@@ -1,5 +1,6 @@
 package com.asteria.world;
 
+import java.util.Objects;
 import java.util.concurrent.Phaser;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -53,7 +54,7 @@ public final class World {
                 }
 
                 try {
-                    player.pulse();
+                    player.preUpdate();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     player.getSession().disconnect();
@@ -67,7 +68,7 @@ public final class World {
                 }
 
                 try {
-                    npc.pulse();
+                    npc.preUpdate();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     npcs.remove(npc);
@@ -122,7 +123,7 @@ public final class World {
                 }
 
                 try {
-                    player.reset();
+                    player.postUpdate();
                     player.setCachedUpdateBlock(null);
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -137,15 +138,14 @@ public final class World {
                 }
 
                 try {
-                    npc.reset();
+                    npc.postUpdate();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     npcs.remove(npc);
                 }
             }
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -153,22 +153,15 @@ public final class World {
      * Returns an instance of a {@link Player} object for the specified username
      * hash.
      * 
-     * @param username
+     * @param hash
      *            The username hash.
      * @return The <code>Player</code> object representing the player or
      *         {@code null} if no such player exists.
      */
-    public static Player getPlayerByHash(long username) {
-        for (Player player : players) {
-            if (player == null) {
-                continue;
-            }
-
-            if (player.getUsernameHash() == username) {
-                return player;
-            }
-        }
-        return null;
+    public static Player getPlayerByHash(long hash) {
+        return players.stream().filter(
+            p -> p != null && p.getUsernameHash() == hash).findFirst().orElse(
+            null);
     }
 
     /**
@@ -181,16 +174,9 @@ public final class World {
      *         {@code null} if no such player exists.
      */
     public static Player getPlayerByName(String username) {
-        for (Player player : players) {
-            if (player == null) {
-                continue;
-            }
-
-            if (player.getUsername().equals(username)) {
-                return player;
-            }
-        }
-        return null;
+        return players.stream().filter(
+            p -> p != null && p.getUsername().equals(username)).findFirst()
+            .orElse(null);
     }
 
     /**
@@ -200,24 +186,13 @@ public final class World {
      *            the message to send that will be sent to everyone online.
      */
     public void sendMessage(String message) {
-        for (Player p : players) {
-            if (p == null) {
-                continue;
-            }
-
-            p.getPacketBuilder().sendMessage(message);
-        }
+        players.stream().filter(Objects::nonNull).forEach(
+            p -> p.getPacketBuilder().sendMessage(message));
     }
 
     /** Saves the game for all players that are currently online. */
     public static void savePlayers() {
-        for (Player player : players) {
-            if (player == null) {
-                continue;
-            }
-
-            savePlayer(player);
-        }
+        players.stream().filter(Objects::nonNull).forEach(p -> savePlayer(p));
     }
 
     /** Performs a series of operations that shut the entire server down. */
@@ -227,14 +202,8 @@ public final class World {
             // First save all players, we block the calling thread until all
             // players are saved.
             BlockingThreadPool pool = new BlockingThreadPool();
-
-            for (Player player : players) {
-                if (player == null) {
-                    continue;
-                }
-
-                pool.append(new WritePlayerFileTask(player));
-            }
+            players.stream().filter(Objects::nonNull).forEach(
+                p -> pool.append(new WritePlayerFileTask(p)));
             pool.fireAndAwait();
 
             // Terminate any thread pools.

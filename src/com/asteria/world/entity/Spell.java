@@ -24,7 +24,6 @@ public abstract class Spell {
      * @return <code>true</code> if the spell can be cast by the player,
      *         <code>false</code> otherwise.
      */
-    // TODO: Add support for combination runes.
     public boolean canCast(Player player) {
 
         // We first check the level required.

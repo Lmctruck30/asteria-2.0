@@ -14,7 +14,7 @@ public class UpdateFlags {
 
     /**
      * Holds all of the update flag constants. Please note that the order of
-     * these constants should never be changed!
+     * these constants <b>should never</b> be changed!
      * 
      * @author lare96
      */
@@ -64,8 +64,8 @@ public class UpdateFlags {
     }
 
     /**
-     * Gets if an update is required. This is determined by if the backing
-     * {@link BitSet} is empty or not.
+     * Determines if an update is required. This is done by checking if the
+     * backing {@link #bits} is not empty.
      * 
      * @return true if an update is required, meaning the backing bit set is not
      *         empty.
@@ -75,7 +75,8 @@ public class UpdateFlags {
     }
 
     /**
-     * Resets the update flags.
+     * Resets the update flags, essentially reverting all flags back to a state
+     * of <code>false</code>.
      */
     public void reset() {
         bits.clear();

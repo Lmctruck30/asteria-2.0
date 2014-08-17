@@ -79,7 +79,7 @@ public class Npc extends Entity {
     }
 
     @Override
-    public void pulse() throws Exception {
+    public void preUpdate() throws Exception {
         NpcAggression.target(this);
         movementCoordinator.coordinate();
         getMovementQueue().execute();

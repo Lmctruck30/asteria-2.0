@@ -38,7 +38,7 @@ public abstract class Entity {
 
     /** Used for placing actions at the end of the walking queue. */
     private MovementQueueListener movementListener = new MovementQueueListener(
-            this);
+        this);
 
     /** The spell currently being casted. */
     private CombatSpell currentlyCasting;
@@ -111,7 +111,7 @@ public abstract class Entity {
 
     /**
      * All of the possible types that can be assigned to an entity. We have this
-     * to get around using <code>instanceof</code>.
+     * function to get around using <code>instanceof</code>.
      * 
      * @author lare96
      */
@@ -122,8 +122,11 @@ public abstract class Entity {
 
     /**
      * Handles processing for this entity.
+     * 
+     * @throws Exception
+     *             if any errors occur while executing pre-processing code.
      */
-    public abstract void pulse() throws Exception;
+    public abstract void preUpdate() throws Exception;
 
     /**
      * Gets the attack speed for the entity.
@@ -229,7 +232,7 @@ public abstract class Entity {
     /**
      * Resets this entity after updating.
      */
-    public void reset() {
+    public void postUpdate() {
         primaryDirection = -1;
         secondaryDirection = -1;
         flags.reset();
@@ -295,7 +298,7 @@ public abstract class Entity {
             return;
         }
         this.faceIndex = entity.type() == EntityType.PLAYER ? entity.slot + 32768
-                : entity.slot;
+            : entity.slot;
         flags.flag(Flag.FACE_ENTITY);
     }
 
@@ -385,7 +388,7 @@ public abstract class Entity {
      *            the fourth hit.
      */
     public void dealQuadrupleDamage(Hit hit, Hit secondHit, final Hit thirdHit,
-            final Hit fourthHit) {
+        final Hit fourthHit) {
         dealDoubleDamage(hit, secondHit);
 
         TaskManager.submit(new Task(1, false) {

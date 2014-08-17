@@ -36,11 +36,6 @@ import com.asteria.world.map.Position;
  */
 public final class CombatFactory {
 
-    // TODO: KBD and dragon combat strategies, as an example of how to make
-    // bosses.
-    // TODO: When KBD is done, check if immunity is above 0. If not then deal
-    // fire damage.
-
     /** The amount of time it takes for cached damage to timeout. */
     // Damage cached for currently 60 seconds will not be accounted for.
     public static final long DAMAGE_CACHE_TIMEOUT = 60000;

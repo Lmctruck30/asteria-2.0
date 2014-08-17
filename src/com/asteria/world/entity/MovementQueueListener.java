@@ -54,7 +54,7 @@ public class MovementQueueListener {
         listener = new MovementQueueListenerTask(entity,
                 Objects.requireNonNull(task));
 
-        // Then submit it to the task factory!
+        // Then submit it to the TaskManager!
         TaskManager.submit(listener);
     }
 

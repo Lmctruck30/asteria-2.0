@@ -4,8 +4,8 @@ import java.util.Iterator;
 import java.util.Objects;
 
 /**
- * A dynamic cycle based task that carries out general game code on the game
- * thread.
+ * A dynamic cycle based task that executes all general game related code on the
+ * game thread.
  * 
  * @author lare96
  */
@@ -27,9 +27,9 @@ public abstract class Task {
     private Object key;
 
     /**
-     * If this task is currently running. When this field is unflagged the task
-     * is removed from the list of active tasks and can never be added to the
-     * list of pending tasks.
+     * If this task is currently running. When this is unflagged the task is
+     * removed from the list of active tasks and can never be added to the list
+     * of pending tasks.
      */
     private boolean running;
 
@@ -47,7 +47,7 @@ public abstract class Task {
         // Check if the delay is valid first.
         if (delay <= 0) {
             throw new IllegalArgumentException(
-                    "The delay must be above 0! Delay was: " + delay);
+                "The delay must be above 0! Delay was: " + delay);
         }
 
         // Delay is valid, so set the fields.
@@ -61,7 +61,7 @@ public abstract class Task {
     public abstract void execute();
 
     /**
-     * Tasks can override this method to run more logic once it has been
+     * Tasks can override this method to execute more code once it has been
      * canceled.
      */
     public void onCancel() {
@@ -87,7 +87,7 @@ public abstract class Task {
 
             try {
 
-                // Run the logic within the task.
+                // Execute the code within the task.
                 execute();
             } catch (Exception e) {
 
@@ -106,8 +106,8 @@ public abstract class Task {
     }
 
     /**
-     * Cancels this task which will unregister it and stop its logic from firing
-     * in the future.
+     * Cancels this task which will unregister it and stop it from executing in
+     * the future. If this task is already cancelled this method has no effect.
      */
     public final void cancel() {
         if (running) {
@@ -133,7 +133,7 @@ public abstract class Task {
      */
     public final Task bind(Object key) {
         this.key = Objects.requireNonNull(key,
-                "Keys with a value of null not permitted!");
+            "Keys with a value of null not permitted!");
         return this;
     }
 

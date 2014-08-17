@@ -228,6 +228,9 @@ public class Player extends Entity {
     /** The player's username hash. */
     private long usernameHash;
 
+    /** The player's hashcode. */
+    private int hashCode;
+
     /** The current dialogue we are in. */
     private Dialogue dialogue;
 
@@ -282,7 +285,7 @@ public class Player extends Entity {
     }
 
     @Override
-    public void pulse() throws Exception {
+    public void preUpdate() throws Exception {
         if (session.getTimeout().elapsed() > 5000) {
             session.disconnect();
             return;
@@ -343,6 +346,11 @@ public class Player extends Entity {
                 .getPoisonType(equipment.get(
                             Utility.EQUIPMENT_SLOT_ARROWS)));
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return hashCode;
     }
 
     /**
@@ -1422,6 +1430,7 @@ public class Player extends Entity {
      */
     public void setUsernameHash(long usernameHash) {
         this.usernameHash = usernameHash;
+        this.hashCode = (int) usernameHash;
     }
 
     /**

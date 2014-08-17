@@ -3,7 +3,7 @@ package com.asteria.engine.task.listener;
 import com.asteria.engine.task.Task;
 
 /**
- * A listener that will repeatedly fire logic until some sort of event occurs.
+ * A listener that will repeatedly execute code until some sort of event occurs.
  * 
  * @author lare96
  */
@@ -13,28 +13,30 @@ public abstract class OnFireEventListener extends Task {
      * Create a new {@link OnFireEventListener}.
      * 
      * @param rate
-     *            the rate in which the logic will be fired.
+     *            the rate in which the code will be fired.
      */
     public OnFireEventListener(int rate) {
         super(rate, true);
     }
 
     /**
-     * Create a new {@link OnFireEventListener}.
+     * Create a new {@link OnFireEventListener} that will execute code in
+     * <tt>600</tt>ms intervals.
      */
     public OnFireEventListener() {
         this(1);
     }
 
     /**
-     * Will repeatedly fire the logic until this boolean is flagged.
+     * Will repeatedly execute the code within {@link #run} until this boolean
+     * is flagged.
      * 
-     * @return true if this listener should stop firing the logic, false if this
-     *         listener should keep firing the logic.
+     * @return <code>true</code> if this listener should stop executing code,
+     *         <code>false</code> if this listener should keep executing code.
      */
     public abstract boolean listenFor();
 
-    /** The logic that will be fired until <code>listenFor()</code> is flagged. */
+    /** The code that will be executed until {@link #listenFor} is flagged. */
     public abstract void run();
 
     @Override

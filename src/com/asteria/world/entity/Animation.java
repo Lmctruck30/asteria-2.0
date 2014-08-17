@@ -36,9 +36,7 @@ public class Animation {
         this(id, 0);
     }
 
-    /**
-     * Create a new {@link Animation}.
-     */
+    /** Create a new {@link Animation}. */
     public Animation() {
 
     }

@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Queue;
 
 /**
- * Utility methods to manage stored pending and active tasks.
+ * Utility methods to manage stored pending and active tasks. The functions in
+ * this class are <b>NOT</b> safe for use across multiple threads.
  * 
  * @author lare96
  */

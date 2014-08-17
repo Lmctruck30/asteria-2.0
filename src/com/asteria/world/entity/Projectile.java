@@ -1,12 +1,15 @@
 package com.asteria.world.entity;
 
+import com.asteria.engine.task.Task;
+import com.asteria.engine.task.TaskManager;
 import com.asteria.world.World;
 import com.asteria.world.entity.Entity.EntityType;
 import com.asteria.world.entity.player.Player;
 import com.asteria.world.map.Position;
 
 /**
- * A graphic propelled through the air by some sort of spell or weapon.
+ * A graphic propelled through the air by some sort of spell, weapon, or other
+ * miscellaneous force.
  * 
  * @author lare96
  */
@@ -62,11 +65,11 @@ public final class Projectile {
      *            the curve angle of the projectile.
      */
     public Projectile(Position start, Position end, int lockon,
-            int projectileId, int speed, int delay, int startHeight,
-            int endHeight, int curve) {
+        int projectileId, int speed, int delay, int startHeight, int endHeight,
+        int curve) {
         this.start = start;
         this.offset = new Position((end.getX() - start.getX()),
-                (end.getY() - start.getY()));
+            (end.getY() - start.getY()));
         this.lockon = lockon;
         this.projectileId = projectileId;
         this.delay = delay;
@@ -97,11 +100,11 @@ public final class Projectile {
      *            the curve angle of the projectile.
      */
     public Projectile(Entity source, Entity victim, int projectileId,
-            int delay, int speed, int startHeight, int endHeight, int curve) {
+        int delay, int speed, int startHeight, int endHeight, int curve) {
         this(source.getPosition(), victim.getPosition(),
-                (victim.type() == EntityType.PLAYER ? -victim.getSlot() - 1
-                        : victim.getSlot() + 1), projectileId, delay, speed,
-                startHeight, endHeight, curve);
+            (victim.type() == EntityType.PLAYER ? -victim.getSlot() - 1
+                : victim.getSlot() + 1), projectileId, delay, speed,
+            startHeight, endHeight, curve);
     }
 
     /**
@@ -116,10 +119,28 @@ public final class Projectile {
 
             if (start.isViewableFrom(player.getPosition())) {
                 player.getPacketBuilder().sendProjectile(start, offset, 0,
-                        speed, projectileId, startHeight, endHeight, lockon,
-                        delay);
+                    speed, projectileId, startHeight, endHeight, lockon, delay);
 
             }
+        }
+    }
+
+    /**
+     * Sends <code>count</code> projectiles using the values set when the
+     * {@link Projectile} was constructed.
+     * 
+     * @param count
+     *            the amount of projectiles to send.
+     */
+    public void sendProjectiles(int count) {
+        for (int i = 0; i < count; i++) {
+            TaskManager.submit(new Task(1, false) {
+                @Override
+                public void execute() {
+                    sendProjectile();
+                    this.cancel();
+                }
+            });
         }
     }
 
