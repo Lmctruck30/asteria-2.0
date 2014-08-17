@@ -93,14 +93,14 @@ public class BankContainer extends ItemContainer {
             return false;
         }
 
-        item.setId(item.getDefinition().isNoted() ? item.getDefinition()
-            .getUnNotedId() : item.getId());
+        int itemId = item.getDefinition().isNoted() ? item.getDefinition()
+            .getUnNotedId() : item.getId();
 
         if (!contains) {
-            super.add(item, slot);
-        } else {
-            get(getSlot(item.getId())).incrementAmountBy(item.getAmount());
+            return super.add(new Item(itemId, item.getAmount()), slot);
         }
+
+        get(getSlot(itemId)).incrementAmountBy(item.getAmount());
         return true;
     }
 
@@ -162,6 +162,8 @@ public class BankContainer extends ItemContainer {
             player.getPacketBuilder().sendConfig(115, 0);
         }
 
+        super.remove(item, bankSlot);
+
         if (player.isWithdrawAsNote()) {
             item.setId(item.getId() + 1);
         }
@@ -169,7 +171,6 @@ public class BankContainer extends ItemContainer {
         if (addItem)
             player.getInventory().add(item);
 
-        super.remove(item, bankSlot);
         shift();
         refresh();
         player.getPacketBuilder().sendUpdateItems(5064,

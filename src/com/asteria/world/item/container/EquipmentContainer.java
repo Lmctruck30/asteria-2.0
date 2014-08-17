@@ -118,10 +118,8 @@ public class EquipmentContainer extends ItemContainer {
 
                 player.getInventory().set(inventorySlot, equipItem);
                 player.getInventory().refresh();
-
             } else {
-                player.getInventory().set(inventorySlot, item);
-                player.getInventory().refresh();
+                player.getInventory().remove(item, inventorySlot);
             }
 
             set(designatedSlot, new Item(item.getId(), item.getAmount()));
@@ -177,7 +175,7 @@ public class EquipmentContainer extends ItemContainer {
             return false;
         }
 
-        remove(item, equipmentSlot);
+        super.remove(item, equipmentSlot);
 
         if (addItem)
             player.getInventory().add(new Item(item.getId(), item.getAmount()));
