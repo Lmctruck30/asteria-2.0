@@ -520,6 +520,14 @@ public class ItemContainer extends AbstractCollection<Item> {
         return add(item, -1);
     }
 
+    /**
+     * Performs a check on all items in this container to see if they match the
+     * argued Object. Rather than using <code>equals</code> to check if the
+     * elements match, it checks whether the Object is an item and if so
+     * compares the ID and quantity. This method will throw a
+     * {@link NullPointerException} if the argued Object has a value of
+     * <code>null</code>.
+     */
     @Override
     public boolean contains(Object o) {
         Objects.requireNonNull(o);
