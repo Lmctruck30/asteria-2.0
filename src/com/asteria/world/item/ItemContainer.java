@@ -521,6 +521,19 @@ public class ItemContainer extends AbstractCollection<Item> {
     }
 
     @Override
+    public boolean contains(Object o) {
+        Objects.requireNonNull(o);
+
+        if (!(o instanceof Item))
+            return false;
+
+        Item $item = (Item) o;
+        return Arrays.stream(items).filter(Objects::nonNull).anyMatch(
+            item -> item.getId() == $item.getId() && item.getAmount() >= $item
+                .getAmount());
+    }
+
+    @Override
     public void clear() {
         items = new Item[capacity];
     }
