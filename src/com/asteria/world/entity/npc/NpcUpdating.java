@@ -56,7 +56,7 @@ public class NpcUpdating {
         int added = 0;
         for (Npc npc : World.getNpcs()) {
             if (npc == null || added == 15 || player.getLocalNpcs().size() >= 255 || player
-                    .getLocalNpcs().contains(npc)) {
+                .getLocalNpcs().contains(npc)) {
                 continue;
             }
 
@@ -144,7 +144,7 @@ public class NpcUpdating {
      *            The NPC to update.
      */
     private static void updateState(ProtocolBuffer block, Npc npc)
-            throws Exception {
+        throws Exception {
         int mask = 0x0;
 
         // NPC update masks.
@@ -224,7 +224,7 @@ public class NpcUpdating {
      *            the npc to append this update for.
      */
     private static void appendSecondaryHit(ProtocolBuffer out, Npc npc)
-            throws Exception {
+        throws Exception {
         if (!npc.isDead()) {
             if (npc.getCurrentHP() <= 0) {
                 npc.setCurrentHealth(0);
@@ -233,7 +233,7 @@ public class NpcUpdating {
         }
 
         out.writeByte(npc.getSecondaryHit().getDamage(), ValueType.A);
-        out.writeByte(npc.getSecondaryHit().getType().ordinal(), ValueType.C);
+        out.writeByte(npc.getSecondaryHit().getType().getId(), ValueType.C);
         out.writeByte(npc.getCurrentHP(), ValueType.A);
         out.writeByte(npc.getMaxHealth());
     }
@@ -279,7 +279,7 @@ public class NpcUpdating {
         }
 
         out.writeByte(npc.getPrimaryHit().getDamage(), ValueType.C);
-        out.writeByte(npc.getPrimaryHit().getType().ordinal(), ValueType.S);
+        out.writeByte(npc.getPrimaryHit().getType().getId(), ValueType.S);
         out.writeByte(npc.getCurrentHP(), ValueType.S);
         out.writeByte(npc.getMaxHealth(), ValueType.C);
     }

@@ -1,29 +1,33 @@
 package com.asteria.world.entity;
 
+import java.util.AbstractCollection;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Objects;
-import java.util.Spliterators;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import com.asteria.world.WorldFullException;
 
 /**
- * A container for holding and managing {@link Entity}s. This container uses a
- * fail-safe {@link Iterator} implementation which allows for insertion and
- * removal of elements during an iteration.
+ * An {@link AbstractCollection} implementation that stores and manages stored
+ * elements.
  * 
  * @author lare96
- * @param <T>
- *            the type of {@link Entity} to hold in this container.
+ * @param <E>
+ *            the type of element to hold in this container.
  */
-public class EntityContainer<T extends Entity> implements Iterable<T> {
+public class EntityContainer<E extends Entity> extends AbstractCollection<E> {
 
-    /** The size of this container. */
+    /** The maximum amount of elements that can be in this container. */
+    private int capacity;
+
+    /** The current amount of elements that are in this container. */
     private int size;
 
-    /** The backing array for this container. */
-    private T[] backingArray;
+    /** The actual elements that are in this container. */
+    private E[] elements;
 
     /**
      * Create a new {@link EntityContainer} with the specified capacity.
@@ -34,200 +38,197 @@ public class EntityContainer<T extends Entity> implements Iterable<T> {
      */
     @SuppressWarnings("unchecked")
     public EntityContainer(int capacity) {
-        this.backingArray = (T[]) new Entity[capacity];
+        this.capacity = capacity + 1;
         this.size = 0;
+        this.elements = (E[]) new Entity[capacity + 1];
     }
 
-    /**
-     * Finds a slot for this entity and places it in that slot. If no slot is
-     * found then a {@link WorldFullException} is thrown.
-     * 
-     * @param entity
-     *            the entity to add to the found slot.
-     * @return this container for chaining.
-     */
-    public EntityContainer<T> add(T entity) {
+    @Override
+    public boolean add(E e) {
 
-        // Locates a free slot for this entity.
-        int foundSlot = getFreeSlot();
+        // Determine the next free slot and validate it.
+        int slot = determineSlot();
 
-        // No more space, throw an exception.
-        if (foundSlot == -1) {
-            throw new WorldFullException(entity);
-        }
+        if (slot == -1)
+            throw new WorldFullException(e);
 
-        // Otherwise add the entity to the found slot.
-        return addSlot(foundSlot, entity);
-    }
-
-    /**
-     * Adds an entity to the specified slot.
-     * 
-     * @param slot
-     *            the slot to add this entity to.
-     * @param entity
-     *            the entity to add to the slot.
-     * @return this container for chaining.
-     */
-    private EntityContainer<T> addSlot(int slot, T entity) {
-
-        // Check if the slot is in range.
-        checkSlot(slot);
-
-        // Add the entity and set its slot.
-        backingArray[slot] = Objects.requireNonNull(entity);
-        backingArray[slot].setSlot(slot);
+        // The slot has passed the checks, so add the entity to that slot.
+        elements[slot] = Objects.requireNonNull(e);
+        elements[slot].setSlot(slot);
         size++;
-        return this;
+        return true;
     }
 
-    /**
-     * Remove this entity from the slot its currently in.
-     * 
-     * @param entity
-     *            the entity to remove from its slot.
-     * @return this container for chaining.
-     */
-    public EntityContainer<T> remove(T entity) {
+    @Override
+    public boolean contains(Object o) {
 
-        // Attempt to remove the entity from the container.
-        return removeSlot(entity.getSlot());
+        // Validate the argued Object.
+        if (!(o instanceof Entity))
+            return false;
+
+        // Determine if the entity is in this container.
+        Entity e = (Entity) o;
+        return !slotFree(e.getSlot());
     }
 
-    /**
-     * Remove the entity on the specified slot.
-     * 
-     * @param slot
-     *            the slot to remove the entity on.
-     * @return this container for chaining.
-     */
-    private EntityContainer<T> removeSlot(int slot) {
+    @Override
+    public boolean remove(Object o) {
 
-        // Check if the slot is in range.
-        checkSlot(slot);
+        // Validate the argued Object.
+        if (o == null)
+            throw new NullPointerException();
+        if (!(o instanceof Entity))
+            return false;
 
-        // Check if the entity is even online.
-        if (isSlotFree(slot)) {
-            return this;
+        // Remove the entity from the container.
+        Entity e = (Entity) o;
+
+        if (!slotFree(e.getSlot())) {
+            elements[e.getSlot()].setUnregistered(true);
+            elements[e.getSlot()] = null;
+            size--;
+            return true;
         }
-
-        // Otherwise remove the entity from the container and flag them as
-        // unregistered.
-        backingArray[slot].setUnregistered(true);
-        backingArray[slot] = null;
-        size--;
-        return this;
+        return false;
     }
 
     /**
-     * Determines if this container has the specified entity.
-     * 
-     * @param entity
-     *            the entity to check this container for.
-     * @return true if this container has the entity.
-     */
-    public boolean contains(T entity) {
-
-        // Check if the slot is in range.
-        checkSlot(entity.getSlot());
-
-        // Determine if this container contains the entity.
-        return backingArray[entity.getSlot()] != null;
-    }
-
-    /**
-     * Determines if the argued slot is in range or not. An
-     * {@link IllegalArgumentException} is thrown if the slot is out of range.
+     * Retrieves the element on the argued slot.
      * 
      * @param slot
-     *            the argued slot.
-     * @return true if the slot is in range.
+     *            the slot to retrieve the element on.
+     * @return the element on the slot, or <code>null</code> if no element is on
+     *         the slot.
      */
-    private void checkSlot(int slot) {
-
-        // Throw an exception if the slot is out of the range.
-        if (slot > backingArray.length || slot < 1) {
-            throw new IllegalArgumentException("Slot out of range: " + slot);
-        }
+    public E get(int slot) {
+        return elements[slot];
     }
 
     /**
-     * Determines if the argued slot is free.
+     * Determines if the argued slot is free, meaning it currently has no
+     * elements on it.
      * 
      * @param slot
-     *            the slot to determine if free.
-     * @return true if the slot is free.
+     *            the slot to check is free or not.
+     * @return <code>true</code> if the slot is free, <code>false</code>
+     *         otherwise.
      */
-    public boolean isSlotFree(int slot) {
-        return backingArray[slot] == null;
+    public boolean slotFree(int slot) {
+        return elements[slot] == null;
     }
 
-    /**
-     * Gets the entity on the specified slot.
-     * 
-     * @param slot
-     *            the slot to retrieve the entity on.
-     * @return the entity on the specified slot.
-     */
-    public T get(int slot) {
-        return backingArray[slot];
+    @Override
+    public Object[] toArray() {
+        throw new UnsupportedOperationException(
+            "Access to the backing array is denied!");
     }
 
-    /**
-     * Gets the maximum amount of entities this container can hold.
-     * 
-     * @return the capacity of this container.
-     */
-    public int getCapacity() {
-        return backingArray.length;
+    @Override
+    public <T> T[] toArray(T[] a) {
+        throw new UnsupportedOperationException(
+            "Access to the backing array is denied!");
     }
 
-    /**
-     * Gets the amount of non-malformed entities in this container.
-     * 
-     * @return the amount of non-malformed entities.
-     */
-    public int getSize() {
+    @SuppressWarnings("unchecked")
+    @Override
+    public void clear() {
+        elements = (E[]) new Entity[capacity];
+        size = 0;
+    }
+
+    @Override
+    public int size() {
         return size;
     }
 
     /**
-     * Gets a free slot in this container.
+     * The maximum amount of elements that can be in this container. This method
+     * returns an amount equal to the length of {@link #elements}.
      * 
-     * @return the free slot or -1 if there are none left.
+     * @return the maximum amount of elements that can be in this container.
      */
-    public int getFreeSlot() {
-        for (int slot = 1; slot < backingArray.length; slot++) {
-            if (backingArray[slot] == null) {
+    public int capacity() {
+        return elements.length;
+    }
+
+    /**
+     * Iterates through the array of elements to determine the index of the
+     * first free slot found.
+     * 
+     * @return the index of the free slot, or <tt>-1</tt> if the container is
+     *         full.
+     */
+    private int determineSlot() {
+        for (int slot = 1; slot < elements.length; slot++) {
+            if (slotFree(slot)) {
                 return slot;
             }
         }
         return -1;
     }
 
+
     /**
-     * Gets the amount of free slots left in this container.
+     * Gets the amount of free slots left in this container. This method returns
+     * a value equal to subtracting the {@link #capacity} by the {@link #size}.
      * 
      * @return the amount of free slots left in this container.
      */
-    public int getRemainingSize() {
-        return backingArray.length - size;
+    public int remainingSize() {
+        return capacity() - size();
     }
 
     /**
-     * Creates a sequential {@link Stream} from this container's
-     * <code>iterator()</code> and <code>size</code> functions.
+     * Determines if this container cannot accept anymore elements.
      * 
-     * @return the sequential stream.
+     * @return <code>true</code> if this container is full, <code>false</code>
+     *         otherwise.
      */
-    public Stream<T> stream() {
-        return StreamSupport.stream(Spliterators.spliterator(iterator(), size,
-            0), false);
+    public boolean isFull() {
+        return size >= capacity;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * This implementation automatically excludes all elements with a value of
+     * <code>null</code>.
+     */
     @Override
-    public Iterator<T> iterator() {
-        return new Iterator<T>() {
+    public void forEach(Consumer<? super E> action) {
+        for (E e : elements) {
+            if (e == null)
+                continue;
+            action.accept(e);
+        }
+    }
+
+    /**
+     * Iterates through the backing array and finds the first element that
+     * matches the argued {@link Predicate}.
+     * 
+     * @param p
+     *            the predicate that will be used to find the element.
+     * @return the optional representing the found element.
+     */
+    public Optional<E> search(Predicate<? super E> p) {
+        for (E e : elements) {
+            if (p.test(e))
+                return Optional.ofNullable(e);
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * This is a fail-safe iterator implementation, meaning that modification of
+     * the collection while performing an enhanced loop will not throw a
+     * {@link ConcurrentModificationException}.
+     */
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
 
             /** The current index we are iterating on. */
             private int currentIndex;
@@ -237,19 +238,19 @@ public class EntityContainer<T extends Entity> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
-                return !(currentIndex + 1 > backingArray.length);
+                return !(currentIndex + 1 > elements.length);
             }
 
             @Override
-            public T next() {
-                if (currentIndex >= backingArray.length) {
+            public E next() {
+                if (currentIndex >= elements.length) {
                     throw new ArrayIndexOutOfBoundsException(
                         "Can only call 'next()' in amount to 'backingArray.length'.");
                 }
 
                 int i = currentIndex;
                 currentIndex++;
-                return backingArray[lastElementIndex = i];
+                return elements[lastElementIndex = i];
             }
 
             @Override
@@ -259,7 +260,7 @@ public class EntityContainer<T extends Entity> implements Iterable<T> {
                         "Can only call 'remove()' once in call to 'next()'.");
                 }
 
-                removeSlot(lastElementIndex);
+                EntityContainer.this.remove(elements[lastElementIndex]);
                 currentIndex = lastElementIndex;
                 lastElementIndex = -1;
             }

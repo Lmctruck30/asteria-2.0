@@ -1,5 +1,7 @@
 package com.asteria.world.entity;
 
+import java.util.Optional;
+
 import com.asteria.world.entity.npc.Npc;
 import com.asteria.world.entity.player.Player;
 import com.asteria.world.entity.player.content.PlayerMagicStaff;
@@ -28,28 +30,28 @@ public abstract class Spell {
 
         // We first check the level required.
         if (player.getSkills()[Skills.MAGIC].getLevel() < levelRequired()) {
-            player.getPacketBuilder().sendMessage(
-                    "You need a Magic level of " + levelRequired()
-                            + " to cast this spell.");
+            player
+                .getPacketBuilder()
+                .sendMessage(
+                    "You need a Magic level of " + levelRequired() + " to cast this spell.");
             player.getCombatBuilder().reset();
             return false;
         }
 
         // Then we check the items required.
-        if (itemsRequired(player) != null) {
+        if (itemsRequired(player).isPresent()) {
 
             // Suppress the runes based on the staff, we then use the new array
             // of items that don't include suppressed runes.
             Item[] items = PlayerMagicStaff.suppressRunes(player,
-                    itemsRequired(player));
+                itemsRequired(player).get());
 
             // Now check if we have all of the runes.
             if (!player.getInventory().containsAll(items)) {
 
                 // We don't, so we can't cast.
-                player.getPacketBuilder()
-                        .sendMessage(
-                                "You do not have the required items to cast this spell.");
+                player.getPacketBuilder().sendMessage(
+                    "You do not have the required items to cast this spell.");
                 resetPlayerSpell(player);
                 player.getCombatBuilder().reset();
                 return false;
@@ -61,12 +63,13 @@ public abstract class Spell {
         }
 
         // Finally, we check the equipment required.
-        if (equipmentRequired(player) != null) {
-            if (!player.getEquipment()
-                    .containsAll(equipmentRequired(player))) {
-                player.getPacketBuilder()
-                        .sendMessage(
-                                "You do not have the required equipment to cast this spell.");
+        if (equipmentRequired(player).isPresent()) {
+            if (!player.getEquipment().containsAll(
+                equipmentRequired(player).get())) {
+                player
+                    .getPacketBuilder()
+                    .sendMessage(
+                        "You do not have the required equipment to cast this spell.");
                 resetPlayerSpell(player);
                 player.getCombatBuilder().reset();
                 return false;
@@ -83,9 +86,8 @@ public abstract class Spell {
      */
     // To prevent a bit of boilerplate code.
     private void resetPlayerSpell(Player player) {
-        if (player.getCombatBuilder().isAttacking()
-                || player.getCombatBuilder().isBeingAttacked()
-                && player.isAutocast()) {
+        if (player.getCombatBuilder().isAttacking() || player
+            .getCombatBuilder().isBeingAttacked() && player.isAutocast()) {
             player.setAutocastSpell(null);
             player.setAutocast(false);
             player.getPacketBuilder().sendConfig(108, 0);
@@ -116,7 +118,7 @@ public abstract class Spell {
      * @return the items required to cast this spell, or <code>null</code> if
      *         there are no items required.
      */
-    public abstract Item[] itemsRequired(Player player);
+    public abstract Optional<Item[]> itemsRequired(Player player);
 
     /**
      * The equipment required to cast this spell.
@@ -127,7 +129,7 @@ public abstract class Spell {
      * @return the equipment required to cast this spell, or <code>null</code>
      *         if there is no equipment required.
      */
-    public abstract Item[] equipmentRequired(Player player);
+    public abstract Optional<Item[]> equipmentRequired(Player player);
 
     /**
      * The method invoked when the spell is cast.

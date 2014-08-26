@@ -19,11 +19,9 @@ import com.asteria.world.entity.combat.effect.CombatTeleblockEffect;
 import com.asteria.world.entity.combat.prayer.CombatPrayer;
 import com.asteria.world.entity.player.Player;
 import com.asteria.world.entity.player.PlayerFileTask.ReadPlayerFileTask;
-import com.asteria.world.entity.player.content.AssignWeaponAnimation;
-import com.asteria.world.entity.player.content.AssignWeaponInterface;
-import com.asteria.world.entity.player.minigame.Minigame;
-import com.asteria.world.entity.player.minigame.MinigameFactory;
-import com.asteria.world.entity.player.skill.SkillEvent;
+import com.asteria.world.entity.player.content.WeaponAnimations;
+import com.asteria.world.entity.player.content.WeaponInterfaces;
+import com.asteria.world.entity.player.minigame.Minigames;
 import com.asteria.world.entity.player.skill.Skills;
 
 /**
@@ -80,6 +78,9 @@ public final class Session {
 
     /** The packet length for this session. */
     private int packetLength = -1;
+
+    /** The amount of packets decoded this cycle. */
+    private int packetCount;
 
     /** The packet encryptor for this session. */
     private ISAACCipher encryptor;
@@ -311,7 +312,7 @@ public final class Session {
                 player.setUsernameHash(Utility.nameToHash(username));
 
                 // Check if the player is already logged in.
-                if (World.getPlayerByHash(player.getUsernameHash()) != null) {
+                if (World.getPlayerByHash(player.getUsernameHash()).isPresent()) {
                     response = Utility.LOGIN_RESPONSE_ACCOUNT_ONLINE;
                 }
 
@@ -323,8 +324,7 @@ public final class Session {
             }
 
             // Check if we even have enough space for the player.
-            if (World.getPlayers().getSize() >= World.getPlayers()
-                .getCapacity()) {
+            if (World.getPlayers().isFull()) {
                 response = Utility.LOGIN_RESPONSE_WORLD_FULL;
             }
 
@@ -415,17 +415,13 @@ public final class Session {
             packetBuilder.sendMessage(Player.WELCOME_MESSAGE);
 
             // Check dynamic minigame actions.
-            for (Minigame minigame : MinigameFactory.getMinigames().values()) {
-                if (minigame.inMinigame(player)) {
-                    minigame.fireOnLogin(player);
-                }
-            }
+            Minigames.get(player).ifPresent(m -> m.fireOnLogin(player));
 
             // Send the weapon interface and animation.
-            AssignWeaponInterface.assignInterface(player, player.getEquipment()
-                .get(Utility.EQUIPMENT_SLOT_WEAPON));
-            AssignWeaponAnimation.assignAnimation(player, player.getEquipment()
-                .get(Utility.EQUIPMENT_SLOT_WEAPON));
+            WeaponInterfaces.assign(player, player.getEquipment().get(
+                Utility.EQUIPMENT_SLOT_WEAPON));
+            WeaponAnimations.assign(player, player.getEquipment().get(
+                Utility.EQUIPMENT_SLOT_WEAPON));
 
             // Last but not least, send client configurations.
             packetBuilder.sendConfig(173, player.getMovementQueue()
@@ -457,18 +453,13 @@ public final class Session {
     public void disconnect() {
         try {
             if (player != null && stage == Stage.LOGGED_IN) {
-                for (Minigame minigame : MinigameFactory.getMinigames()
-                    .values()) {
-                    if (minigame.inMinigame(player)) {
-                        minigame.fireOnForcedLogout(player);
-                    }
-                }
-
+                Minigames.get(player).ifPresent(
+                    m -> m.fireOnForcedLogout(player));
                 World.savePlayer(player);
                 TaskManager.cancelTasks(player);
                 player.getTradeSession().reset(false);
                 player.getPrivateMessage().updateOtherList(false);
-                SkillEvent.fireSkillEvents(player);
+                Skills.fireSkillEvents(player);
 
                 if (World.getPlayers().contains(player)) {
                     World.getPlayers().remove(player);
@@ -665,5 +656,28 @@ public final class Session {
      */
     public Stopwatch getTimeout() {
         return timeout;
+    }
+
+    /**
+     * Gets the amount of packets decoded this cycle.
+     * 
+     * @return the amount of packets decoded this cycle.
+     */
+    public int getPacketCount() {
+        return packetCount;
+    }
+
+    /**
+     * Increments the amount of packets decoded this cycle.
+     */
+    public void incrementPacketCount() {
+        this.packetCount++;
+    }
+
+    /**
+     * Resets the amount of packets decoded this cycle.
+     */
+    public void resetPacketCount() {
+        this.packetCount = 0;
     }
 }

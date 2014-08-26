@@ -2,6 +2,7 @@ package com.asteria.world.object;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.Set;
 
 import com.asteria.util.JsonLoader;
@@ -67,30 +68,38 @@ public class WorldObjectManager implements Iterable<WorldObject> {
         if (objectSet.remove(registerable)) {
 
             // Remove object for all existing players.
-            for (Player player : World.getPlayers()) {
-                if (player == null) {
-                    continue;
-                }
-
-                player.getPacketBuilder().sendRemoveObject(registerable);
-            }
+            World.getPlayers().forEach(
+                p -> p.getPacketBuilder().sendRemoveObject(registerable));
         }
     }
 
     /**
-     * Gets the object on the argued {@link Position}.
+     * Gets the first occurrence of the object on the argued {@link Position}.
      * 
      * @param position
      *            the position to get the object on.
      * @return the object on the position.
      */
-    public static WorldObject getObjectOnPosition(Position position) {
-        for (WorldObject object : objectSet) {
-            if (position.equals(object.getPosition())) {
-                return object;
-            }
-        }
-        return null;
+    public static Optional<WorldObject> getObjectOnPosition(Position position) {
+        return objectSet.stream().filter(o -> position.equals(o.getPosition()))
+            .findFirst();
+    }
+
+    /**
+     * Determines if there is a {@link WorldObject} with the argued ID on the
+     * argued position.
+     * 
+     * @param objectId
+     *            the ID of the object to validate.
+     * @param position
+     *            the position to validate.
+     * @return <code>true</code> if there is an object with the specified ID on
+     *         this position, <code>false</code> otherwise.
+     */
+    public static boolean valid(int objectId, Position position) {
+        return objectSet.stream().filter(
+            o -> position.equals(o.getPosition()) && o.getId() == objectId)
+            .findFirst().isPresent();
     }
 
     /**
@@ -134,16 +143,19 @@ public class WorldObjectManager implements Iterable<WorldObject> {
             public void load(JsonObject reader, Gson builder) {
                 int id = reader.get("id").getAsInt();
                 Position position = builder.fromJson(reader.get("position"),
-                        Position.class);
-                WorldObject.Rotation face = WorldObject.Rotation.valueOf(reader
-                        .get("rotation").getAsString());
+                    Position.class);
+                WorldObject.Direction face = WorldObject.Direction
+                    .valueOf(reader.get("rotation").getAsString());
+                WorldObject.Type type = WorldObject.Type.valueOf(reader.get(
+                    "type").getAsString());
 
                 if (face == null) {
                     throw new IllegalStateException(
-                            "Invalid object rotation! for [id: " + id + " - " + position + "");
+                        "Invalid object rotation! for [id: " + id + " - " + position + "");
+                } else if (type == null) {
+                    throw new IllegalStateException(
+                        "Invalid object type! for [id: " + id + " - " + position + "");
                 }
-
-                int type = reader.get("type").getAsInt();
 
                 objectSet.add(new WorldObject(id, position, face, type));
             }

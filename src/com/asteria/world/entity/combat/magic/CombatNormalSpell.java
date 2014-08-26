@@ -13,5 +13,5 @@ public abstract class CombatNormalSpell extends CombatSpell {
 
     @Override
     public void finishCast(Entity cast, Entity castOn, boolean accurate,
-            int damage) {}
+        int damage) {}
 }

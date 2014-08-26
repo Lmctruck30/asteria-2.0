@@ -4,7 +4,7 @@ import com.asteria.engine.net.ProtocolBuffer;
 import com.asteria.engine.net.packet.PacketDecoder;
 import com.asteria.engine.net.packet.PacketOpcodeHeader;
 import com.asteria.world.entity.player.Player;
-import com.asteria.world.entity.player.skill.SkillEvent;
+import com.asteria.world.entity.player.skill.Skills;
 import com.asteria.world.item.Item;
 import com.asteria.world.item.ItemDefinition;
 import com.asteria.world.shop.Shop;
@@ -28,7 +28,7 @@ public class DecodeItemInterfacePacket extends PacketDecoder {
             interfaceId = buf.readShort(ProtocolBuffer.ValueType.A);
             slot = buf.readShort(ProtocolBuffer.ValueType.A);
             itemId = buf.readShort(ProtocolBuffer.ValueType.A);
-            SkillEvent.fireSkillEvents(player);
+            Skills.fireSkillEvents(player);
 
             if (interfaceId < 0 || slot < 0 || itemId < 0) {
                 return;
@@ -38,7 +38,7 @@ public class DecodeItemInterfacePacket extends PacketDecoder {
 
             case 1688:
                 player.getCombatBuilder().resetAttackTimer();
-                SkillEvent.fireSkillEvents(player);
+                Skills.fireSkillEvents(player);
                 player.getEquipment().unequipItem(slot, true);
                 break;
             case 5064:
@@ -198,7 +198,7 @@ public class DecodeItemInterfacePacket extends PacketDecoder {
             }
             player.getCombatBuilder().resetAttackTimer();
             player.getEquipment().equipItem(slot);
-            SkillEvent.fireSkillEvents(player);
+            Skills.fireSkillEvents(player);
             break;
 
         case 214:

@@ -7,23 +7,23 @@ import com.asteria.engine.task.Task;
  * 
  * @author lare96
  */
-public abstract class OnFireEventListener extends Task {
+public abstract class OnFireActionListener extends Task {
 
     /**
-     * Create a new {@link OnFireEventListener}.
+     * Create a new {@link OnFireActionListener}.
      * 
      * @param rate
      *            the rate in which the code will be fired.
      */
-    public OnFireEventListener(int rate) {
+    public OnFireActionListener(int rate) {
         super(rate, true);
     }
 
     /**
-     * Create a new {@link OnFireEventListener} that will execute code in
+     * Create a new {@link OnFireActionListener} that will execute code in
      * <tt>600</tt>ms intervals.
      */
-    public OnFireEventListener() {
+    public OnFireActionListener() {
         this(1);
     }
 
@@ -34,7 +34,7 @@ public abstract class OnFireEventListener extends Task {
      * @return <code>true</code> if this listener should stop executing code,
      *         <code>false</code> if this listener should keep executing code.
      */
-    public abstract boolean listenFor();
+    public abstract boolean cancelWhen();
 
     /** The code that will be executed until {@link #listenFor} is flagged. */
     public abstract void run();
@@ -43,7 +43,7 @@ public abstract class OnFireEventListener extends Task {
     public void execute() {
 
         // Check if the condition has been flagged.
-        if (listenFor()) {
+        if (cancelWhen()) {
 
             // It has, so we cancel this listener.
             this.cancel();

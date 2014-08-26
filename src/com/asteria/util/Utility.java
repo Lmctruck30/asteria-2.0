@@ -3,6 +3,7 @@ package com.asteria.util;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -14,11 +15,12 @@ import java.security.spec.RSAPublicKeySpec;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.asteria.world.map.Position;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * A collection of miscellaneous utility methods and constants.
@@ -29,50 +31,42 @@ import com.asteria.world.map.Position;
  */
 public final class Utility {
 
-    /**
-     * Thread local random instance, used to generate pseudo-random primitive
-     * types. Thread local random is faster than your traditional random
-     * implementation as there is no unnecessary wait on the backing
-     * <code>AtomicLong</code> within {@link Random}.
-     */
-    public static final Random RANDOM = ThreadLocalRandom.current();
+    /** Random instance, used to generate pseudo-random primitive types. */
+    public static final Random RANDOM = new Random(System.currentTimeMillis());
 
     /** The login response codes. */
     public static final int LOGIN_RESPONSE_OK = 2,
-            LOGIN_RESPONSE_INVALID_CREDENTIALS = 3,
-            LOGIN_RESPONSE_ACCOUNT_DISABLED = 4,
-            LOGIN_RESPONSE_ACCOUNT_ONLINE = 5, LOGIN_RESPONSE_UPDATED = 6,
-            LOGIN_RESPONSE_WORLD_FULL = 7,
-            LOGIN_RESPONSE_LOGIN_SERVER_OFFLINE = 8,
-            LOGIN_RESPONSE_LOGIN_LIMIT_EXCEEDED = 9,
-            LOGIN_RESPONSE_BAD_SESSION_ID = 10,
-            LOGIN_RESPONSE_PLEASE_TRY_AGAIN = 11,
-            LOGIN_RESPONSE_NEED_MEMBERS = 12,
-            LOGIN_RESPONSE_COULD_NOT_COMPLETE_LOGIN = 13,
-            LOGIN_RESPONSE_SERVER_BEING_UPDATED = 14,
-            LOGIN_RESPONSE_LOGIN_ATTEMPTS_EXCEEDED = 16,
-            LOGIN_RESPONSE_MEMBERS_ONLY_AREA = 17;
+        LOGIN_RESPONSE_INVALID_CREDENTIALS = 3,
+        LOGIN_RESPONSE_ACCOUNT_DISABLED = 4, LOGIN_RESPONSE_ACCOUNT_ONLINE = 5,
+        LOGIN_RESPONSE_UPDATED = 6, LOGIN_RESPONSE_WORLD_FULL = 7,
+        LOGIN_RESPONSE_LOGIN_SERVER_OFFLINE = 8,
+        LOGIN_RESPONSE_LOGIN_LIMIT_EXCEEDED = 9,
+        LOGIN_RESPONSE_BAD_SESSION_ID = 10,
+        LOGIN_RESPONSE_PLEASE_TRY_AGAIN = 11, LOGIN_RESPONSE_NEED_MEMBERS = 12,
+        LOGIN_RESPONSE_COULD_NOT_COMPLETE_LOGIN = 13,
+        LOGIN_RESPONSE_SERVER_BEING_UPDATED = 14,
+        LOGIN_RESPONSE_LOGIN_ATTEMPTS_EXCEEDED = 16,
+        LOGIN_RESPONSE_MEMBERS_ONLY_AREA = 17;
 
     /** The equipment slots. */
     public static final int EQUIPMENT_SLOT_HEAD = 0, EQUIPMENT_SLOT_CAPE = 1,
-            EQUIPMENT_SLOT_AMULET = 2, EQUIPMENT_SLOT_WEAPON = 3,
-            EQUIPMENT_SLOT_CHEST = 4, EQUIPMENT_SLOT_SHIELD = 5,
-            EQUIPMENT_SLOT_LEGS = 7, EQUIPMENT_SLOT_HANDS = 9,
-            EQUIPMENT_SLOT_FEET = 10, EQUIPMENT_SLOT_RING = 12,
-            EQUIPMENT_SLOT_ARROWS = 13;
+        EQUIPMENT_SLOT_AMULET = 2, EQUIPMENT_SLOT_WEAPON = 3,
+        EQUIPMENT_SLOT_CHEST = 4, EQUIPMENT_SLOT_SHIELD = 5,
+        EQUIPMENT_SLOT_LEGS = 7, EQUIPMENT_SLOT_HANDS = 9,
+        EQUIPMENT_SLOT_FEET = 10, EQUIPMENT_SLOT_RING = 12,
+        EQUIPMENT_SLOT_ARROWS = 13;
 
     /** The appearance slots. */
     public static final int APPEARANCE_SLOT_CHEST = 0,
-            APPEARANCE_SLOT_ARMS = 1, APPEARANCE_SLOT_LEGS = 2,
-            APPEARANCE_SLOT_HEAD = 3, APPEARANCE_SLOT_HANDS = 4,
-            APPEARANCE_SLOT_FEET = 5, APPEARANCE_SLOT_BEARD = 6;
+        APPEARANCE_SLOT_ARMS = 1, APPEARANCE_SLOT_LEGS = 2,
+        APPEARANCE_SLOT_HEAD = 3, APPEARANCE_SLOT_HANDS = 4,
+        APPEARANCE_SLOT_FEET = 5, APPEARANCE_SLOT_BEARD = 6;
 
     /** The bonus id's. */
     public static final int ATTACK_STAB = 0, ATTACK_SLASH = 1,
-            ATTACK_CRUSH = 2, ATTACK_MAGIC = 3, ATTACK_RANGE = 4,
-            DEFENCE_STAB = 5, DEFENCE_SLASH = 6, DEFENCE_CRUSH = 7,
-            DEFENCE_MAGIC = 8, DEFENCE_RANGE = 9, BONUS_STRENGTH = 10,
-            BONUS_PRAYER = 11;
+        ATTACK_CRUSH = 2, ATTACK_MAGIC = 3, ATTACK_RANGE = 4, DEFENCE_STAB = 5,
+        DEFENCE_SLASH = 6, DEFENCE_CRUSH = 7, DEFENCE_MAGIC = 8,
+        DEFENCE_RANGE = 9, BONUS_STRENGTH = 10, BONUS_PRAYER = 11;
 
     /** The gender id's. */
     public static final int GENDER_MALE = 0, GENDER_FEMALE = 1;
@@ -154,13 +148,6 @@ public final class Utility {
      * @return The pseudo-random {@code int}.
      * @throws IllegalArgumentException
      *             If the specified range is less <tt>0</tt>
-     * 
-     *             <p>
-     *             We use {@link ThreadLocalRandom#current()} to produce this
-     *             random {@code int}, it is faster than a standard
-     *             {@link Random} instance as we do not have to wait on
-     *             {@code AtomicLong}.
-     *             </p>
      */
     public static int exclusiveRandom(int min, int max) {
         if (max <= min) {
@@ -182,13 +169,6 @@ public final class Utility {
      * @return The pseudo-random {@code int}.
      * @throws IllegalArgumentException
      *             If the specified range is less <tt>0</tt>
-     * 
-     *             <p>
-     *             We use {@link ThreadLocalRandom#current()} to produce this
-     *             random {@code int}, it is faster than a standard
-     *             {@link Random} instance as we do not have to wait on
-     *             {@code AtomicLong}.
-     *             </p>
      */
     public static int exclusiveRandom(int range) {
         return exclusiveRandom(0, range);
@@ -267,13 +247,6 @@ public final class Utility {
      * @return The pseudo-random {@code float}.
      * @throws IllegalArgumentException
      *             If the specified range is less than <tt>0</tt>
-     * 
-     *             <p>
-     *             We use {@link ThreadLocalRandom#current()} to produce this
-     *             random {@code float}, it is faster than a standard
-     *             {@link Random} instance as we do not have to wait on
-     *             {@code AtomicLong}.
-     *             </p>
      */
     public static float random(float range) {
         if (range < 0F) {
@@ -404,8 +377,8 @@ public final class Utility {
      * @return the capitalized string.
      */
     public static String capitalize(String s) {
-        return s.substring(0, 1).toUpperCase()
-                .concat(s.substring(1, s.length()));
+        return s.substring(0, 1).toUpperCase().concat(
+            s.substring(1, s.length()));
     }
 
     /**
@@ -485,6 +458,23 @@ public final class Utility {
     }
 
     /**
+     * Writes the argued Object to a Json file.
+     * 
+     * @param path
+     *            the path to the Json file.
+     * @param obj
+     *            the Object to write to the file.
+     * @throws IOException
+     *             if any errors occur while writing the object.
+     */
+    public static void putJson(String path, Object obj) throws IOException {
+        try (FileWriter w = new FileWriter(new File(path))) {
+            Gson g = new GsonBuilder().setPrettyPrinting().create();
+            w.write(g.toJson(obj));
+        }
+    }
+
+    /**
      * Deletes character files out of the specified directory.
      * 
      * @author lare96
@@ -502,7 +492,7 @@ public final class Utility {
         public static void main(String[] args) {
             int count = 0;
             Logger l = Logger.getLogger(DeleteCharacterFiles.class
-                    .getSimpleName());
+                .getSimpleName());
             l.info("Starting with data " + DIRECTORY + ":" + STARTING_WITH);
 
             try {
@@ -512,8 +502,8 @@ public final class Utility {
                 // Loop through all of the files and delete them.
                 for (File child : files) {
                     if (child == null || !child.isFile() || child.isHidden() || !child
-                            .getName().toLowerCase()
-                            .startsWith(STARTING_WITH.toLowerCase())) {
+                        .getName().toLowerCase().startsWith(
+                            STARTING_WITH.toLowerCase())) {
                         continue;
                     }
                     child.delete();
@@ -546,14 +536,14 @@ public final class Utility {
                 PublicKey publicKey = keypair.getPublic();
 
                 RSAPrivateKeySpec privSpec = factory.getKeySpec(privateKey,
-                        RSAPrivateKeySpec.class);
+                    RSAPrivateKeySpec.class);
                 writeKey("./data/rsa/rsa_private.txt", privSpec.getModulus(),
-                        privSpec.getPrivateExponent());
+                    privSpec.getPrivateExponent());
 
                 RSAPublicKeySpec pubSpec = factory.getKeySpec(publicKey,
-                        RSAPublicKeySpec.class);
+                    RSAPublicKeySpec.class);
                 writeKey("./data/rsa/rsa_public.txt", pubSpec.getModulus(),
-                        pubSpec.getPublicExponent());
+                    pubSpec.getPublicExponent());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -561,14 +551,16 @@ public final class Utility {
 
         /** Writes the actual key to a file. */
         private static void writeKey(String file, BigInteger modulus,
-                BigInteger exponent) {
-            try (BufferedWriter writer = new BufferedWriter(
-                    new FileWriter(file))) {
-                writer.write("private static final BigInteger RSA_MODULUS = new BigInteger(\"" + modulus
+            BigInteger exponent) {
+            try (
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer
+                    .write("private static final BigInteger RSA_MODULUS = new BigInteger(\"" + modulus
                         .toString() + "\");");
                 writer.newLine();
                 writer.newLine();
-                writer.write("private static final BigInteger RSA_EXPONENT = new BigInteger(\"" + exponent
+                writer
+                    .write("private static final BigInteger RSA_EXPONENT = new BigInteger(\"" + exponent
                         .toString() + "\");");
                 writer.newLine();
             } catch (Exception e) {

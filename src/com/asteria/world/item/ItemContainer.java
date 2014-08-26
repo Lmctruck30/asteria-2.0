@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.Optional;
 
 import com.asteria.world.entity.player.Player;
 
@@ -419,10 +420,9 @@ public class ItemContainer extends AbstractCollection<Item> {
      * @return the first item found in this container with the argued item ID,
      *         or <code>null</code> if no item was found.
      */
-    public Item getItem(int itemId) {
+    public Optional<Item> getItem(int itemId) {
         return Arrays.stream(items).filter(
-            item -> item != null && itemId == item.getId()).findFirst().orElse(
-            null);
+            item -> item != null && itemId == item.getId()).findFirst();
     }
 
     /**

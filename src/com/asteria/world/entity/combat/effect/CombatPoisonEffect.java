@@ -2,6 +2,7 @@ package com.asteria.world.entity.combat.effect;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import com.asteria.engine.task.Task;
 import com.asteria.util.Utility;
@@ -81,8 +82,8 @@ public class CombatPoisonEffect extends Task {
 
         // Deal the damage, then try and decrement the damage count.
         entity.dealDamage(new Hit(Utility.RANDOM.nextBoolean() ? entity
-                .getPoisonDamage() : entity.getAndDecrementPoisonDamage(),
-                HitType.POISON));
+            .getPoisonDamage() : entity.getAndDecrementPoisonDamage(),
+            HitType.POISON));
     }
 
     /**
@@ -95,8 +96,7 @@ public class CombatPoisonEffect extends Task {
 
         /** The map of all of the different weapons that poison. */
         // Increase the capacity of the map as more elements are added.
-        private static final Map<Integer, PoisonType> types = new HashMap<>(
-                150);
+        private static final Map<Integer, PoisonType> types = new HashMap<>(150);
 
         /** Load all of the poison data. */
         public static void loadPoisonData() {
@@ -209,8 +209,8 @@ public class CombatPoisonEffect extends Task {
          * @return the poison type of the specified item, or <code>null</code>
          *         if the item is not able to poison the victim.
          */
-        public static PoisonType getPoisonType(Item item) {
-            return item == null ? null : types.get(item.getId());
+        public static Optional<PoisonType> getPoisonType(Item item) {
+            return Optional.ofNullable(types.get(item.getId()));
         }
 
         /** Default private constructor. */

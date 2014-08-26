@@ -90,39 +90,39 @@ public class NpcDefinition {
                 definitions[index].setId(index);
                 definitions[index].setName(reader.get("name").getAsString());
                 definitions[index].setExamine(reader.get("examine")
-                        .getAsString());
+                    .getAsString());
                 definitions[index].setCombatLevel(reader.get("combat")
-                        .getAsInt());
+                    .getAsInt());
                 definitions[index].setNpcSize(reader.get("size").getAsInt());
                 definitions[index].setAttackable(reader.get("attackable")
-                        .getAsBoolean());
+                    .getAsBoolean());
                 definitions[index].setAggressive(reader.get("aggressive")
-                        .getAsBoolean());
+                    .getAsBoolean());
                 definitions[index].setRetreats(reader.get("retreats")
-                        .getAsBoolean());
+                    .getAsBoolean());
                 definitions[index].setPoisonous(reader.get("poisonous")
-                        .getAsBoolean());
+                    .getAsBoolean());
                 definitions[index].setRespawnTime(reader.get("respawn")
-                        .getAsInt());
+                    .getAsInt());
                 definitions[index].setMaxHit(reader.get("maxHit").getAsInt());
                 definitions[index].setHitpoints(reader.get("hitpoints")
-                        .getAsInt());
+                    .getAsInt());
                 definitions[index].setAttackSpeed(reader.get("attackSpeed")
-                        .getAsInt());
+                    .getAsInt());
                 definitions[index].setAttackAnimation(reader.get("attackAnim")
-                        .getAsInt());
+                    .getAsInt());
                 definitions[index].setDefenceAnimation(reader
-                        .get("defenceAnim").getAsInt());
+                    .get("defenceAnim").getAsInt());
                 definitions[index].setDeathAnimation(reader.get("deathAnim")
-                        .getAsInt());
+                    .getAsInt());
                 definitions[index].setAttackBonus(reader.get("attackBonus")
-                        .getAsInt());
+                    .getAsInt());
                 definitions[index].setDefenceMelee(reader.get("defenceMelee")
-                        .getAsInt());
+                    .getAsInt());
                 definitions[index].setDefenceRange(reader.get("defenceRange")
-                        .getAsInt());
+                    .getAsInt());
                 definitions[index].setDefenceMage(reader.get("defenceMage")
-                        .getAsInt());
+                    .getAsInt());
             }
 
             @Override
@@ -222,7 +222,7 @@ public class NpcDefinition {
      * 
      * @return the npc size.
      */
-    public int getNpcSize() {
+    public int getSize() {
         return size;
     }
 

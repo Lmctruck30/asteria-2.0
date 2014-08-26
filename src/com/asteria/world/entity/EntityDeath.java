@@ -56,7 +56,7 @@ public abstract class EntityDeath<T extends Entity> extends Task {
     @Override
     public void execute() {
         switch (ticks) {
-        
+
         // Npc has just died so flag them, reset poison, and reset movement.
         case 0:
             entity.setDead(true);

@@ -12,11 +12,12 @@ import com.asteria.world.entity.combat.CombatFactory;
 import com.asteria.world.entity.combat.CombatFactory.CombatType;
 import com.asteria.world.entity.combat.CombatStrategy;
 import com.asteria.world.entity.combat.range.CombatRangedAmmo;
+import com.asteria.world.entity.combat.weapon.FightStyle;
+import com.asteria.world.entity.combat.weapon.FightType;
 import com.asteria.world.entity.npc.Npc;
 import com.asteria.world.entity.player.Player;
-import com.asteria.world.entity.player.content.AssignWeaponInterface;
-import com.asteria.world.entity.player.content.AssignWeaponInterface.FightStyle;
-import com.asteria.world.entity.player.content.AssignWeaponInterface.WeaponInterface;
+import com.asteria.world.entity.player.content.WeaponInterfaces;
+import com.asteria.world.entity.player.content.WeaponInterfaces.WeaponInterface;
 import com.asteria.world.item.Item;
 
 /**
@@ -84,7 +85,8 @@ public class DefaultRangedCombatStrategy implements CombatStrategy {
         }
 
         // Then send the projectiles.
-        CombatRangedAmmo ammo = CombatRangedAmmo.getPlayerAmmo(player);
+        CombatRangedAmmo ammo = CombatRangedAmmo.getPlayerAmmo(player).orElse(
+            CombatRangedAmmo.BRONZE_ARROW);
         player.setRangedAmmo(ammo);
 
         if (!player.isSpecialActivated()) {
@@ -242,8 +244,8 @@ public class DefaultRangedCombatStrategy implements CombatStrategy {
             player.getEquipment().set(slot, null);
 
             if (slot == Utility.EQUIPMENT_SLOT_WEAPON) {
-                AssignWeaponInterface.assignInterface(player, null);
-                AssignWeaponInterface.changeFightType(player);
+                WeaponInterfaces.assign(player, null);
+                FightType.assign(player);
             }
         }
 

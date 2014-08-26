@@ -3,26 +3,26 @@ package com.asteria.util;
 import java.util.concurrent.TimeUnit;
 
 /**
- * A simple timing utility used to throttle or time actions.
+ * A simple timing utility used to throttle or time actions. This class has been
+ * altered to use <code>NANOSECONDS</code> for extremely accurate timing.
  * 
- * @author blakeman8192
  * @author lare96
  */
-public class Stopwatch {
+public final class Stopwatch {
 
     /** The internal cached time for this stopwatch. */
-    private long time = System.currentTimeMillis();
+    private long time = getTime();
 
     /**
      * Resets the internal cached time, but instead of resetting it to
-     * <tt>0</tt> it resets it to start at <code>startAt</code>.
+     * <tt>0</tt> it resets it to start at <code>start</code>.
      * 
-     * @param startAt
+     * @param start
      *            the time to start this stopwatch at.
      * @return the stopwatch instance.
      */
-    public Stopwatch reset(long startAt) {
-        time = System.currentTimeMillis() - startAt;
+    public Stopwatch reset(long start) {
+        time = getTime() - start;
         return this;
     }
 
@@ -32,7 +32,7 @@ public class Stopwatch {
      * @return the stopwatch instance.
      */
     public Stopwatch reset() {
-        time = System.currentTimeMillis();
+        time = getTime();
         return this;
     }
 
@@ -43,7 +43,7 @@ public class Stopwatch {
      * @return the elapsed time in <code>MILLISECONDS</code>.
      */
     public long elapsed() {
-        return System.currentTimeMillis() - time;
+        return getTime() - time;
     }
 
     /**
@@ -57,6 +57,20 @@ public class Stopwatch {
      * @return the elapsed time in <code>unit</code>.
      */
     public long elapsed(TimeUnit unit) {
+        if (unit == TimeUnit.MILLISECONDS)
+            throw new IllegalArgumentException(
+                "Time is already in milliseconds!");
         return unit.convert(elapsed(), TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * Gets the current time using <code>System.nanoTime()</code> and converts
+     * it to <code>MILLISECONDS</code>.
+     * 
+     * @return the current time, in milliseconds.
+     */
+    private long getTime() {
+        return TimeUnit.MILLISECONDS.convert(System.nanoTime(),
+            TimeUnit.NANOSECONDS);
     }
 }

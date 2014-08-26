@@ -49,6 +49,7 @@ public class NpcDialogueAction implements DialogueAction {
 
     @Override
     public void accept(Dialogue dialogue) {
-        Dialogue.sendNpcDialogue(dialogue.getPlayer(), expression, npcId, lines);
+        Dialogue
+            .sendNpcDialogue(dialogue.getPlayer(), expression, npcId, lines);
     }
 }

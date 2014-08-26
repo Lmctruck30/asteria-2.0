@@ -15,8 +15,7 @@ import com.asteria.world.entity.player.Player;
 public class Dialogue {
 
     /** An integer representing the maximum dialogue length for a single line. */
-    public static final int MAXIMUM_DIALOGUE_LENGTH = "The fox jumped over the fence and ran into the lake."
-        .length();
+    public static final int MAXIMUM_LENGTH = "The fox jumped over the fence and ran into the lake.".length();
 
     /** The player this dialogue is being displayed for. */
     private Player player;
@@ -226,16 +225,17 @@ public class Dialogue {
     /**
      * Validates the lengths of all of the argued string Objects. An
      * {@link IllegalArgumentException} will be thrown if the text does not pass
-     * the validation.
+     * the validation, or in other words if the text is longer than
+     * {@link #MAXIMUM_LENGTH}.
      * 
      * @param text
      *            the dialogue text to validate.
      */
     private static void validateLength(String... text) {
         if (Arrays.stream(text).filter(Objects::nonNull).anyMatch(
-            s -> s.length() < 0 || s.length() > MAXIMUM_DIALOGUE_LENGTH)) {
+            s -> s.length() < 0 || s.length() > MAXIMUM_LENGTH)) {
             throw new IllegalStateException(
-                "Dialogue length too long, maximum length is: " + MAXIMUM_DIALOGUE_LENGTH);
+                "Dialogue length too long, maximum length is: " + MAXIMUM_LENGTH);
         }
     }
 

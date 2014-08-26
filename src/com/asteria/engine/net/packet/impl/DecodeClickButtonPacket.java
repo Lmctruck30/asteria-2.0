@@ -1,5 +1,6 @@
 package com.asteria.engine.net.packet.impl;
 
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import com.asteria.Main;
@@ -11,13 +12,13 @@ import com.asteria.engine.task.TaskManager;
 import com.asteria.util.Utility;
 import com.asteria.world.entity.combat.magic.CombatSpells;
 import com.asteria.world.entity.combat.prayer.CombatPrayer;
+import com.asteria.world.entity.combat.weapon.FightType;
 import com.asteria.world.entity.player.Player;
-import com.asteria.world.entity.player.content.AssignWeaponInterface.FightType;
-import com.asteria.world.entity.player.content.AssignWeaponInterface.WeaponInterface;
 import com.asteria.world.entity.player.content.Spellbook;
 import com.asteria.world.entity.player.content.TradeSession.TradeStage;
+import com.asteria.world.entity.player.content.WeaponInterfaces.WeaponInterface;
 import com.asteria.world.entity.player.minigame.Minigame;
-import com.asteria.world.entity.player.minigame.MinigameFactory;
+import com.asteria.world.entity.player.minigame.Minigames;
 import com.asteria.world.map.Position;
 
 /**
@@ -35,7 +36,7 @@ public class DecodeClickButtonPacket extends PacketDecoder {
         .getLogger(DecodeClickButtonPacket.class.getSimpleName());
 
     @Override
-    public void decode(final Player player, ProtocolBuffer buf) {
+    public void decode(Player player, ProtocolBuffer buf) {
         int buttonId = Utility.hexToInt(buf.readBytes(2));
 
         switch (buttonId) {
@@ -222,11 +223,10 @@ public class DecodeClickButtonPacket extends PacketDecoder {
             break;
 
         case 9154:
-            for (Minigame minigame : MinigameFactory.getMinigames().values()) {
-                if (minigame.inMinigame(player)) {
-                    if (!minigame.canFormalLogout(player)) {
-                        return;
-                    }
+            Optional<Minigame> optional = Minigames.get(player);
+            if (optional.isPresent()) {
+                if (!optional.get().canFormalLogout(player)) {
+                    return;
                 }
             }
 

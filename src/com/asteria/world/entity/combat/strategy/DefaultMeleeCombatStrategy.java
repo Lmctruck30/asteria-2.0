@@ -7,10 +7,10 @@ import com.asteria.world.entity.Entity.EntityType;
 import com.asteria.world.entity.combat.CombatContainer;
 import com.asteria.world.entity.combat.CombatFactory.CombatType;
 import com.asteria.world.entity.combat.CombatStrategy;
+import com.asteria.world.entity.combat.weapon.FightType;
 import com.asteria.world.entity.npc.Npc;
 import com.asteria.world.entity.player.Player;
-import com.asteria.world.entity.player.content.AssignWeaponInterface.FightType;
-import com.asteria.world.entity.player.content.AssignWeaponInterface.WeaponInterface;
+import com.asteria.world.entity.player.content.WeaponInterfaces.WeaponInterface;
 import com.asteria.world.item.Item;
 
 /**
@@ -73,45 +73,45 @@ public class DefaultMeleeCombatStrategy implements CombatStrategy {
         if (entity.type() == EntityType.NPC) {
             Npc npc = (Npc) entity;
             npc.animation(new Animation(npc.getDefinition()
-                    .getAttackAnimation()));
+                .getAttackAnimation()));
         } else if (entity.type() == EntityType.PLAYER) {
             Player player = (Player) entity;
             Item item = player.getEquipment()
-                    .get(Utility.EQUIPMENT_SLOT_WEAPON);
+                .get(Utility.EQUIPMENT_SLOT_WEAPON);
 
             if (!player.isSpecialActivated() && item != null) {
-                if (item.getDefinition().getItemName()
-                        .startsWith("Dragon dagger")) {
+                if (item.getDefinition().getItemName().startsWith(
+                    "Dragon dagger")) {
                     player.animation(new Animation(402));
-                } else if (item.getDefinition().getItemName()
-                        .startsWith("Dharoks")) {
+                } else if (item.getDefinition().getItemName().startsWith(
+                    "Dharoks")) {
                     if (player.getFightType() == FightType.BATTLEAXE_SMASH) {
                         player.animation(new Animation(2067));
                     } else {
                         player.animation(new Animation(2066));
                     }
-                } else if (item.getDefinition().getItemName()
-                        .equals("Granite maul")) {
+                } else if (item.getDefinition().getItemName().equals(
+                    "Granite maul")) {
                     player.animation(new Animation(1665));
-                } else if (item.getDefinition().getItemName()
-                        .equals("Tzhaar-ket-om")) {
+                } else if (item.getDefinition().getItemName().equals(
+                    "Tzhaar-ket-om")) {
                     player.animation(new Animation(2661));
                 } else if (item.getDefinition().getItemName().endsWith("wand")) {
                     player.animation(new Animation(FightType.UNARMED_KICK
-                            .getAnimation()));
-                } else if (item.getDefinition().getItemName()
-                        .startsWith("Torags")) {
+                        .getAnimation()));
+                } else if (item.getDefinition().getItemName().startsWith(
+                    "Torags")) {
                     player.animation(new Animation(2068));
-                } else if (item.getDefinition().getItemName()
-                        .startsWith("Veracs")) {
+                } else if (item.getDefinition().getItemName().startsWith(
+                    "Veracs")) {
                     player.animation(new Animation(2062));
                 } else {
                     player.animation(new Animation(player.getFightType()
-                            .getAnimation()));
+                        .getAnimation()));
                 }
             } else {
                 player.animation(new Animation(player.getFightType()
-                        .getAnimation()));
+                    .getAnimation()));
             }
         }
     }

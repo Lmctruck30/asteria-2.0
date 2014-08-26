@@ -1,7 +1,7 @@
 package com.asteria.world.entity.player.content;
 
 import com.asteria.world.entity.player.Player;
-import com.asteria.world.entity.player.content.AssignWeaponInterface.WeaponInterface;
+import com.asteria.world.entity.player.content.WeaponInterfaces.WeaponInterface;
 import com.asteria.world.item.Item;
 
 /**
@@ -55,7 +55,7 @@ public enum PlayerMagicStaff {
                     for (int id : m.runes) {
                         for (int i = 0; i < runesRequired.length; i++) {
                             if (runesRequired[i] != null && runesRequired[i]
-                                    .getId() == id) {
+                                .getId() == id) {
                                 runesRequired[i] = null;
                             }
                         }

@@ -80,8 +80,8 @@ public class GroundItem {
             }
             break;
         case SEEN_BY_OWNER:
-            World.getPlayerByHash(player.getUsernameHash()).getPacketBuilder()
-                .sendRemoveGroundItem(this);
+            World.getPlayerByHash(player.getUsernameHash()).ifPresent(
+                p -> p.getPacketBuilder().sendRemoveGroundItem(this));
             break;
         default:
             throw new IllegalStateException(

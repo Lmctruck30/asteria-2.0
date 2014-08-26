@@ -36,11 +36,11 @@ public class Npc extends Entity {
 
     /** Determines if this npc's stats have been weakened. */
     private boolean[] attackWeakened = new boolean[3],
-            strengthWeakened = new boolean[3];
+        strengthWeakened = new boolean[3];
 
     /** The movement coordinator for this npc. */
     private NpcMovementCoordinator movementCoordinator = new NpcMovementCoordinator(
-            this);
+        this);
 
     /** The npc's position from the moment of conception. */
     private final Position originalPosition;
@@ -76,13 +76,6 @@ public class Npc extends Entity {
         }
         currentHealth -= hit.getDamage();
         return hit;
-    }
-
-    @Override
-    public void preUpdate() throws Exception {
-        NpcAggression.target(this);
-        movementCoordinator.coordinate();
-        getMovementQueue().execute();
     }
 
     @Override
@@ -157,9 +150,11 @@ public class Npc extends Entity {
     @Override
     public void poisonVictim(Entity victim, CombatType type) {
         if (getDefinition().isPoisonous()) {
-            CombatFactory.poisonEntity(victim,type == CombatType.RANGED
-                    || type == CombatType.MAGIC ? PoisonType.MILD
-                                    : PoisonType.EXTRA);
+            CombatFactory
+                .poisonEntity(
+                    victim,
+                    type == CombatType.RANGED || type == CombatType.MAGIC ? PoisonType.MILD
+                        : PoisonType.EXTRA);
         }
     }
 
@@ -200,19 +195,17 @@ public class Npc extends Entity {
             public void load(JsonObject reader, Gson builder) {
                 int id = reader.get("npc-id").getAsInt();
                 Position position = builder.fromJson(reader.get("position")
-                        .getAsJsonObject(), Position.class);
-                Coordinator coordinator = builder.fromJson(
-                        reader.get("walking-policy").getAsJsonObject(),
-                        Coordinator.class);
-
+                    .getAsJsonObject(), Position.class);
+                Coordinator coordinator = builder.fromJson(reader.get(
+                    "walking-policy").getAsJsonObject(), Coordinator.class);
 
                 if (coordinator.isCoordinate() && coordinator.getRadius() == 0) {
                     throw new IllegalStateException(
-                            "Radius must be higher than 0 when coordinator is active!");
+                        "Radius must be higher than 0 when coordinator is active!");
                 } else if (!coordinator.isCoordinate() && coordinator
-                        .getRadius() > 0) {
+                    .getRadius() > 0) {
                     throw new IllegalStateException(
-                            "Radius must be 0 when coordinator is inactive!");
+                        "Radius must be 0 when coordinator is inactive!");
                 }
 
                 Npc npc = new Npc(id, position);
@@ -238,8 +231,7 @@ public class Npc extends Entity {
 
         // -1 because the task is scheduled 1 tick late.
         return ((getDefinition().getRespawnTime() - 1) <= 0 ? 1
-                : (getDefinition()
-                .getRespawnTime() - 1));
+            : (getDefinition().getRespawnTime() - 1));
     }
 
     /**

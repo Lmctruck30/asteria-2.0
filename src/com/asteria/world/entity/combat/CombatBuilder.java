@@ -3,10 +3,11 @@ package com.asteria.world.entity.combat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import com.asteria.engine.net.Session.Stage;
 import com.asteria.engine.task.TaskManager;
-import com.asteria.engine.task.listener.EventListener;
+import com.asteria.engine.task.listener.ActionListener;
 import com.asteria.util.Stopwatch;
 import com.asteria.world.entity.Entity;
 import com.asteria.world.entity.Entity.EntityType;
@@ -135,11 +136,11 @@ public class CombatBuilder {
      * @return the player who killed this entity, or <code>null</code> if an npc
      *         or something else killed this entity.
      */
-    public Player getKiller(boolean clearMap) {
+    public Optional<Player> getKiller(boolean clearMap) {
 
         // Return null if no players killed this entity.
         if (damageMap.size() == 0) {
-            return null;
+            return Optional.empty();
         }
 
         // The damage and killer placeholders.
@@ -164,7 +165,7 @@ public class CombatBuilder {
             // out.
             Player player = entry.getKey();
             if (player.isDead() || !player.getPosition().withinDistance(
-                    entity.getPosition(), 25) || player.getSession().getStage() != Stage.LOGGED_IN) {
+                entity.getPosition(), 25) || player.getSession().getStage() != Stage.LOGGED_IN) {
                 continue;
             }
 
@@ -181,7 +182,7 @@ public class CombatBuilder {
             damageMap.clear();
 
         // Return the killer placeholder.
-        return killer;
+        return Optional.ofNullable(killer);
     }
 
     /**
@@ -366,12 +367,12 @@ public class CombatBuilder {
     }
 
     /**
-     * An {@link EventListener} implementation that is used to listen for the
+     * An {@link ActionListener} implementation that is used to listen for the
      * player to become in proper range of the victim.
      * 
      * @author lare96
      */
-    private static class CombatDistanceListener extends EventListener {
+    private static class CombatDistanceListener extends ActionListener {
 
         /** The combat builder. */
         private CombatBuilder builder;
@@ -394,7 +395,7 @@ public class CombatBuilder {
         }
 
         @Override
-        public boolean listenFor() {
+        public boolean listenWhile() {
 
             // Redetermine the strategy while we're walking to the victim, just
             // in case the entity activates some sort of special effect or
@@ -404,7 +405,7 @@ public class CombatBuilder {
             // Stop if we reset the cooldown, or the victim becomes too out of
             // range.
             if (builder.isCooldown() || !builder.entity.getPosition()
-                    .isViewableFrom(victim.getPosition())) {
+                .isViewableFrom(victim.getPosition())) {
 
                 builder.reset();
                 this.cancel();
@@ -416,8 +417,8 @@ public class CombatBuilder {
                 Npc npc = (Npc) builder.entity;
 
                 if (!npc.getPosition()
-                        .isViewableFrom(npc.getOriginalPosition()) && npc
-                        .getDefinition().isRetreats()) {
+                    .isViewableFrom(npc.getOriginalPosition()) && npc
+                    .getDefinition().isRetreats()) {
                     npc.getMovementQueue().walk(npc.getOriginalPosition());
                     builder.reset();
                     this.cancel();
@@ -428,11 +429,10 @@ public class CombatBuilder {
             // Reset the attack timer so we can attack straight away.
             builder.attackTimer = 0;
 
-
             // Start combat if we are in the correct distance.
             return !builder.entity.getPosition().withinDistance(
-                    victim.getPosition(),
-                    builder.strategy.attackDistance(builder.getEntity()));
+                victim.getPosition(),
+                builder.strategy.attackDistance(builder.getEntity()));
         }
 
         @Override
@@ -446,7 +446,7 @@ public class CombatBuilder {
 
             // Start a new combat task if needed.
             if (builder.getCombatTask() == null || !builder.getCombatTask()
-                    .isRunning()) {
+                .isRunning()) {
                 builder.setCombatTask(new CombatHookTask(builder));
                 TaskManager.submit(builder.getCombatTask());
             }

@@ -1,19 +1,17 @@
 package com.asteria.world;
 
-import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.Phaser;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import com.asteria.engine.GameEngine;
-import com.asteria.engine.ThreadPoolFactory;
-import com.asteria.engine.ThreadPoolFactory.BlockingThreadPool;
+import com.asteria.engine.ThreadPoolBuilder;
+import com.asteria.engine.ThreadPoolBuilder.BlockingThreadPool;
 import com.asteria.engine.net.Session.Stage;
 import com.asteria.world.entity.EntityContainer;
 import com.asteria.world.entity.npc.Npc;
-import com.asteria.world.entity.npc.NpcUpdating;
 import com.asteria.world.entity.player.Player;
 import com.asteria.world.entity.player.PlayerFileTask.WritePlayerFileTask;
-import com.asteria.world.entity.player.PlayerUpdating;
 
 /**
  * Updates all in-game entities, and also contains utility methods to manage
@@ -30,16 +28,16 @@ public final class World {
     /** All of the registered NPCs. */
     private static final EntityContainer<Npc> npcs = new EntityContainer<>(1500);
 
-    /** The synchronizer that will block until updating is completed. */
+    /** Used to block the game thread until updating is completed. */
     private static final Phaser synchronizer = new Phaser(1);
 
     /** A thread pool that will update players in parallel. */
-    private static final ThreadPoolExecutor updateExecutor = ThreadPoolFactory
-        .createThreadPool("Update-Thread", Runtime.getRuntime()
+    private static final ThreadPoolExecutor updateExecutor = ThreadPoolBuilder
+        .build("Update-Thread", Runtime.getRuntime()
             .availableProcessors(), Thread.MAX_PRIORITY, 5);
 
     /**
-     * The method that executes code for all in-game entities every <tt>600</tt>
+     * The method that executes code for all in game entities every <tt>600</tt>
      * ms. Updating is parallelized using the {@link #updateExecutor} to execute
      * the code concurrently and the {@link #synchronizer} to block the game
      * thread until it's finished.
@@ -47,105 +45,25 @@ public final class World {
     public static void tick() {
         try {
 
-            // Perform any general processing for players.
-            for (Player player : players) {
-                if (player == null) {
-                    continue;
-                }
+            // First we construct the update sequences.
+            WorldUpdateSequence<Player> playerUpdate = new PlayerUpdateSequence(synchronizer, updateExecutor);
+            WorldUpdateSequence<Npc> npcUpdate = new NpcUpdateSequence();
 
-                try {
-                    player.preUpdate();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    player.getSession().disconnect();
-                }
-            }
+            // Then we execute pre-updating code.
+            players.forEach(playerUpdate::executePreUpdate);
+            npcs.forEach(npcUpdate::executePreUpdate);
 
-            // Perform any general processing for npcs.
-            for (Npc npc : npcs) {
-                if (npc == null) {
-                    continue;
-                }
-
-                try {
-                    npc.preUpdate();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    npcs.remove(npc);
-                }
-            }
-
-            // Perform updating for players in parallel using the updateExecutor
-            // and synchronizer.
-            synchronizer.bulkRegister(players.getSize());
-
-            for (final Player player : players) {
-                if (player == null) {
-                    continue;
-                }
-
-                updateExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        // Put a concurrent lock on the player we are currently
-                        // updating, so only one thread in the pool can access
-                        // this player at a time.
-                        synchronized (player) {
-
-                            // Now we actually update the player.
-                            try {
-                                PlayerUpdating.update(player);
-                                NpcUpdating.update(player);
-
-                                // Handle any errors with the player.
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                                player.getSession().disconnect();
-
-                                // Arrive at the phaser regardless if there was
-                                // an error or not.
-                            } finally {
-                                synchronizer.arriveAndDeregister();
-                            }
-                        }
-                    }
-                });
-            }
-
-            // Wait here until updating is complete
+            // Then we execute parallelized updating code.
+            synchronizer.bulkRegister(players.size());
+            players.forEach(playerUpdate::executeUpdate);
             synchronizer.arriveAndAwaitAdvance();
 
-            // Reset all players and prepare them for the next cycle.
-            for (Player player : players) {
-                if (player == null) {
-                    continue;
-                }
-
-                try {
-                    player.postUpdate();
-                    player.setCachedUpdateBlock(null);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    player.getSession().disconnect();
-                }
-            }
-
-            // Reset all npcs and prepare them for the next cycle.
-            for (Npc npc : npcs) {
-                if (npc == null) {
-                    continue;
-                }
-
-                try {
-                    npc.postUpdate();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    npcs.remove(npc);
-                }
-            }
+            // Then we execute post-updating code.
+            players.forEach(playerUpdate::executePostUpdate);
+            npcs.forEach(npcUpdate::executePostUpdate);
         } catch (Exception e) {
             e.printStackTrace();
+            savePlayers();
         }
     }
 
@@ -158,10 +76,8 @@ public final class World {
      * @return The <code>Player</code> object representing the player or
      *         {@code null} if no such player exists.
      */
-    public static Player getPlayerByHash(long hash) {
-        return players.stream().filter(
-            p -> p != null && p.getUsernameHash() == hash).findFirst().orElse(
-            null);
+    public static Optional<Player> getPlayerByHash(long hash) {
+        return players.search(p -> p != null && p.getUsernameHash() == hash);
     }
 
     /**
@@ -173,10 +89,9 @@ public final class World {
      * @return The <code>Player</code> object representing the player or
      *         {@code null} if no such player exists.
      */
-    public static Player getPlayerByName(String username) {
-        return players.stream().filter(
-            p -> p != null && p.getUsername().equals(username)).findFirst()
-            .orElse(null);
+    public static Optional<Player> getPlayerByName(String username) {
+        return players.search(p -> p != null && p.getUsername()
+            .equals(username));
     }
 
     /**
@@ -186,13 +101,12 @@ public final class World {
      *            the message to send that will be sent to everyone online.
      */
     public void sendMessage(String message) {
-        players.stream().filter(Objects::nonNull).forEach(
-            p -> p.getPacketBuilder().sendMessage(message));
+        players.forEach(p -> p.getPacketBuilder().sendMessage(message));
     }
 
     /** Saves the game for all players that are currently online. */
     public static void savePlayers() {
-        players.stream().filter(Objects::nonNull).forEach(p -> savePlayer(p));
+        players.forEach(World::savePlayer);
     }
 
     /** Performs a series of operations that shut the entire server down. */
@@ -202,8 +116,7 @@ public final class World {
             // First save all players, we block the calling thread until all
             // players are saved.
             BlockingThreadPool pool = new BlockingThreadPool();
-            players.stream().filter(Objects::nonNull).forEach(
-                p -> pool.append(new WritePlayerFileTask(p)));
+            players.forEach(p -> pool.append(new WritePlayerFileTask(p)));
             pool.fireAndAwait();
 
             // Terminate any thread pools.

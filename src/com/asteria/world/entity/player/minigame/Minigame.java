@@ -13,8 +13,6 @@ import com.asteria.world.map.Position;
  */
 public abstract class Minigame {
 
-    // TODO: Add more functionality, rewrite documentation, less redundancy.
-
     /**
      * Fired when an {@link Player} logs in while in the minigame boundary.
      * 
@@ -40,33 +38,6 @@ public abstract class Minigame {
      * @return true if they are in the minigame.
      */
     public abstract boolean inMinigame(Player player);
-
-    /**
-     * The name of this minigame.
-     * 
-     * @return the name of this minigame.
-     */
-    public abstract String name();
-
-    /**
-     * Fired when an {@link Player} enters the minigame (or waiting room).
-     * 
-     * @param player
-     *            the player entering the minigame (or waiting room).
-     */
-    public void fireOnEnter(Player player) {
-
-    }
-
-    /**
-     * Fired when an {@link Player} exits the minigame (or waiting room).
-     * 
-     * @param player
-     *            the player entering the minigame (or waiting room).
-     */
-    public void fireOnExit(Player player) {
-
-    }
 
     /**
      * Fired when a {@link Player} dies within the minigame.

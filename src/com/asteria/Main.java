@@ -14,12 +14,12 @@ import com.asteria.world.entity.npc.Npc;
 import com.asteria.world.entity.npc.NpcAggression;
 import com.asteria.world.entity.npc.NpcDefinition;
 import com.asteria.world.entity.npc.NpcDropTable;
-import com.asteria.world.entity.player.content.AssignSkillRequirement;
-import com.asteria.world.entity.player.content.AssignWeaponAnimation;
-import com.asteria.world.entity.player.content.AssignWeaponInterface;
 import com.asteria.world.entity.player.content.RestoreStatTask;
-import com.asteria.world.entity.player.minigame.MinigameFactory;
-import com.asteria.world.entity.player.skill.SkillEvent;
+import com.asteria.world.entity.player.content.SkillRequirements;
+import com.asteria.world.entity.player.content.WeaponAnimations;
+import com.asteria.world.entity.player.content.WeaponInterfaces;
+import com.asteria.world.entity.player.minigame.Minigames;
+import com.asteria.world.entity.player.skill.Skills;
 import com.asteria.world.item.ItemDefinition;
 import com.asteria.world.item.ground.GroundItemManager;
 import com.asteria.world.object.WorldObjectManager;
@@ -33,12 +33,11 @@ import com.asteria.world.shop.Shop;
 public final class Main {
 
     /** The logger for printing information. */
-    private static Logger logger = Logger.getLogger(Main.class
-        .getSimpleName());
+    private static Logger logger = Logger.getLogger(Main.class.getSimpleName());
 
     /** The name of this server. */
     public static final String NAME = "Asteria 2.0";
-    
+
     /** If debugging messages should be printed. */
     public static final boolean DEBUG = true;
 
@@ -50,10 +49,11 @@ public final class Main {
      */
     public static void main(String[] args) {
         try {
+
             // The stopwatch for timing how long all this takes.
             Stopwatch timer = new Stopwatch().reset();
 
-            // Load all of the json stuff.
+            // Load all utilities.
             NpcDropTable.parseDrops().load();
             ItemDefinition.parseItems().load();
             WorldObjectManager.parseObjects().load();
@@ -61,32 +61,14 @@ public final class Main {
             Shop.parseShops().load();
             GroundItemManager.parseItems().load();
             Npc.parseNpcs().load();
-
-            // Load all of the IP banned hosts.
+            SkillRequirements.parseRequirements().load();
+            WeaponAnimations.parseAnimations().load();
+            WeaponInterfaces.parseInterfaces().load();
             HostGateway.loadBannedHosts();
-
-            // Load all of the various skills.
-            SkillEvent.loadSkills();
-
-            // Load all of the packets.
+            Skills.loadSkills();
             PacketDecoder.loadDecoders();
-
-            // Load all of the minigames.
-            MinigameFactory.loadMinigames();
-
-            // Load all of the weapon animations.
-            AssignWeaponAnimation.loadWeaponAnimations();
-
-            // Load all of the weapon interfaces.
-            AssignWeaponInterface.loadWeaponInterfaces();
-
-            // Load all of the skill requirements.
-            AssignSkillRequirement.loadSkillRequirements();
-
-            // Load all of the poison data.
+            Minigames.loadMinigames();
             CombatPoisonData.loadPoisonData();
-
-            // Load npc aggressive policies.
             NpcAggression.loadPolicies();
             logger.info("Sucessfully loaded all utilities!");
 

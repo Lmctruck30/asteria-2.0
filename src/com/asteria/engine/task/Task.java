@@ -125,15 +125,14 @@ public abstract class Task {
      * should be bound with the player's instance so all tasks are automatically
      * stopped on logout. Please note that keys with a value of
      * <code>null</code> are not permitted, the default value for all keys is
-     * defined as <code>DEFAULT_KEY</code>.
+     * {@link #DEFAULT_KEY}.
      * 
      * @param key
      *            the key to attach.
      * @return this task for chaining.
      */
     public final Task bind(Object key) {
-        this.key = Objects.requireNonNull(key,
-            "Keys with a value of null not permitted!");
+        this.key = Objects.requireNonNull(key);
         return this;
     }
 
@@ -164,7 +163,7 @@ public abstract class Task {
      * @return the key bound to this task.
      */
     public final Object getKey() {
-        return key;
+        return Objects.requireNonNull(key);
     }
 
     /**

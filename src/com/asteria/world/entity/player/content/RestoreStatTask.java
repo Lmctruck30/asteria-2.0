@@ -3,7 +3,7 @@ package com.asteria.world.entity.player.content;
 import com.asteria.engine.task.Task;
 import com.asteria.world.World;
 import com.asteria.world.entity.combat.prayer.CombatPrayer;
-import com.asteria.world.entity.combat.special.CombatSpecial;
+import com.asteria.world.entity.combat.weapon.CombatSpecial;
 import com.asteria.world.entity.player.Player;
 import com.asteria.world.entity.player.PlayerRights;
 import com.asteria.world.entity.player.skill.Skills;
@@ -42,11 +42,11 @@ public class RestoreStatTask extends Task {
                 // Check if the hitpoints level needs regeneration.
                 if (i == Skills.HITPOINTS) {
                     if (player.getSkills()[i].getLevel() < realLevel && player
-                            .isAcceptAid()) {
+                        .isAcceptAid()) {
                         player.getSkills()[i].increaseLevel(1);
 
                         if (CombatPrayer.isActivated(player,
-                                CombatPrayer.RAPID_HEAL)) {
+                            CombatPrayer.RAPID_HEAL)) {
                             if (player.getSkills()[i].getLevel() < realLevel) {
                                 player.getSkills()[i].increaseLevel(1);
                             }
@@ -61,7 +61,7 @@ public class RestoreStatTask extends Task {
                     player.getSkills()[i].increaseLevel(1);
 
                     if (CombatPrayer.isActivated(player,
-                            CombatPrayer.RAPID_RESTORE)) {
+                        CombatPrayer.RAPID_RESTORE)) {
                         if (player.getSkills()[i].getLevel() < realLevel) {
                             player.getSkills()[i].increaseLevel(1);
                         }

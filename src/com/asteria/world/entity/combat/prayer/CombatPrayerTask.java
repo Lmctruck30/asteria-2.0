@@ -67,7 +67,7 @@ public class CombatPrayerTask extends Task {
         // Check the prayer level.
         if (player.getSkills()[Skills.PRAYER].getLevel() < 1) {
             player.getPacketBuilder().sendMessage(
-                    "You've run out of prayer points!");
+                "You've run out of prayer points!");
             CombatPrayer.deactivateAll(player);
             this.cancel();
             return;
@@ -82,7 +82,7 @@ public class CombatPrayerTask extends Task {
      * @return the amount of ticks needed to drain 1 level of prayer.
      */
     private int calculateDrainRate(CombatPrayer prayer) {
-        return (player.getBonus()[Utility.BONUS_PRAYER] / 2)
-                + prayer.getDrainRate();
+        return (player.getBonus()[Utility.BONUS_PRAYER] / 2) + prayer
+            .getDrainRate();
     }
 }

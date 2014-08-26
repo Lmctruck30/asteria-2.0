@@ -21,24 +21,25 @@ public class DecodeItemOnObjectPacket extends PacketDecoder {
     // see if you're actually near them or not.
 
     @Override
-    public void decode(final Player player, ProtocolBuffer buf) {
-        final int container = buf.readShort(false);
-        final int objectId = buf.readShort(true, ByteOrder.LITTLE);
-        final int objectY = buf.readShort(true, ValueType.A, ByteOrder.LITTLE);
-        final int slot = buf.readShort(true, ByteOrder.LITTLE);
-        final int objectX = buf.readShort(true, ValueType.A, ByteOrder.LITTLE);
-        final int itemId = buf.readShort(false);
-        final int objectSize = 1;
+    public void decode(Player player, ProtocolBuffer buf) {
+        int container = buf.readShort(false);
+        int objectId = buf.readShort(true, ByteOrder.LITTLE);
+        int objectY = buf.readShort(true, ValueType.A, ByteOrder.LITTLE);
+        int slot = buf.readShort(true, ByteOrder.LITTLE);
+        int objectX = buf.readShort(true, ValueType.A, ByteOrder.LITTLE);
+        int itemId = buf.readShort(false);
+        int size = 1;
 
-        if (container < 0 || objectId < 0 || objectY < 0 || slot < 0
-                || objectX < 0 || itemId < 0 || objectSize < 0) {
+        if (container < 0 || objectId < 0 || objectY < 0 || slot < 0 || objectX < 0 || itemId < 0) {
             return;
         }
+        // if (!def.valid(new Position(objectX, objectY, player.getPosition()
+        // .getZ())))
+        // return;
 
-        final Item item = player.getInventory().get(slot);
+        Item item = player.getInventory().get(slot);
 
-        if (item == null
- || container != 3214) {
+        if (item == null || container != 3214) {
             return;
         }
 
@@ -46,9 +47,10 @@ public class DecodeItemOnObjectPacket extends PacketDecoder {
         player.getMovementQueueListener().append(new Runnable() {
             @Override
             public void run() {
-                if (player.getPosition().withinDistance(
+                if (player.getPosition()
+                    .withinDistance(
                         new Position(objectX, objectY, player.getPosition()
-                                .getZ()), objectSize)) {
+                            .getZ()), size)) {
                     switch (objectId) {
 
                     }

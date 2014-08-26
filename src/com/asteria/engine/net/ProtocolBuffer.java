@@ -27,7 +27,7 @@ public final class ProtocolBuffer {
     /** The current session attached to this buffer. */
     private Session session;
 
-    /** The position of the buffer when a var length packet header is created. */
+    /** The position of the buffer when a variable length packet is created. */
     private int variableLengthPos = 0;
 
     /** The current bit position. */
@@ -39,7 +39,7 @@ public final class ProtocolBuffer {
      * 
      * @author blakeman8192
      */
-    public static enum ByteOrder {
+    public enum ByteOrder {
         LITTLE,
         BIG,
         MIDDLE,
@@ -54,7 +54,7 @@ public final class ProtocolBuffer {
      * 
      * @author blakeman8192
      */
-    public static enum ValueType {
+    public enum ValueType {
         STANDARD,
         A,
         C,
@@ -179,7 +179,7 @@ public final class ProtocolBuffer {
     public ProtocolBuffer endVar() {
         requestSpace(1);
         buf.put(variableLengthPos,
-                (byte) (buf.position() - variableLengthPos - 1));
+            (byte) (buf.position() - variableLengthPos - 1));
         return this;
     }
 
@@ -192,8 +192,8 @@ public final class ProtocolBuffer {
      */
     public ProtocolBuffer endVarShort() {
         requestSpace(2);
-        buf.putShort(variableLengthPos, (short) (buf.position()
-                - variableLengthPos - 2));
+        buf.putShort(variableLengthPos,
+            (short) (buf.position() - variableLengthPos - 2));
         return this;
     }
 
@@ -253,7 +253,7 @@ public final class ProtocolBuffer {
         // Check for invalid amounts.
         if (amount < 0 || amount > 32) {
             throw new IllegalArgumentException(
-                    "Number of bits must be between 1 and 32 inclusive.");
+                "Number of bits must be between 1 and 32 inclusive.");
         }
 
         // Modify the bit and byte positions.
@@ -365,10 +365,10 @@ public final class ProtocolBuffer {
             break;
         case MIDDLE:
             throw new IllegalArgumentException(
-                    "Middle-endian short is impossible!");
+                "Middle-endian short is impossible!");
         case INVERSE_MIDDLE:
             throw new IllegalArgumentException(
-                    "Inverse-middle-endian short is impossible!");
+                "Inverse-middle-endian short is impossible!");
         case LITTLE:
             writeByte(value, type);
             writeByte(value >> 8);
@@ -523,10 +523,10 @@ public final class ProtocolBuffer {
             break;
         case MIDDLE:
             throw new UnsupportedOperationException(
-                    "Middle-endian long is not implemented!");
+                "Middle-endian long is not implemented!");
         case INVERSE_MIDDLE:
             throw new UnsupportedOperationException(
-                    "Inverse-middle-endian long is not implemented!");
+                "Inverse-middle-endian long is not implemented!");
         case LITTLE:
             writeByte((int) value, type);
             writeByte((int) (value >> 8));
@@ -674,10 +674,10 @@ public final class ProtocolBuffer {
             break;
         case MIDDLE:
             throw new UnsupportedOperationException(
-                    "Middle-endian short is impossible!");
+                "Middle-endian short is impossible!");
         case INVERSE_MIDDLE:
             throw new UnsupportedOperationException(
-                    "Inverse-middle-endian short is impossible!");
+                "Inverse-middle-endian short is impossible!");
         case LITTLE:
             value |= readByte(false, type);
             value |= readByte(false) << 8;
@@ -914,10 +914,10 @@ public final class ProtocolBuffer {
             break;
         case MIDDLE:
             throw new UnsupportedOperationException(
-                    "middle-endian long is not implemented!");
+                "middle-endian long is not implemented!");
         case INVERSE_MIDDLE:
             throw new UnsupportedOperationException(
-                    "inverse-middle-endian long is not implemented!");
+                "inverse-middle-endian long is not implemented!");
         case LITTLE:
             value |= readByte(false, type);
             value |= (long) readByte(false) << 8L;
@@ -1057,7 +1057,7 @@ public final class ProtocolBuffer {
     public ProtocolBuffer sendPacket() {
         if (!isPacket()) {
             throw new IllegalStateException(
-                    "There is no session bound to this buffer!");
+                "There is no session bound to this buffer!");
         }
 
         session.send(this);

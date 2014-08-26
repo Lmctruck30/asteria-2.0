@@ -1,13 +1,14 @@
 package com.asteria.world.entity.npc;
 
+import java.util.Optional;
+
 import com.asteria.engine.task.Task;
 import com.asteria.engine.task.TaskManager;
 import com.asteria.world.World;
 import com.asteria.world.entity.Animation;
 import com.asteria.world.entity.EntityDeath;
 import com.asteria.world.entity.player.Player;
-import com.asteria.world.entity.player.minigame.Minigame;
-import com.asteria.world.entity.player.minigame.MinigameFactory;
+import com.asteria.world.entity.player.minigame.Minigames;
 import com.asteria.world.item.Item;
 import com.asteria.world.item.ground.GroundItem;
 import com.asteria.world.item.ground.GroundItem.StaticGroundItem;
@@ -36,21 +37,21 @@ public class NpcDeath extends EntityDeath<Npc> {
 
         // Here we do the death animation.
         entity.animation(new Animation(entity.getDefinition()
-                .getDeathAnimation()));
+            .getDeathAnimation()));
     }
 
     @Override
     public void death(Npc entity) {
 
         // We find who killed this npc, and get the drop table.
-        Player killer = entity.getCombatBuilder().getKiller(true);
+        Optional<Player> killer = entity.getCombatBuilder().getKiller(true);
         NpcDropTable table = NpcDropTable.getDrops().get(entity.getNpcId());
 
         // If here is no table we skip this stage.
         if (table != null) {
 
             // Calculate the items that will be dropped.
-            Item[] dropItems = table.calculateDrops(killer);
+            Item[] dropItems = table.calculateDrops(killer.orElse(null));
 
             // Then we drop all of those items.
             for (Item drop : dropItems) {
@@ -59,20 +60,14 @@ public class NpcDeath extends EntityDeath<Npc> {
                 }
 
                 GroundItemManager
-                        .register(killer == null ? new StaticGroundItem(drop,
-                                entity.getPosition()) : new GroundItem(drop,
-                                entity.getPosition(), killer));
+                    .register(!killer.isPresent() ? new StaticGroundItem(drop,
+                        entity.getPosition()) : new GroundItem(drop, entity
+                        .getPosition(), killer.get()));
             }
 
             // Fire any minigame events.
-            if (killer != null) {
-                for (Minigame minigame : MinigameFactory.getMinigames()
-                        .values()) {
-                    if (minigame.inMinigame(killer)) {
-                        minigame.fireOnKill(killer, entity);
-                    }
-                }
-            }
+            killer.ifPresent(k -> Minigames.get(k).ifPresent(
+                m -> m.fireOnKill(k, entity)));
         }
 
         // Then finally we unregister the npc.
@@ -81,7 +76,7 @@ public class NpcDeath extends EntityDeath<Npc> {
     }
 
     @Override
-    public void postDeath(final Npc entity) {
+    public void postDeath(Npc entity) {
 
         // And spawn it back if needed!
         if (entity.isRespawn()) {
@@ -89,7 +84,7 @@ public class NpcDeath extends EntityDeath<Npc> {
                 @Override
                 public void execute() {
                     Npc npc = new Npc(entity.getNpcId(), entity
-                            .getOriginalPosition());
+                        .getOriginalPosition());
                     npc.setRespawn(true);
                     World.getNpcs().add(npc);
                     this.cancel();

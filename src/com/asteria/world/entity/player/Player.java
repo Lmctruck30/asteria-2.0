@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import com.asteria.Main;
@@ -21,21 +22,21 @@ import com.asteria.world.entity.combat.effect.CombatPoisonEffect.CombatPoisonDat
 import com.asteria.world.entity.combat.magic.CombatSpell;
 import com.asteria.world.entity.combat.prayer.CombatPrayerTask;
 import com.asteria.world.entity.combat.range.CombatRangedAmmo;
-import com.asteria.world.entity.combat.special.CombatSpecial;
+import com.asteria.world.entity.combat.weapon.CombatSpecial;
+import com.asteria.world.entity.combat.weapon.FightType;
 import com.asteria.world.entity.npc.Npc;
-import com.asteria.world.entity.npc.NpcAggression;
 import com.asteria.world.entity.npc.dialogue.Dialogue;
-import com.asteria.world.entity.player.content.AssignWeaponAnimation.WeaponAnimationIndex;
-import com.asteria.world.entity.player.content.AssignWeaponInterface.FightType;
-import com.asteria.world.entity.player.content.AssignWeaponInterface.WeaponInterface;
 import com.asteria.world.entity.player.content.PrivateMessage;
 import com.asteria.world.entity.player.content.Spellbook;
 import com.asteria.world.entity.player.content.TeleportSpell;
 import com.asteria.world.entity.player.content.TradeSession;
+import com.asteria.world.entity.player.content.WeaponAnimations.WeaponAnimation;
+import com.asteria.world.entity.player.content.WeaponInterfaces.WeaponInterface;
 import com.asteria.world.entity.player.minigame.Minigame;
-import com.asteria.world.entity.player.minigame.MinigameFactory;
+import com.asteria.world.entity.player.minigame.Minigames;
 import com.asteria.world.entity.player.skill.Skill;
 import com.asteria.world.entity.player.skill.Skills;
+import com.asteria.world.entity.player.skill.impl.Fishing.Tool;
 import com.asteria.world.item.Item;
 import com.asteria.world.item.container.BankContainer;
 import com.asteria.world.item.container.EquipmentContainer;
@@ -92,7 +93,7 @@ public class Player extends Entity {
     private FightType fightType = FightType.UNARMED_PUNCH;
 
     /** The weapon animation for this player. */
-    private WeaponAnimationIndex equipmentAnimation = new WeaponAnimationIndex();
+    private WeaponAnimation equipmentAnimation = new WeaponAnimation();
 
     /** An array of all the trainable skills. */
     private Skill[] skills = new Skill[21];
@@ -147,8 +148,11 @@ public class Player extends Entity {
 
     /** A collection of timers. */
     private final Stopwatch eatingTimer = new Stopwatch().reset(),
-            potionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(),
-            lastEnergy = new Stopwatch().reset();
+        potionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(),
+        lastEnergy = new Stopwatch().reset();
+    
+    /** The fishing tool field for fishing. */
+    private Tool fishingTool;
 
     /** The multicombat and wilderness flags. */
     private boolean wildernessInterface, multicombatInterface;
@@ -252,8 +256,7 @@ public class Player extends Entity {
         // Set the player's rights, if we're connecting locally we automatically
         // get developer status.
         rights = session.getHost().equals("127.0.0.1") || session.getHost()
-                .equals("localhost") ? PlayerRights.DEVELOPER
-                : PlayerRights.PLAYER;
+            .equals("localhost") ? PlayerRights.DEVELOPER : PlayerRights.PLAYER;
 
         // Set the default appearance.
         getAppearance()[Utility.APPEARANCE_SLOT_CHEST] = 18;
@@ -282,17 +285,6 @@ public class Player extends Entity {
         Skills.refresh(this, Skills.HITPOINTS);
         getPacketBuilder().sendCloseWindows();
         return hit;
-    }
-
-    @Override
-    public void preUpdate() throws Exception {
-        if (session.getTimeout().elapsed() > 5000) {
-            session.disconnect();
-            return;
-        }
-
-        NpcAggression.target(this);
-        getMovementQueue().execute();
     }
 
     @Override
@@ -339,12 +331,10 @@ public class Player extends Entity {
     public void poisonVictim(Entity victim, CombatType type) {
         if (type == CombatType.MELEE || weapon == WeaponInterface.DART || weapon == WeaponInterface.KNIFE || weapon == WeaponInterface.THROWNAXE || weapon == WeaponInterface.JAVELIN) {
             CombatFactory.poisonEntity(victim, CombatPoisonData
-                .getPoisonType(equipment.get(
-                            Utility.EQUIPMENT_SLOT_WEAPON)));
+                .getPoisonType(equipment.get(Utility.EQUIPMENT_SLOT_WEAPON)));
         } else if (type == CombatType.RANGED) {
             CombatFactory.poisonEntity(victim, CombatPoisonData
-                .getPoisonType(equipment.get(
-                            Utility.EQUIPMENT_SLOT_ARROWS)));
+                .getPoisonType(equipment.get(Utility.EQUIPMENT_SLOT_ARROWS)));
         }
     }
 
@@ -360,7 +350,7 @@ public class Player extends Entity {
      * @param position
      *            the position to teleport to.
      */
-    public void teleport(final TeleportSpell spell) {
+    public void teleport(TeleportSpell spell) {
 
         if (teleportStage > 0) {
             return;
@@ -369,29 +359,28 @@ public class Player extends Entity {
 
         if (wildernessLevel >= 20) {
             player.getPacketBuilder().sendMessage(
-                    "You must be below level 20 wilderness to teleport!");
+                "You must be below level 20 wilderness to teleport!");
             return;
         }
 
         if (teleblockTimer > 0) {
             if ((teleblockTimer * 600) >= 1000 && (teleblockTimer * 600) <= 60000) {
                 getPacketBuilder()
-                        .sendMessage(
-                                "You must wait approximately " + ((teleblockTimer * 600) / 1000) + " seconds in order to teleport!");
+                    .sendMessage(
+                        "You must wait approximately " + ((teleblockTimer * 600) / 1000) + " seconds in order to teleport!");
                 return;
             } else if ((teleblockTimer * 600) > 60000) {
                 getPacketBuilder()
-                        .sendMessage(
-                                "You must wait approximately " + ((teleblockTimer * 600) / 60000) + " minutes in order to teleport!");
+                    .sendMessage(
+                        "You must wait approximately " + ((teleblockTimer * 600) / 60000) + " minutes in order to teleport!");
                 return;
             }
         }
 
-        for (Minigame minigame : MinigameFactory.getMinigames().values()) {
-            if (minigame.inMinigame(player)) {
-                if (!minigame.canTeleport(player)) {
-                    return;
-                }
+        Optional<Minigame> optional = Minigames.get(player);
+        if (optional.isPresent()) {
+            if (!optional.get().canTeleport(player)) {
+                return;
             }
         }
 
@@ -416,7 +405,7 @@ public class Player extends Entity {
      * @param position
      *            the position to teleport to.
      */
-    public void teleport(final Position position) {
+    public void teleport(Position position) {
         teleport(new TeleportSpell() {
             @Override
             public Position teleportTo() {
@@ -435,8 +424,8 @@ public class Player extends Entity {
             }
 
             @Override
-            public Item[] itemsRequired(Player player) {
-                return null;
+            public Optional<Item[]> itemsRequired(Player player) {
+                return Optional.empty();
             }
 
             @Override
@@ -478,9 +467,9 @@ public class Player extends Entity {
     @Override
     public String toString() {
         return getUsername() == null ? "SESSION[host= " + session.getHost() + ", stage= " + session
-                .getStage().name() + "]"
-                : "PLAYER[username= " + getUsername() + ", host= " + session
-                        .getHost() + ", rights= " + rights + "]";
+            .getStage().name() + "]"
+            : "PLAYER[username= " + getUsername() + ", host= " + session
+                .getHost() + ", rights= " + rights + "]";
     }
 
     @Override
@@ -610,7 +599,7 @@ public class Player extends Entity {
         // Update the wilderness info.
         if (Location.inWilderness(this)) {
             int calculateY = this.getPosition().getY() > 6400 ? this
-                    .getPosition().getY() - 6400 : this.getPosition().getY();
+                .getPosition().getY() - 6400 : this.getPosition().getY();
             wildernessLevel = (((calculateY - 3520) / 8) + 1);
 
             if (!wildernessInterface) {
@@ -620,7 +609,7 @@ public class Player extends Entity {
             }
 
             this.getPacketBuilder().sendString(
-                    "@yel@Level: " + wildernessLevel, 199);
+                "@yel@Level: " + wildernessLevel, 199);
         } else {
             this.getPacketBuilder().sendContextMenu("Attack", 3);
             this.getPacketBuilder().sendWalkable(-1);
@@ -666,7 +655,7 @@ public class Player extends Entity {
                 send = Utility.BONUS_NAMES[i] + ": +" + playerBonus[i];
             } else {
                 send = Utility.BONUS_NAMES[i] + ": -" + Math
-                        .abs(playerBonus[i]);
+                    .abs(playerBonus[i]);
             }
 
             if (i == 10) {
@@ -1153,8 +1142,15 @@ public class Player extends Entity {
     /**
      * @return the equipmentAnimation
      */
-    public WeaponAnimationIndex getUpdateAnimation() {
+    public WeaponAnimation getUpdateAnimation() {
         return equipmentAnimation;
+    }
+
+    /**
+     * @return the equipmentAnimation
+     */
+    public void setUpdateAnimation(WeaponAnimation equipmentAnimation) {
+        this.equipmentAnimation = equipmentAnimation.clone();
     }
 
     /**
@@ -1469,5 +1465,13 @@ public class Player extends Entity {
 
     public void setUpdateRegion(boolean updateRegion) {
         this.updateRegion = updateRegion;
+    }
+
+    public Tool getFishingTool() {
+        return fishingTool;
+    }
+
+    public void setFishingTool(Tool fishingTool) {
+        this.fishingTool = fishingTool;
     }
 }

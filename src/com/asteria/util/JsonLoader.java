@@ -34,7 +34,7 @@ public abstract class JsonLoader {
     public JsonLoader() throws Exception {
         this.parser = new JsonParser();
         this.array = (JsonArray) parser.parse(new FileReader(Paths.get(
-                filePath()).toFile()));
+            filePath()).toFile()));
         this.builder = new GsonBuilder().create();
     }
 

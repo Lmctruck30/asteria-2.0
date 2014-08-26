@@ -2,6 +2,7 @@ package com.asteria.world.item.ground;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Optional;
 
 import com.asteria.engine.task.Task;
 import com.asteria.util.JsonLoader;
@@ -21,7 +22,7 @@ import com.google.gson.JsonObject;
  * @author lare96
  */
 public final class GroundItemManager extends Task implements
-        Iterable<GroundItem> {
+    Iterable<GroundItem> {
 
     /** How often processing events will be fired. */
     public static final int FIRE_PROCESSING_EVENTS = 100;
@@ -95,7 +96,7 @@ public final class GroundItemManager extends Task implements
 
         // Iterate through the items to increment the count.
         for (Iterator<GroundItem> iterator = itemList.iterator(); iterator
-                .hasNext();) {
+            .hasNext();) {
             GroundItem next = iterator.next();
 
             if (next == null) {
@@ -103,8 +104,8 @@ public final class GroundItemManager extends Task implements
             }
 
             if (next.getItem().getId() == item.getItem().getId() && next
-                    .getPosition().equals(item.getPosition()) && next
-                    .getPlayer().equals(item.getPlayer())) {
+                .getPosition().equals(item.getPosition()) && next.getPlayer()
+                .equals(item.getPlayer())) {
                 count += next.getItem().getAmount();
                 next.fireOnUnregister();
                 iterator.remove();
@@ -178,18 +179,18 @@ public final class GroundItemManager extends Task implements
      * @return the instance of the item, or <code>null</code> if the item does
      *         not exist.
      */
-    public static GroundItem getItem(int id, Position position) {
+    public static Optional<GroundItem> getItem(int id, Position position) {
         for (GroundItem item : itemList) {
             if (item == null || item.getState() == ItemState.HIDDEN) {
                 continue;
 
             }
             if (item.getItem().getId() == id && item.getPosition().equals(
-                    position)) {
-                return item;
+                position)) {
+                return Optional.of(item);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -204,10 +205,9 @@ public final class GroundItemManager extends Task implements
             @Override
             public void load(JsonObject reader, Gson builder) {
                 GroundItem.StaticGroundItem item = new GroundItem.StaticGroundItem(
-                        new Item(reader.get("id").getAsInt(), reader.get(
-                                "amount").getAsInt()), builder.fromJson(
-                                reader.get("position"), Position.class),
-                        ItemPolicy.RESPAWN);
+                    new Item(reader.get("id").getAsInt(), reader.get("amount")
+                        .getAsInt()), builder.fromJson(reader.get("position"),
+                        Position.class), ItemPolicy.RESPAWN);
                 register(item);
             }
 

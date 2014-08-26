@@ -5,7 +5,7 @@ import com.asteria.engine.net.ProtocolBuffer;
 import com.asteria.engine.net.packet.PacketDecoder;
 import com.asteria.engine.net.packet.PacketOpcodeHeader;
 import com.asteria.world.entity.player.Player;
-import com.asteria.world.entity.player.skill.SkillEvent;
+import com.asteria.world.entity.player.skill.Skills;
 import com.asteria.world.map.Position;
 
 /**
@@ -24,7 +24,7 @@ public class DecodeMovementPacket extends PacketDecoder {
 
         // minimap click
         if (player.getSession().getPacketOpcode() == 248) {
-            SkillEvent.fireSkillEvents(player);
+            Skills.fireSkillEvents(player);
             player.setFollowing(false);
             player.getCombatBuilder().resetAttackTimer();
             length -= 14;
@@ -32,7 +32,7 @@ public class DecodeMovementPacket extends PacketDecoder {
 
         // yellow x click
         if (player.getSession().getPacketOpcode() == 164) {
-            SkillEvent.fireSkillEvents(player);
+            Skills.fireSkillEvents(player);
             player.setFollowing(false);
             player.getCombatBuilder().resetAttackTimer();
             // player.getRS2Packet().sendMessage("164");

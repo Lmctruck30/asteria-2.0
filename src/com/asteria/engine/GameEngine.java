@@ -20,7 +20,7 @@ public final class GameEngine implements Runnable {
 
     /** A sequential executor that acts as the main game thread. */
     private static final ScheduledExecutorService gameExecutor = Executors
-        .newSingleThreadScheduledExecutor(new ThreadProvider("Game-Thread",
+        .newSingleThreadScheduledExecutor(new ThreadBuilder("Game-Thread",
             Thread.NORM_PRIORITY, false));
 
     /**
@@ -28,8 +28,8 @@ public final class GameEngine implements Runnable {
      * pool should be used to carry out any short lived tasks that don't have to
      * be done on the game thread.
      */
-    private static final ThreadPoolExecutor serviceExecutor = ThreadPoolFactory
-        .createThreadPool("Service-Thread", 1, Thread.MIN_PRIORITY, 5);
+    private static final ThreadPoolExecutor serviceExecutor = ThreadPoolBuilder
+        .build("Service-Thread", 1, Thread.MIN_PRIORITY, 5);
 
     /**
      * Schedule the task that will execute game code at 600ms intervals. This

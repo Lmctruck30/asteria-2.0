@@ -36,7 +36,6 @@ public final class TaskManager {
         // Add all of the pending tasks to the active list only if they are
         // running.
         Task t;
-
         while ((t = pendingTasks.poll()) != null) {
             if (t.isRunning()) {
                 activeTasks.add(t);
@@ -85,8 +84,8 @@ public final class TaskManager {
      * Cancels all of the currently registered {@link Task}s.
      */
     public static void cancelAllTasks() {
-        pendingTasks.stream().forEach(t -> t.cancel());
-        activeTasks.stream().forEach(t -> t.cancel());
+        pendingTasks.forEach(t -> t.cancel());
+        activeTasks.forEach(t -> t.cancel());
     }
 
     /**

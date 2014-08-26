@@ -50,7 +50,7 @@ public class CombatHitTask extends Task {
      *            if the task should be ran right away.
      */
     public CombatHitTask(CombatBuilder builder, CombatContainer container,
-            int delay, boolean initialRun) {
+        int delay, boolean initialRun) {
         super(delay, initialRun);
         this.builder = builder;
         this.container = container;
@@ -73,9 +73,9 @@ public class CombatHitTask extends Task {
         // Now we send the hitsplats if needed! We can't send the hitsplats
         // there are none to send, or if we're using magic and it splashed.
         if (container.getHits().length != 0 && container.getCombatType() != CombatType.MAGIC || container
-                .isAccurate()) {
+            .isAccurate()) {
             victim.getCombatBuilder().addDamage(attacker,
-                    (damage = container.dealDamage()));
+                (damage = container.dealDamage()));
         }
 
         // Give experience based on the hits
@@ -89,7 +89,7 @@ public class CombatHitTask extends Task {
             if (container.getCombatType() == CombatType.MAGIC) {
                 victim.graphic(new Graphic(85));
                 attacker.getCurrentlyCasting().finishCast(attacker, victim,
-                        false, 0);
+                    false, 0);
                 attacker.setCurrentlyCasting(null);
             }
 
@@ -106,22 +106,20 @@ public class CombatHitTask extends Task {
 
             // Finish the magic spell with the correct end graphic.
             if (container.getCombatType() == CombatType.MAGIC) {
-                victim.graphic(attacker.getCurrentlyCasting().endGraphic());
+                attacker.getCurrentlyCasting().endGraphic().ifPresent(
+                    victim::graphic);
                 attacker.getCurrentlyCasting().finishCast(attacker, victim,
-                        true, damage);
+                    true, damage);
                 attacker.setCurrentlyCasting(null);
             }
 
             // 50% chance of dropping arrows from a ranged attack.
             if (container.getCombatType() == CombatType.RANGED && attacker
-                    .type() == EntityType.PLAYER && Utility
-                    .exclusiveRandom(2) == 0) {
+                .type() == EntityType.PLAYER && Utility.exclusiveRandom(2) == 0) {
                 Player player = (Player) attacker;
                 if (player.getFireAmmo() > 0) {
-                    GroundItemManager
-                            .registerAndStack(new GroundItem(new Item(player
-                                    .getFireAmmo()), victim.getPosition(),
-                                    player));
+                    GroundItemManager.registerAndStack(new GroundItem(new Item(
+                        player.getFireAmmo()), victim.getPosition(), player));
                     player.setFireAmmo(0);
                 }
             }
@@ -132,7 +130,7 @@ public class CombatHitTask extends Task {
             victim.animation(new Animation(404));
         } else if (victim.type() == EntityType.NPC) {
             victim.animation(new Animation(((Npc) victim).getDefinition()
-                    .getDefenceAnimation()));
+                .getDefenceAnimation()));
         }
 
         // Fire the container's dynamic hit method.
@@ -144,7 +142,7 @@ public class CombatHitTask extends Task {
 
         // And finally auto-retaliate if needed.
         if (victim.isAutoRetaliate() && !victim.getCombatBuilder()
-                .isAttacking()) {
+            .isAttacking()) {
             victim.getCombatBuilder().attack(attacker);
         }
 

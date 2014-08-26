@@ -23,7 +23,7 @@ public class HostGateway {
 
     /** A {@link Logger} for printing debugging info. */
     private static Logger logger = Logger.getLogger(HostGateway.class
-            .getSimpleName());
+        .getSimpleName());
 
     /** The maximum amount of connections from any host that isn't localhost. */
     public static final int MAX_CONNECTIONS_PER_HOST = 1;
@@ -33,7 +33,7 @@ public class HostGateway {
 
     /** Used to keep track of banned hosts. */
     private static Set<String> bannedHosts = Collections
-            .synchronizedSet(new HashSet<String>());
+        .synchronizedSet(new HashSet<String>());
 
     /**
      * Checks the host into the gateway.
@@ -48,7 +48,8 @@ public class HostGateway {
         // If the host is coming from the hosting computer we don't need to
         // check it.
         if (host.equals("127.0.0.1") || host.equals("localhost")) {
-            logger.info("Session request from " + host + "<unlimited> accepted.");
+            logger
+                .info("Session request from " + host + "<unlimited> accepted.");
             return true;
         }
 
@@ -69,13 +70,15 @@ public class HostGateway {
         // If they've reached or surpassed the connection limit, reject the
         // host.
         if (amount >= MAX_CONNECTIONS_PER_HOST) {
-            logger.warning("Session request from " + host + "<" + amount + "> over connection limit, rejected.");
+            logger
+                .warning("Session request from " + host + "<" + amount + "> over connection limit, rejected.");
             return false;
         }
 
         // Otherwise, replace the key with the next value if it was present.
         hostMap.put(host, amount + 1);
-        logger.info("Session request from " + host + "<" + hostMap.get(host) + "> accepted.");
+        logger
+            .info("Session request from " + host + "<" + hostMap.get(host) + "> accepted.");
         return true;
     }
 
@@ -114,11 +117,12 @@ public class HostGateway {
      * @param host
      *            the host to add to the text file.
      */
-    public static void addBannedHost(final String host) {
+    public static void addBannedHost(String host) {
         GameEngine.getServiceExecutor().execute(new Runnable() {
             @Override
             public void run() {
-                try (FileWriter writer = new FileWriter(new File(
+                try (
+                    FileWriter writer = new FileWriter(new File(
                         "./data/ip_ban_list.txt"), true)) {
 
                     // First add the host to the active list.

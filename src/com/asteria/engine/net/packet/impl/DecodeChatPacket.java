@@ -20,7 +20,7 @@ public class DecodeChatPacket extends PacketDecoder {
         int color = buf.readByte(false, ProtocolBuffer.ValueType.S);
         int chatLength = (player.getSession().getPacketLength() - 2);
         byte[] text = buf.readBytesReverse(chatLength,
-                ProtocolBuffer.ValueType.A);
+            ProtocolBuffer.ValueType.A);
 
         if (effects < 0 || color < 0 || chatLength < 0 || text == null) {
             return;

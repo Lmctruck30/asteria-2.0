@@ -1,0 +1,4226 @@
+[
+  {
+    "hash": 4097,
+    "item-id": 4097,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4099,
+    "item-id": 4099,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4101,
+    "item-id": 4101,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4103,
+    "item-id": 4103,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4105,
+    "item-id": 4105,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4107,
+    "item-id": 4107,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4109,
+    "item-id": 4109,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4111,
+    "item-id": 4111,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4113,
+    "item-id": 4113,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4115,
+    "item-id": 4115,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 3093,
+    "item-id": 3093,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4117,
+    "item-id": 4117,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 3094,
+    "item-id": 3094,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 3097,
+    "item-id": 3097,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 3098,
+    "item-id": 3098,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 3099,
+    "item-id": 3099,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 3100,
+    "item-id": 3100,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 3101,
+    "item-id": 3101,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1065,
+    "item-id": 1065,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 1069,
+    "item-id": 1069,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1071,
+    "item-id": 1071,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1073,
+    "item-id": 1073,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1077,
+    "item-id": 1077,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1079,
+    "item-id": 1079,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4151,
+    "item-id": 4151,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 4153,
+    "item-id": 4153,
+    "requirement": [
+      {
+        "requiredLevel": 50,
+        "skillId": 0
+      },
+      {
+        "requiredLevel": 50,
+        "skillId": 2
+      }
+    ]
+  },
+  {
+    "hash": 1083,
+    "item-id": 1083,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1085,
+    "item-id": 1085,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1089,
+    "item-id": 1089,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1091,
+    "item-id": 1091,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 3140,
+    "item-id": 3140,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1093,
+    "item-id": 1093,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1097,
+    "item-id": 1097,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 1099,
+    "item-id": 1099,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 1105,
+    "item-id": 1105,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4178,
+    "item-id": 4178,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1107,
+    "item-id": 1107,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4180,
+    "item-id": 4180,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1109,
+    "item-id": 1109,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1111,
+    "item-id": 1111,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1113,
+    "item-id": 1113,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1119,
+    "item-id": 1119,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1121,
+    "item-id": 1121,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1123,
+    "item-id": 1123,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1125,
+    "item-id": 1125,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1127,
+    "item-id": 1127,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1131,
+    "item-id": 1131,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1133,
+    "item-id": 1133,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 1135,
+    "item-id": 1135,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 1141,
+    "item-id": 1141,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1143,
+    "item-id": 1143,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1145,
+    "item-id": 1145,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 3194,
+    "item-id": 3194,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1147,
+    "item-id": 1147,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 3196,
+    "item-id": 3196,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 0
+      },
+      {
+        "requiredLevel": 5,
+        "skillId": 2
+      }
+    ]
+  },
+  {
+    "hash": 1149,
+    "item-id": 1149,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 3198,
+    "item-id": 3198,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 0
+      },
+      {
+        "requiredLevel": 10,
+        "skillId": 2
+      }
+    ]
+  },
+  {
+    "hash": 1151,
+    "item-id": 1151,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 3200,
+    "item-id": 3200,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 0
+      },
+      {
+        "requiredLevel": 15,
+        "skillId": 2
+      }
+    ]
+  },
+  {
+    "hash": 3202,
+    "item-id": 3202,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 0
+      },
+      {
+        "requiredLevel": 20,
+        "skillId": 2
+      }
+    ]
+  },
+  {
+    "hash": 3204,
+    "item-id": 3204,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 0
+      },
+      {
+        "requiredLevel": 30,
+        "skillId": 2
+      }
+    ]
+  },
+  {
+    "hash": 1157,
+    "item-id": 1157,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1159,
+    "item-id": 1159,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1161,
+    "item-id": 1161,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1163,
+    "item-id": 1163,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1165,
+    "item-id": 1165,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1177,
+    "item-id": 1177,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1179,
+    "item-id": 1179,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1181,
+    "item-id": 1181,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1183,
+    "item-id": 1183,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1185,
+    "item-id": 1185,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1187,
+    "item-id": 1187,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1193,
+    "item-id": 1193,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1195,
+    "item-id": 1195,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1197,
+    "item-id": 1197,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1199,
+    "item-id": 1199,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1201,
+    "item-id": 1201,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1207,
+    "item-id": 1207,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1209,
+    "item-id": 1209,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1211,
+    "item-id": 1211,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1213,
+    "item-id": 1213,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1215,
+    "item-id": 1215,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1217,
+    "item-id": 1217,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 7362,
+    "item-id": 7362,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 7364,
+    "item-id": 7364,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 7366,
+    "item-id": 7366,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 1223,
+    "item-id": 1223,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 7368,
+    "item-id": 7368,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 1225,
+    "item-id": 1225,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1227,
+    "item-id": 1227,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1229,
+    "item-id": 1229,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1231,
+    "item-id": 1231,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1233,
+    "item-id": 1233,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1241,
+    "item-id": 1241,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1243,
+    "item-id": 1243,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1245,
+    "item-id": 1245,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1247,
+    "item-id": 1247,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1249,
+    "item-id": 1249,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 7398,
+    "item-id": 7398,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 7399,
+    "item-id": 7399,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 7400,
+    "item-id": 7400,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 1269,
+    "item-id": 1269,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1271,
+    "item-id": 1271,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1273,
+    "item-id": 1273,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1275,
+    "item-id": 1275,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1281,
+    "item-id": 1281,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1283,
+    "item-id": 1283,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1285,
+    "item-id": 1285,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1287,
+    "item-id": 1287,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1289,
+    "item-id": 1289,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1295,
+    "item-id": 1295,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1297,
+    "item-id": 1297,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1299,
+    "item-id": 1299,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1301,
+    "item-id": 1301,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1303,
+    "item-id": 1303,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1305,
+    "item-id": 1305,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1311,
+    "item-id": 1311,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1313,
+    "item-id": 1313,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1315,
+    "item-id": 1315,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1317,
+    "item-id": 1317,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1319,
+    "item-id": 1319,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1325,
+    "item-id": 1325,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1327,
+    "item-id": 1327,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1329,
+    "item-id": 1329,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1331,
+    "item-id": 1331,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1333,
+    "item-id": 1333,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 3385,
+    "item-id": 3385,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 1339,
+    "item-id": 1339,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 3387,
+    "item-id": 3387,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 1341,
+    "item-id": 1341,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 3389,
+    "item-id": 3389,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 1343,
+    "item-id": 1343,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 3391,
+    "item-id": 3391,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 3393,
+    "item-id": 3393,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 1347,
+    "item-id": 1347,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1365,
+    "item-id": 1365,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1367,
+    "item-id": 1367,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1369,
+    "item-id": 1369,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1371,
+    "item-id": 1371,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1373,
+    "item-id": 1373,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1377,
+    "item-id": 1377,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 2415,
+    "item-id": 2415,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 2416,
+    "item-id": 2416,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 2417,
+    "item-id": 2417,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 1401,
+    "item-id": 1401,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 1403,
+    "item-id": 1403,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 1405,
+    "item-id": 1405,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 1407,
+    "item-id": 1407,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 6528,
+    "item-id": 6528,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 2
+      }
+    ]
+  },
+  {
+    "hash": 1409,
+    "item-id": 1409,
+    "requirement": [
+      {
+        "requiredLevel": 50,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1424,
+    "item-id": 1424,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1426,
+    "item-id": 1426,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1428,
+    "item-id": 1428,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 1430,
+    "item-id": 1430,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 3478,
+    "item-id": 3478,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1432,
+    "item-id": 1432,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 3480,
+    "item-id": 3480,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 1434,
+    "item-id": 1434,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 6563,
+    "item-id": 6563,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 2487,
+    "item-id": 2487,
+    "requirement": [
+      {
+        "requiredLevel": 50,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 2489,
+    "item-id": 2489,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 2493,
+    "item-id": 2493,
+    "requirement": [
+      {
+        "requiredLevel": 50,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 2495,
+    "item-id": 2495,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 2499,
+    "item-id": 2499,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 50,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 2501,
+    "item-id": 2501,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 60,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 2513,
+    "item-id": 2513,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4580,
+    "item-id": 4580,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 4585,
+    "item-id": 4585,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4587,
+    "item-id": 4587,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 5630,
+    "item-id": 5630,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5631,
+    "item-id": 5631,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5632,
+    "item-id": 5632,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5633,
+    "item-id": 5633,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5634,
+    "item-id": 5634,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5637,
+    "item-id": 5637,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5638,
+    "item-id": 5638,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5639,
+    "item-id": 5639,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5640,
+    "item-id": 5640,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5641,
+    "item-id": 5641,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5644,
+    "item-id": 5644,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5645,
+    "item-id": 5645,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5647,
+    "item-id": 5647,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5650,
+    "item-id": 5650,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5651,
+    "item-id": 5651,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5653,
+    "item-id": 5653,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5656,
+    "item-id": 5656,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5657,
+    "item-id": 5657,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5658,
+    "item-id": 5658,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5659,
+    "item-id": 5659,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5660,
+    "item-id": 5660,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5663,
+    "item-id": 5663,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5664,
+    "item-id": 5664,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5665,
+    "item-id": 5665,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5667,
+    "item-id": 5667,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 5672,
+    "item-id": 5672,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 5674,
+    "item-id": 5674,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 5678,
+    "item-id": 5678,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 5680,
+    "item-id": 5680,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 5682,
+    "item-id": 5682,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 5690,
+    "item-id": 5690,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 5692,
+    "item-id": 5692,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 5696,
+    "item-id": 5696,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 5698,
+    "item-id": 5698,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 4675,
+    "item-id": 4675,
+    "requirement": [
+      {
+        "requiredLevel": 50,
+        "skillId": 6
+      },
+      {
+        "requiredLevel": 50,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 5700,
+    "item-id": 5700,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 2653,
+    "item-id": 2653,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 2655,
+    "item-id": 2655,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 2657,
+    "item-id": 2657,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 2659,
+    "item-id": 2659,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4708,
+    "item-id": 4708,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4710,
+    "item-id": 4710,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 0
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4712,
+    "item-id": 4712,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4714,
+    "item-id": 4714,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4716,
+    "item-id": 4716,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 2669,
+    "item-id": 2669,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4718,
+    "item-id": 4718,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 0
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 2
+      }
+    ]
+  },
+  {
+    "hash": 2671,
+    "item-id": 2671,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4720,
+    "item-id": 4720,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 2673,
+    "item-id": 2673,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4722,
+    "item-id": 4722,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 2675,
+    "item-id": 2675,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4724,
+    "item-id": 4724,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4726,
+    "item-id": 4726,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 4728,
+    "item-id": 4728,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4730,
+    "item-id": 4730,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4732,
+    "item-id": 4732,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4734,
+    "item-id": 4734,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4736,
+    "item-id": 4736,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4738,
+    "item-id": 4738,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4745,
+    "item-id": 4745,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4747,
+    "item-id": 4747,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 0
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 2
+      }
+    ]
+  },
+  {
+    "hash": 4749,
+    "item-id": 4749,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4751,
+    "item-id": 4751,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4753,
+    "item-id": 4753,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4755,
+    "item-id": 4755,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 4757,
+    "item-id": 4757,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4759,
+    "item-id": 4759,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 6889,
+    "item-id": 6889,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 6894,
+    "item-id": 6894,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 6895,
+    "item-id": 6895,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 6897,
+    "item-id": 6897,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 4856,
+    "item-id": 4856,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4857,
+    "item-id": 4857,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4858,
+    "item-id": 4858,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4859,
+    "item-id": 4859,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 6908,
+    "item-id": 6908,
+    "requirement": [
+      {
+        "requiredLevel": 45,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4862,
+    "item-id": 4862,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 6910,
+    "item-id": 6910,
+    "requirement": [
+      {
+        "requiredLevel": 50,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4863,
+    "item-id": 4863,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4864,
+    "item-id": 4864,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 6912,
+    "item-id": 6912,
+    "requirement": [
+      {
+        "requiredLevel": 55,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4865,
+    "item-id": 4865,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 6914,
+    "item-id": 6914,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4868,
+    "item-id": 4868,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 6916,
+    "item-id": 6916,
+    "requirement": [
+      {
+        "requiredLevel": 25,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 50,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4869,
+    "item-id": 4869,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4870,
+    "item-id": 4870,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 6918,
+    "item-id": 6918,
+    "requirement": [
+      {
+        "requiredLevel": 25,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 50,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4871,
+    "item-id": 4871,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 6920,
+    "item-id": 6920,
+    "requirement": [
+      {
+        "requiredLevel": 25,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 50,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4874,
+    "item-id": 4874,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 6922,
+    "item-id": 6922,
+    "requirement": [
+      {
+        "requiredLevel": 25,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 50,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4875,
+    "item-id": 4875,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4876,
+    "item-id": 4876,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 6924,
+    "item-id": 6924,
+    "requirement": [
+      {
+        "requiredLevel": 25,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 50,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4877,
+    "item-id": 4877,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4880,
+    "item-id": 4880,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4881,
+    "item-id": 4881,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4882,
+    "item-id": 4882,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4883,
+    "item-id": 4883,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4886,
+    "item-id": 4886,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4887,
+    "item-id": 4887,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4888,
+    "item-id": 4888,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4889,
+    "item-id": 4889,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4892,
+    "item-id": 4892,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4893,
+    "item-id": 4893,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4894,
+    "item-id": 4894,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4895,
+    "item-id": 4895,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 802,
+    "item-id": 802,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4898,
+    "item-id": 4898,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 803,
+    "item-id": 803,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4899,
+    "item-id": 4899,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4900,
+    "item-id": 4900,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 805,
+    "item-id": 805,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4901,
+    "item-id": 4901,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 808,
+    "item-id": 808,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4904,
+    "item-id": 4904,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 809,
+    "item-id": 809,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4905,
+    "item-id": 4905,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 810,
+    "item-id": 810,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4906,
+    "item-id": 4906,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 811,
+    "item-id": 811,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4907,
+    "item-id": 4907,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 814,
+    "item-id": 814,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4910,
+    "item-id": 4910,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 815,
+    "item-id": 815,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4911,
+    "item-id": 4911,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 816,
+    "item-id": 816,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4912,
+    "item-id": 4912,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 817,
+    "item-id": 817,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4913,
+    "item-id": 4913,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4916,
+    "item-id": 4916,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4917,
+    "item-id": 4917,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4918,
+    "item-id": 4918,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4919,
+    "item-id": 4919,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 6967,
+    "item-id": 6967,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4922,
+    "item-id": 4922,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 827,
+    "item-id": 827,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4923,
+    "item-id": 4923,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 828,
+    "item-id": 828,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4924,
+    "item-id": 4924,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 829,
+    "item-id": 829,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4925,
+    "item-id": 4925,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 830,
+    "item-id": 830,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4928,
+    "item-id": 4928,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 833,
+    "item-id": 833,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4929,
+    "item-id": 4929,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 834,
+    "item-id": 834,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4930,
+    "item-id": 4930,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 835,
+    "item-id": 835,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4931,
+    "item-id": 4931,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 836,
+    "item-id": 836,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4934,
+    "item-id": 4934,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4935,
+    "item-id": 4935,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4936,
+    "item-id": 4936,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4937,
+    "item-id": 4937,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 843,
+    "item-id": 843,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4940,
+    "item-id": 4940,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4941,
+    "item-id": 4941,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4942,
+    "item-id": 4942,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4943,
+    "item-id": 4943,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 849,
+    "item-id": 849,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4946,
+    "item-id": 4946,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4947,
+    "item-id": 4947,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4948,
+    "item-id": 4948,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 853,
+    "item-id": 853,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4949,
+    "item-id": 4949,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 70,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4952,
+    "item-id": 4952,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 857,
+    "item-id": 857,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4953,
+    "item-id": 4953,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4954,
+    "item-id": 4954,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4955,
+    "item-id": 4955,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 861,
+    "item-id": 861,
+    "requirement": [
+      {
+        "requiredLevel": 50,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4958,
+    "item-id": 4958,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4959,
+    "item-id": 4959,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4960,
+    "item-id": 4960,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 865,
+    "item-id": 865,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4961,
+    "item-id": 4961,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 866,
+    "item-id": 866,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 867,
+    "item-id": 867,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 868,
+    "item-id": 868,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4964,
+    "item-id": 4964,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 869,
+    "item-id": 869,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4965,
+    "item-id": 4965,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4966,
+    "item-id": 4966,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4967,
+    "item-id": 4967,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 872,
+    "item-id": 872,
+    "requirement": [
+      {
+        "requiredLevel": 5,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 873,
+    "item-id": 873,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 874,
+    "item-id": 874,
+    "requirement": [
+      {
+        "requiredLevel": 10,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4970,
+    "item-id": 4970,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 875,
+    "item-id": 875,
+    "requirement": [
+      {
+        "requiredLevel": 30,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4971,
+    "item-id": 4971,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 876,
+    "item-id": 876,
+    "requirement": [
+      {
+        "requiredLevel": 40,
+        "skillId": 4
+      }
+    ]
+  },
+  {
+    "hash": 4972,
+    "item-id": 4972,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4973,
+    "item-id": 4973,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4976,
+    "item-id": 4976,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4977,
+    "item-id": 4977,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4978,
+    "item-id": 4978,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4979,
+    "item-id": 4979,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4982,
+    "item-id": 4982,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4983,
+    "item-id": 4983,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4984,
+    "item-id": 4984,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4985,
+    "item-id": 4985,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4988,
+    "item-id": 4988,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4989,
+    "item-id": 4989,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4990,
+    "item-id": 4990,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4991,
+    "item-id": 4991,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4994,
+    "item-id": 4994,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4995,
+    "item-id": 4995,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4996,
+    "item-id": 4996,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4997,
+    "item-id": 4997,
+    "requirement": [
+      {
+        "requiredLevel": 70,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 3054,
+    "item-id": 3054,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 7158,
+    "item-id": 7158,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 0
+      }
+    ]
+  },
+  {
+    "hash": 4087,
+    "item-id": 4087,
+    "requirement": [
+      {
+        "requiredLevel": 60,
+        "skillId": 1
+      }
+    ]
+  },
+  {
+    "hash": 4089,
+    "item-id": 4089,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4091,
+    "item-id": 4091,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4093,
+    "item-id": 4093,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  },
+  {
+    "hash": 4095,
+    "item-id": 4095,
+    "requirement": [
+      {
+        "requiredLevel": 20,
+        "skillId": 1
+      },
+      {
+        "requiredLevel": 40,
+        "skillId": 6
+      }
+    ]
+  }
+]

@@ -26,7 +26,6 @@ public class Shop {
 
     // TODO: Set of players currently viewing the shop to avoid looping through
     // everyone online.
-    // TODO: More functionality for general stores and special stores.
 
     /** Items that are not allowed to be in a shop. */
     public static final int[] NO_SHOP_ITEMS = { 995 };
@@ -76,7 +75,7 @@ public class Shop {
      *            the currency this shop is using.
      */
     public Shop(int index, String name, Item[] items, boolean restockItems,
-            boolean sellItems, Currency currency) {
+        boolean sellItems, Currency currency) {
         this.index = index;
         this.name = name;
         this.restockItems = restockItems;
@@ -84,8 +83,8 @@ public class Shop {
         this.currency = currency;
         this.container.setItems(items);
         this.shopMap = new HashMap<>(container.capacity());
-        Arrays.stream(items).filter(Objects::nonNull)
-                .forEach(item -> shopMap.put(item.getId(), item.getAmount()));
+        Arrays.stream(items).filter(Objects::nonNull).forEach(
+            item -> shopMap.put(item.getId(), item.getAmount()));
     }
 
     /**
@@ -96,9 +95,9 @@ public class Shop {
      */
     public void openShop(Player player) {
         player.getPacketBuilder().sendUpdateItems(3823,
-                player.getInventory().toArray());
+            player.getInventory().toArray());
         player.getPacketBuilder().sendUpdateItems(3900, container.toArray(),
-                container.size());
+            container.size());
         player.setOpenShopId(index);
         player.getPacketBuilder().sendInventoryInterface(3824, 3822);
         player.getPacketBuilder().sendString(name, 3901);
@@ -117,7 +116,7 @@ public class Shop {
         // Check if the item you are buying is at 0 stock.
         if (item.getAmount() == 0) {
             player.getPacketBuilder().sendMessage(
-                    "There is none of this item left in stock!");
+                "There is none of this item left in stock!");
             return;
         }
 
@@ -130,18 +129,17 @@ public class Shop {
         // buy this item.
         if (currency == Currency.COINS) {
             if (!(currency.getCurrency().getAmount(player) >= (item
-                    .getDefinition().getGeneralStorePrice() * item.getAmount()))) {
+                .getDefinition().getGeneralStorePrice() * item.getAmount()))) {
                 player.getPacketBuilder().sendMessage(
-                        "You do not have enough coins to buy this item.");
+                    "You do not have enough coins to buy this item.");
                 return;
             }
         } else {
             if (!(currency.getCurrency().getAmount(player) >= (item
-                    .getDefinition().getSpecialStorePrice() * item.getAmount()))) {
-                player.getPacketBuilder()
-                        .sendMessage(
-                                "You do not have enough " + currency.name()
-                                        .toLowerCase().replaceAll("_", " ") + " to buy this item.");
+                .getDefinition().getSpecialStorePrice() * item.getAmount()))) {
+                player.getPacketBuilder().sendMessage(
+                    "You do not have enough " + currency.name().toLowerCase()
+                        .replaceAll("_", " ") + " to buy this item.");
                 return;
             }
         }
@@ -158,49 +156,50 @@ public class Shop {
             item.setAmount(player.getInventory().getRemainingSlots());
 
             if (item.getAmount() == 0) {
-                player.getPacketBuilder()
-                        .sendMessage(
-                                "You do not have enough space in your inventory to buy this item!");
+                player
+                    .getPacketBuilder()
+                    .sendMessage(
+                        "You do not have enough space in your inventory to buy this item!");
                 return;
             }
         }
 
         // Here we actually buy the item.
         if (player.getInventory().getRemainingSlots() >= item.getAmount() && !item
-                .getDefinition().isStackable() || player.getInventory()
-                .getRemainingSlots() >= 1 && item.getDefinition().isStackable() || player
-                .getInventory().contains(item.getId()) && item.getDefinition()
-                .isStackable()) {
+            .getDefinition().isStackable() || player.getInventory()
+            .getRemainingSlots() >= 1 && item.getDefinition().isStackable() || player
+            .getInventory().contains(item.getId()) && item.getDefinition()
+            .isStackable()) {
 
             if (shopMap.containsKey(item.getId())) {
-                container.getItem(item.getId()).decrementAmountBy(
-                        item.getAmount());
+                container.getItem(item.getId()).ifPresent(
+                    i -> i.decrementAmountBy(item.getAmount()));
             } else if (!shopMap.containsKey(item.getId())) {
                 container.remove(item);
             }
 
             if (currency == Currency.COINS) {
                 currency.getCurrency().give(
-                        player,
-                        item.getAmount() * item.getDefinition()
-                                .getGeneralStorePrice());
+                    player,
+                    item.getAmount() * item.getDefinition()
+                        .getGeneralStorePrice());
             } else {
                 currency.getCurrency().give(
-                        player,
-                        item.getAmount() * item.getDefinition()
-                                .getSpecialStorePrice());
+                    player,
+                    item.getAmount() * item.getDefinition()
+                        .getSpecialStorePrice());
             }
 
             player.getInventory().add(item);
         } else {
             player.getPacketBuilder().sendMessage(
-                    "You don't have enough space in your inventory.");
+                "You don't have enough space in your inventory.");
             return;
         }
 
         // Update the players inventory.
         player.getPacketBuilder().sendUpdateItems(3823,
-                player.getInventory().toArray());
+            player.getInventory().toArray());
 
         // Update the shop for anyone who has it open.
         int size = container.size();
@@ -211,7 +210,7 @@ public class Shop {
 
             if (p.getOpenShopId() == index) {
                 p.getPacketBuilder().sendUpdateItems(3900, container.toArray(),
-                        size);
+                    size);
             }
         }
 
@@ -239,17 +238,17 @@ public class Shop {
         // Check if we can sell to this shop.
         if (!sellItems) {
             player.getPacketBuilder().sendMessage(
-                    "The shop owner doesn't want any of your items.");
+                "The shop owner doesn't want any of your items.");
             return;
         }
 
         // Checks if this item is allowed to be sold.
         for (int i : Shop.NO_SHOP_ITEMS) {
             if (i == item.getId()) {
-                player.getPacketBuilder()
-                        .sendMessage(
-                                "You can't sell " + item.getDefinition()
-                                        .getItemName() + " to this store.");
+                player
+                    .getPacketBuilder()
+                    .sendMessage(
+                        "You can't sell " + item.getDefinition().getItemName() + " to this store.");
                 return;
             }
         }
@@ -262,57 +261,60 @@ public class Shop {
         // Block if this shop isn't a general store and you are trying to sell
         // an item that the shop doesn't even have in stock.
         if (!container.contains(item.getId()) && !name
-                .equalsIgnoreCase("General Store")) {
-            player.getPacketBuilder()
-                    .sendMessage(
-                            "You can't sell " + item.getDefinition()
-                                    .getItemName() + " to this store.");
+            .equalsIgnoreCase("General Store")) {
+            player
+                .getPacketBuilder()
+                .sendMessage(
+                    "You can't sell " + item.getDefinition().getItemName() + " to this store.");
             return;
         }
 
         // Checks if this shop has room for the item you are trying to sell.
         if (!container.spaceFor(item)) {
-            player.getPacketBuilder()
-                    .sendMessage(
-                            "There is no room for the item you are trying to sell in this store!");
+            player
+                .getPacketBuilder()
+                .sendMessage(
+                    "There is no room for the item you are trying to sell in this store!");
             return;
         }
 
         // Checks if you have enough space in your inventory to receive the
         // currency.
         if (player.getInventory().getRemainingSlots() == 0 && !currency
-                .getCurrency().inventoryFull(player)) {
-            player.getPacketBuilder()
-                    .sendMessage(
-                            "You do not have enough space in your inventory to sell this item!");
+            .getCurrency().inventoryFull(player)) {
+            player
+                .getPacketBuilder()
+                .sendMessage(
+                    "You do not have enough space in your inventory to sell this item!");
             return;
         }
 
         // Sets the amount to what you have if you try and buy more.
         if (item.getAmount() > player.getInventory().totalAmount(item.getId()) && !item
-                .getDefinition().isStackable()) {
+            .getDefinition().isStackable()) {
             item.setAmount(player.getInventory().totalAmount(item.getId()));
         } else if (item.getAmount() > player.getInventory().get(fromSlot)
-                .getAmount() && item.getDefinition().isStackable()) {
+            .getAmount() && item.getDefinition().isStackable()) {
             item.setAmount(player.getInventory().get(fromSlot).getAmount());
         }
 
         // Actually sell the item.
         player.getInventory().remove(item, fromSlot);
         currency.getCurrency().recieve(player,
-                item.getAmount() * calculateSellingPrice(item));
+            item.getAmount() * calculateSellingPrice(item));
 
         // Add on to the item if its in the shop already or add it to a whole
         // new slot if its not.
         if (container.contains(item.getId())) {
-            container.getItem(item.getId()).incrementAmountBy(item.getAmount());
+            container.getItem(item.getId()).ifPresent(
+                i -> i.incrementAmountBy(item.getAmount()));
         } else if (!container.contains(item.getId())) {
             container.add(item);
         }
 
         // Update your inventory.
         player.getPacketBuilder().sendUpdateItems(3823,
-                player.getInventory().toArray());
+            player.getInventory().toArray());
 
         // Update the shop for anyone who has it open.
         int size = container.size();
@@ -323,7 +325,7 @@ public class Shop {
 
             if (p.getOpenShopId() == index) {
                 p.getPacketBuilder().sendUpdateItems(3900, container.toArray(),
-                        size);
+                    size);
             }
         }
     }
@@ -340,33 +342,32 @@ public class Shop {
     public void getSellingPrice(Player player, Item item) {
 
         // Checks if this item is able to be sold.
-        for (int i : Shop.NO_SHOP_ITEMS) {
-            if (i == item.getId()) {
-                player.getPacketBuilder()
-                        .sendMessage(
-                                "You can't sell " + item.getDefinition()
-                                        .getItemName() + " here.");
+        if (Arrays.stream(NO_SHOP_ITEMS).anyMatch(i -> i == item.getId())) {
+                player
+                    .getPacketBuilder()
+                    .sendMessage(
+                        "You can't sell " + item.getDefinition().getItemName() + " here.");
                 return;
-            }
         }
 
         // Block if this shop isn't a general store and you are trying to sell
         // an item that the shop doesn't even have in stock.
         if (!container.contains(item.getId()) && !name
-                .equalsIgnoreCase("General Store")) {
-            player.getPacketBuilder()
-                    .sendMessage(
-                            "You can't sell " + item.getDefinition()
-                                    .getItemName() + " to this store.");
+            .equalsIgnoreCase("General Store")) {
+            player
+                .getPacketBuilder()
+                .sendMessage(
+                    "You can't sell " + item.getDefinition().getItemName() + " to this store.");
             return;
         }
 
         // Send the actual value here.
-        player.getPacketBuilder()
-                .sendMessage(
-                        item.getDefinition().getItemName() + ": shop will buy for " + calculateSellingPrice(item) + " " + currency
-                                .name().toLowerCase().replaceAll("_", " ") + "" + Shop
-                                .formatPrice(calculateSellingPrice(item)) + ".");
+        player
+            .getPacketBuilder()
+            .sendMessage(
+            item.getDefinition().getItemName() + ": shop will buy for " + Shop
+                .formatPrice(calculateSellingPrice(item)) + " " + currency
+                .name().toLowerCase().replaceAll("_", " ") + ".");
     }
 
     /**
@@ -382,19 +383,21 @@ public class Shop {
 
         // Send the value of the item based on the currency.
         if (currency == Currency.COINS) {
-            player.getPacketBuilder()
-                    .sendMessage(
-                            item.getDefinition().getItemName() + ": shop will sell for " + Shop
-                                    .formatPrice(item.getDefinition()
-                                            .getGeneralStorePrice()) + " " + currency
-                                    .name().toLowerCase().replaceAll("_", " ") + ".");
+            player
+                .getPacketBuilder()
+                .sendMessage(
+                    item.getDefinition().getItemName() + ": shop will sell for " + Shop
+                        .formatPrice(item.getDefinition()
+                            .getGeneralStorePrice()) + " " + currency.name()
+                        .toLowerCase().replaceAll("_", " ") + ".");
         } else {
-            player.getPacketBuilder()
-                    .sendMessage(
-                            item.getDefinition().getItemName() + ": shop will sell for " + Shop
-                                    .formatPrice(item.getDefinition()
-                                            .getSpecialStorePrice()) + " " + currency
-                                    .name().toLowerCase().replaceAll("_", " ") + ".");
+            player
+                .getPacketBuilder()
+                .sendMessage(
+                    item.getDefinition().getItemName() + ": shop will sell for " + Shop
+                        .formatPrice(item.getDefinition()
+                            .getSpecialStorePrice()) + " " + currency.name()
+                        .toLowerCase().replaceAll("_", " ") + ".");
         }
     }
 
@@ -407,8 +410,8 @@ public class Shop {
      */
     private int calculateSellingPrice(Item item) {
         return (int) (currency == Currency.COINS ? Math.floor((item
-                .getDefinition().getGeneralStorePrice() / 2)) : Math
-                .floor((item.getDefinition().getSpecialStorePrice() / 2)));
+            .getDefinition().getGeneralStorePrice() / 2)) : Math.floor((item
+            .getDefinition().getSpecialStorePrice() / 2)));
     }
 
     /** Submits a {@link Task} to re-stock this shop if needed. */
@@ -501,17 +504,17 @@ public class Shop {
             @Override
             public void load(JsonObject reader, Gson builder) {
                 Shop shop = new Shop(reader.get("id").getAsInt(), reader.get(
-                        "name").getAsString(), builder.fromJson(
-                        reader.get("items").getAsJsonArray(), Item[].class),
-                        reader.get("restock").getAsBoolean(), reader.get(
-                                "can-sell-items").getAsBoolean(),
-                        Currency.valueOf(reader.get("currency").getAsString()));
+                    "name").getAsString(), builder.fromJson(reader.get("items")
+                    .getAsJsonArray(), Item[].class), reader.get("restock")
+                    .getAsBoolean(), reader.get("can-sell-items")
+                    .getAsBoolean(), Currency.valueOf(reader.get("currency")
+                    .getAsString()));
 
                 for (int id : NO_SHOP_ITEMS) {
                     if (shop.getShopContainer().contains(id)) {
                         throw new IllegalStateException(
-                                "Item not allowed to be sold in shops: " + ItemDefinition
-                                        .getDefinitions()[id].getItemName());
+                            "Item not allowed to be sold in shops: " + ItemDefinition
+                                .getDefinitions()[id].getItemName());
                     }
                 }
 
@@ -635,7 +638,7 @@ public class Shop {
 
                             if (p.getOpenShopId() == shop.index) {
                                 p.getPacketBuilder().sendUpdateItems(3900,
-                                        shop.container.toArray(), size);
+                                    shop.container.toArray(), size);
                             }
                         }
                     }

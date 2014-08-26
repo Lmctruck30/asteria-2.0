@@ -82,42 +82,42 @@ public class ItemDefinition {
                 definitions[index].itemId = index;
                 definitions[index].itemName = reader.get("name").getAsString();
                 definitions[index].itemDescription = reader.get("examine")
-                        .getAsString();
+                    .getAsString();
                 definitions[index].equipmentSlot = reader.get("equipmentType")
-                        .getAsInt();
+                    .getAsInt();
                 definitions[index].isNoted = reader.get("noted").getAsBoolean();
                 definitions[index].isNoteable = reader.get("noteable")
-                        .getAsBoolean();
+                    .getAsBoolean();
                 definitions[index].isStackable = reader.get("stackable")
-                        .getAsBoolean();
+                    .getAsBoolean();
                 definitions[index].unNotedId = reader.get("parentId")
-                        .getAsInt();
+                    .getAsInt();
                 definitions[index].specialStorePrice = reader.get(
-                        "specialStorePrice").getAsInt();
+                    "specialStorePrice").getAsInt();
                 definitions[index].generalStorePrice = reader.get(
-                        "generalStorePrice").getAsInt();
+                    "generalStorePrice").getAsInt();
                 definitions[index].highAlchValue = reader.get("highAlchValue")
-                        .getAsInt();
+                    .getAsInt();
                 definitions[index].lowAlchValue = reader.get("lowAlchValue")
-                        .getAsInt();
+                    .getAsInt();
                 definitions[index].weight = reader.get("weight").getAsDouble();
-                definitions[index].bonus = builder.fromJson(
-                        reader.get("bonuses").getAsJsonArray(), int[].class);
+                definitions[index].bonus = builder.fromJson(reader.get(
+                    "bonuses").getAsJsonArray(), int[].class);
 
-                if (definitions[index].equipmentSlot == Utility.EQUIPMENT_SLOT_ARROWS
-                        || definitions[index].itemName.contains("knife")
-                        || definitions[index].itemName.contains("dart")
-                        || definitions[index].itemName.contains("thrownaxe")
-                        || definitions[index].itemName.contains("javelin")) {
+                if (definitions[index].equipmentSlot == Utility.EQUIPMENT_SLOT_ARROWS || definitions[index].itemName
+                    .contains("knife") || definitions[index].itemName
+                    .contains("dart") || definitions[index].itemName
+                    .contains("thrownaxe") || definitions[index].itemName
+                    .contains("javelin")) {
                     definitions[index].bonus[11] = 0;
                 }
 
                 definitions[index].twoHanded = reader.get("twoHanded")
-                        .getAsBoolean();
+                    .getAsBoolean();
                 definitions[index].platebody = reader.get("platebody")
-                        .getAsBoolean();
+                    .getAsBoolean();
                 definitions[index].fullHelm = reader.get("fullHelm")
-                        .getAsBoolean();
+                    .getAsBoolean();
             }
 
             @Override

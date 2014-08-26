@@ -1,9 +1,11 @@
 package com.asteria.world.entity.combat.range;
 
+import java.util.Optional;
+
 import com.asteria.util.Utility;
 import com.asteria.world.entity.combat.CombatFactory;
 import com.asteria.world.entity.player.Player;
-import com.asteria.world.entity.player.content.AssignWeaponInterface.WeaponInterface;
+import com.asteria.world.entity.player.content.WeaponInterfaces.WeaponInterface;
 
 /**
  * A table of constants that hold data for all ranged ammo.
@@ -11,8 +13,6 @@ import com.asteria.world.entity.player.content.AssignWeaponInterface.WeaponInter
  * @author lare96
  */
 public enum CombatRangedAmmo {
-
-    // TODO: Load this externally through a json file.
 
     /** A collection of arrows. */
     BRONZE_ARROW("Bronze arrow", 7, 10, 44, 3, 43, 31, 19),
@@ -100,7 +100,7 @@ public enum CombatRangedAmmo {
      *            the graphic of this ranged ammo.
      */
     private CombatRangedAmmo(String name, int strength, int projectile,
-            int delay, int speed, int startHeight, int endHeight, int graphic) {
+        int delay, int speed, int startHeight, int endHeight, int graphic) {
         this.name = name;
         this.strength = strength;
         this.projectile = projectile;
@@ -119,23 +119,22 @@ public enum CombatRangedAmmo {
      *            the player to get the ammo constant for.
      * @return the ammo constant.
      */
-    public static CombatRangedAmmo getPlayerAmmo(Player player) {
+    public static Optional<CombatRangedAmmo> getPlayerAmmo(Player player) {
         if (CombatFactory.crystalBow(player)) {
-            return CombatRangedAmmo.CRYSTAL_ARROW;
+            return Optional.of(CombatRangedAmmo.CRYSTAL_ARROW);
         }
 
         int slot = player.getWeapon() == WeaponInterface.SHORTBOW || player
-                .getWeapon() == WeaponInterface.LONGBOW || player.getWeapon() == WeaponInterface.CROSSBOW ? Utility.EQUIPMENT_SLOT_ARROWS
-                : Utility.EQUIPMENT_SLOT_WEAPON;
+            .getWeapon() == WeaponInterface.LONGBOW || player.getWeapon() == WeaponInterface.CROSSBOW ? Utility.EQUIPMENT_SLOT_ARROWS
+            : Utility.EQUIPMENT_SLOT_WEAPON;
 
         for (CombatRangedAmmo ammo : CombatRangedAmmo.values()) {
-            if (player.getEquipment().get(slot)
-                    .getDefinition().getItemName().toLowerCase()
-                    .contains(ammo.name.toLowerCase())) {
-                return ammo;
+            if (player.getEquipment().get(slot).getDefinition().getItemName()
+                .toLowerCase().contains(ammo.name.toLowerCase())) {
+                return Optional.of(ammo);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     /**

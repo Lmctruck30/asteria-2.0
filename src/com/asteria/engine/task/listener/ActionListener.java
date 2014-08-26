@@ -7,13 +7,13 @@ import com.asteria.engine.task.Task;
  * 
  * @author lare96
  */
-public abstract class EventListener extends Task {
+public abstract class ActionListener extends Task {
 
     /** If the listener should be shutdown once the code has been executed. */
     private boolean shutdown;
 
     /**
-     * Create a new {@link EventListener}.
+     * Create a new {@link ActionListener}.
      * 
      * @param shutdown
      *            if the listener should be shutdown once the code has been
@@ -21,37 +21,37 @@ public abstract class EventListener extends Task {
      * @param rate
      *            the rate in which the code will be executed.
      */
-    public EventListener(boolean shutdown, int rate) {
+    public ActionListener(boolean shutdown, int rate) {
         super(rate, true);
         this.shutdown = shutdown;
     }
 
     /**
-     * Create a new {@link EventListener}.
+     * Create a new {@link ActionListener}.
      * 
      * @param shutdown
      *            if the listener should be shutdown once the code has been
      *            executed.
      */
-    public EventListener(boolean shutdown) {
+    public ActionListener(boolean shutdown) {
         this(shutdown, 1);
     }
 
     /**
-     * Create a new {@link EventListener}.
+     * Create a new {@link ActionListener}.
      * 
      * @param rate
      *            the rate in which the code will be executed.
      */
-    public EventListener(int rate) {
+    public ActionListener(int rate) {
         this(true, rate);
     }
 
     /**
-     * Create a new {@link EventListener} that will be listen in <tt>600</tt>ms
+     * Create a new {@link ActionListener} that will be listen in <tt>600</tt>ms
      * intervals and will shutdown once the code is executed.
      */
-    public EventListener() {
+    public ActionListener() {
         this(true, 1);
     }
 
@@ -63,7 +63,7 @@ public abstract class EventListener extends Task {
      *         <code>false</code> if the event has occurred and the listener
      *         should execute the code.
      */
-    public abstract boolean listenFor();
+    public abstract boolean listenWhile();
 
     /** The code that will be executed once {@link #listenFor} is unflagged. */
     public abstract void run();
@@ -72,7 +72,7 @@ public abstract class EventListener extends Task {
     public void execute() {
 
         // Don't proceed unless unflagged.
-        if (listenFor()) {
+        if (listenWhile()) {
             return;
         }
 

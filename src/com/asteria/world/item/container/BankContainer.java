@@ -84,6 +84,8 @@ public class BankContainer extends ItemContainer {
      *         the call, <code>false</code> otherwise.
      */
     public boolean deposit(Item item) {
+        item.setId(item.getDefinition().isNoted() ? item.getDefinition()
+            .getUnNotedId() : item.getId());
         int slot = getFreeSlot();
         boolean contains = contains(item.getId());
 

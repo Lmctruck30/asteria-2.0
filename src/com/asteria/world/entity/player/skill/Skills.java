@@ -1,9 +1,14 @@
 package com.asteria.world.entity.player.skill;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.asteria.util.Utility;
 import com.asteria.world.entity.Graphic;
 import com.asteria.world.entity.UpdateFlags.Flag;
 import com.asteria.world.entity.player.Player;
+import com.asteria.world.entity.player.skill.event.SkillEvent;
+import com.asteria.world.entity.player.skill.impl.Fishing;
 
 /**
  * A class that holds various utility methods for managing a player's
@@ -13,13 +18,15 @@ import com.asteria.world.entity.player.Player;
  */
 public final class Skills {
 
+    /** A set of all of the skill events. */
+    public static final Map<String, SkillEvent> SKILL_EVENTS = new HashMap<>();
+
     /** The indexes of the skills in the player's skill array. */
     public static final int ATTACK = 0, DEFENCE = 1, STRENGTH = 2,
-            HITPOINTS = 3, RANGED = 4, PRAYER = 5, MAGIC = 6, COOKING = 7,
-            WOODCUTTING = 8, FLETCHING = 9, FISHING = 10, FIREMAKING = 11,
-            CRAFTING = 12, SMITHING = 13, MINING = 14, HERBLORE = 15,
-            AGILITY = 16, THIEVING = 17, SLAYER = 18, FARMING = 19,
-            RUNECRAFTING = 20;
+        HITPOINTS = 3, RANGED = 4, PRAYER = 5, MAGIC = 6, COOKING = 7,
+        WOODCUTTING = 8, FLETCHING = 9, FISHING = 10, FIREMAKING = 11,
+        CRAFTING = 12, SMITHING = 13, MINING = 14, HERBLORE = 15, AGILITY = 16,
+        THIEVING = 17, SLAYER = 18, FARMING = 19, RUNECRAFTING = 20;
 
     /**
      * The experience multiplier. All experience will be multiplied by this
@@ -28,121 +35,13 @@ public final class Skills {
     public static final int EXP_RATE_MULTIPLIER = 1;
 
     /**
-     * Holds constant data for {@link Skill}s.
+     * Loads all skills in the specified directory.
      * 
-     * @author lare96
+     * @throws Exception
+     *             if any errors occur while loading skills.
      */
-    public enum SkillData {
-        ATTACK(6248, 6249, 6247),
-        DEFENCE(6254, 6255, 6253),
-        STRENGTH(6207, 6208, 6206),
-        HITPOINTS(6217, 6218, 6216),
-        RANGED(5453, 6114, 4443),
-        PRAYER(6243, 6244, 6242, SkillEvent.PRAYER),
-        MAGIC(6212, 6213, 6211),
-        COOKING(6227, 6228, 6226, SkillEvent.COOKING),
-        WOODCUTTING(4273, 4274, 4272, SkillEvent.WOODCUTTING),
-        FLETCHING(6232, 6233, 6231, SkillEvent.FLETCHING),
-        FISHING(6259, 6260, 6258, SkillEvent.FISHING),
-        FIREMAKING(4283, 4284, 4282, SkillEvent.FIREMAKING),
-        CRAFTING(6264, 6265, 6263, SkillEvent.CRAFTING),
-        SMITHING(6222, 6223, 6221, SkillEvent.SMITHING),
-        MINING(4417, 4438, 4416, SkillEvent.MINING),
-        HERBLORE(6238, 6239, 6237, SkillEvent.HERBLORE),
-        AGILITY(4278, 4279, 4277, SkillEvent.AGILITY),
-        THIEVING(4263, 4264, 4261, SkillEvent.THIEVING),
-        SLAYER(12123, 12124, 12122, SkillEvent.SLAYER),
-        FARMING(4889, 4890, 4887, SkillEvent.FARMING),
-        RUNECRAFTING(4268, 4269, 4267, SkillEvent.RUNECRAFTING);
-
-        /** The lines that level up text will be printed on. */
-        private int firstLine, secondLine;
-
-        /** The chatbox interface displayed on level up. */
-        private int chatbox;
-
-        /** The index in the skill event array. */
-        private int index;
-
-        /**
-         * Create a new {@link SkillData}.
-         * 
-         * @param firstLine
-         *            the first line that level up text will be printed on.
-         * @param secondLine
-         *            the second line that level up text will be printed on.
-         * @param chatbox
-         *            the chatbox interface displayed on level up.
-         * @param index
-         *            the index in the skill event array.
-         */
-        private SkillData(int firstLine, int secondLine, int chatbox, int index) {
-            this.firstLine = firstLine;
-            this.secondLine = secondLine;
-            this.chatbox = chatbox;
-            this.index = index;
-        }
-
-        /**
-         * Create a new {@link SkillData} with the default skill event index.
-         * 
-         * @param firstLine
-         *            the first line that level up text will be printed on.
-         * @param secondLine
-         *            the second line that level up text will be printed on.
-         * @param chatbox
-         *            the chatbox interface displayed on level up.
-         */
-        private SkillData(int firstLine, int secondLine, int chatbox) {
-            this(firstLine, secondLine, chatbox, -1);
-        }
-
-        /**
-         * Gets the first line that level up text will be printed on.
-         * 
-         * @return the first line that level up text will be printed on.
-         */
-        public int getFirstLine() {
-            return firstLine;
-        }
-
-        /**
-         * Gets the second line that level up text will be printed on.
-         * 
-         * @return the second line that level up text will be printed on.
-         */
-        public int getSecondLine() {
-            return secondLine;
-        }
-
-        /**
-         * Gets the chatbox interface displayed on level up.
-         * 
-         * @return the chatbox interface displayed on level up.
-         */
-        public int getChatbox() {
-            return chatbox;
-        }
-
-        /**
-         * Gets the index in the skill event array.
-         * 
-         * @return the index in the skill event array.
-         */
-        public int getIndex() {
-            return index;
-        }
-
-        /**
-         * Gets a skill data constant instance by its position in the enum.
-         * 
-         * @param position
-         *            the position of the constant to grab.
-         * @return the constant on the argued position.
-         */
-        public static SkillData getSkill(int position) {
-            return values()[position];
-        }
+    public static void loadSkills() throws Exception {
+        SKILL_EVENTS.put("Fishing", new Fishing());
     }
 
     /**
@@ -165,13 +64,12 @@ public final class Skills {
 
         // Multiply the argued experience and add it.
         amount *= Skills.EXP_RATE_MULTIPLIER;
-
         player.getSkills()[skill].setExperience(experience + amount);
 
         // Check if we are able to level up and do so if needed.
         if (!(oldLevel >= 99)) {
             int newLevel = player.getSkills()[skill]
-                    .calculateLevelForExperience();
+                .calculateLevelForExperience();
 
             if (oldLevel < newLevel) {
                 if (skill != 3) {
@@ -181,7 +79,7 @@ public final class Skills {
 
                     player.getSkills()[skill].setLevel(old + 1, true);
                 }
-                levelUp(player, SkillData.getSkill(skill));
+                levelUp(player, SkillData.getSkill(skill), skill);
                 player.graphic(new Graphic(199));
                 player.getFlags().flag(Flag.APPEARANCE);
             }
@@ -198,27 +96,26 @@ public final class Skills {
      *            the player leveling up.
      * @param skill
      *            the skill being advanced a level.
+     * @param skillId
+     *            the identification for the skill.
      */
-    private static void levelUp(Player player, SkillData skill) {
+    private static void levelUp(Player player, SkillData skill, int skillId) {
 
         // Send the player an indication that they have leveled up.
-        player.getPacketBuilder()
-                .sendString(
-                        "@dre@Congratulations, you've just advanced " + Utility
-                                .appendIndefiniteArticle(skill.name()
-                                        .toLowerCase().replaceAll("_", " ")) + " level!",
-                        skill.getFirstLine());
-        player.getPacketBuilder()
-                .sendString(
-                        "Your " + skill.name().toLowerCase()
-                                .replaceAll("_", " ") + " level is now " + player
-                                .getSkills()[skill.ordinal()]
-                                .getLevelForExperience() + ".",
-                        skill.getSecondLine());
+        player.getPacketBuilder().sendString(
+            "@dre@Congratulations, you've just advanced " + Utility
+                .appendIndefiniteArticle(skill.name().toLowerCase().replaceAll(
+                    "_", " ")) + " level!", skill.getFirstLine());
+        player
+            .getPacketBuilder()
+            .sendString(
+                "Your " + skill.name().toLowerCase().replaceAll("_", " ") + " level is now " + player
+                    .getSkills()[skillId].getLevelForExperience() + ".",
+                skill.getSecondLine());
         player.getPacketBuilder().sendMessage(
-                "Congratulations, you've just advanced " + Utility
-                        .appendIndefiniteArticle(skill.name().toLowerCase()
-                                .replaceAll("_", " ")) + " level!");
+            "Congratulations, you've just advanced " + Utility
+                .appendIndefiniteArticle(skill.name().toLowerCase().replaceAll(
+                    "_", " ")) + " level!");
         player.getPacketBuilder().sendChatInterface(skill.getChatbox());
     }
 
@@ -249,7 +146,7 @@ public final class Skills {
 
         // Send the skill data to the client.
         player.getPacketBuilder().sendSkill(skill, s.getLevel(),
-                s.getExperience());
+            s.getExperience());
     }
 
     /**
@@ -261,8 +158,8 @@ public final class Skills {
     public static void refreshAll(Player player) {
 
         // Refresh all of the skills.
-        for (SkillData s : SkillData.values()) {
-            refresh(player, s.ordinal());
+        for (int i = 0; i < player.getSkills().length; i++) {
+            refresh(player, i);
         }
     }
 
@@ -301,8 +198,8 @@ public final class Skills {
     public static void restore(Player player, int skill) {
 
         // Restore it back to its original level.
-        player.getSkills()[skill].setLevel(
-                player.getSkills()[skill].getLevelForExperience(), true);
+        player.getSkills()[skill].setLevel(player.getSkills()[skill]
+            .getLevelForExperience(), true);
 
         // Refresh the skill after.
         refresh(player, skill);
@@ -317,8 +214,28 @@ public final class Skills {
     public static void restoreAll(Player player) {
 
         // Restore all of the skills.
-        for (SkillData s : SkillData.values()) {
-            restore(player, s.ordinal());
+        for (int i = 0; i < player.getSkills().length; i++) {
+            restore(player, i);
+        }
+    }
+
+    /**
+     * Fires all skill events if needed.
+     * 
+     * @param player
+     *            the player to fire skill events for.
+     */
+    public static final void fireSkillEvents(Player player) {
+
+        // Iterate through the registered skills and fire events.
+        for (SkillEvent skill : SKILL_EVENTS.values()) {
+            if (skill.skill().getIndex() == -1)
+                continue;
+
+            if (player.getSkillEvent()[skill.skill().getIndex()]) {
+                skill.stopSkill(player);
+                player.getSkillEvent()[skill.skill().getIndex()] = false;
+            }
         }
     }
 

@@ -1,5 +1,7 @@
 package com.asteria.world.entity.combat.magic;
 
+import java.util.Optional;
+
 import com.asteria.engine.task.Task;
 import com.asteria.engine.task.TaskManager;
 import com.asteria.world.entity.Animation;
@@ -18,34 +20,30 @@ import com.asteria.world.entity.npc.Npc;
 public abstract class CombatSpell extends Spell {
 
     @Override
-    public void startCast(final Entity cast, final Entity castOn) {
+    public void startCast(Entity cast, Entity castOn) {
 
         // First play the animation.
         if (cast.type() == EntityType.PLAYER) {
-            if (castAnimation() != null) {
-                cast.animation(castAnimation());
-            }
+            castAnimation().ifPresent(cast::animation);
         } else {
             Npc npc = (Npc) cast;
             npc.animation(new Animation(npc.getDefinition()
-                    .getAttackAnimation()));
+                .getAttackAnimation()));
         }
 
         // Then send the starting graphic.
-        if (startGraphic() != null) {
-            cast.graphic(startGraphic());
-        }
+        startGraphic().ifPresent(cast::graphic);
 
         // Finally send the projectile after two ticks.
-        if (castProjectile(cast, castOn) != null) {
+        castProjectile(cast, castOn).ifPresent(g -> {
             TaskManager.submit(new Task(2, false) {
                 @Override
                 public void execute() {
-                    castProjectile(cast, castOn).sendProjectile();
+                    g.sendProjectile();
                     this.cancel();
                 }
             });
-        }
+        });
     }
 
     /**
@@ -68,14 +66,14 @@ public abstract class CombatSpell extends Spell {
      * 
      * @return the animation played when the spell is cast.
      */
-    public abstract Animation castAnimation();
+    public abstract Optional<Animation> castAnimation();
 
     /**
      * The starting graphic played when the spell is cast.
      * 
      * @return the starting graphic played when the spell is cast.
      */
-    public abstract Graphic startGraphic();
+    public abstract Optional<Graphic> startGraphic();
 
     /**
      * The projectile played when this spell is cast.
@@ -87,14 +85,15 @@ public abstract class CombatSpell extends Spell {
      * 
      * @return the projectile played when this spell is cast.
      */
-    public abstract Projectile castProjectile(Entity cast, Entity castOn);
+    public abstract Optional<Projectile> castProjectile(Entity cast,
+        Entity castOn);
 
     /**
      * The ending graphic played when the spell hits the victim.
      * 
      * @return the ending graphic played when the spell hits the victim.
      */
-    public abstract Graphic endGraphic();
+    public abstract Optional<Graphic> endGraphic();
 
     /**
      * Fired when the spell hits the victim.
@@ -109,5 +108,5 @@ public abstract class CombatSpell extends Spell {
      *            the amount of damage inflicted by this spell.
      */
     public abstract void finishCast(Entity cast, Entity castOn,
-            boolean accurate, int damage);
+        boolean accurate, int damage);
 }

@@ -209,8 +209,8 @@ public class Skill {
      */
     public void setExperience(int experience) {
         this.experience = experience;
-        
-        if(this.experience > 2000000000) {
+
+        if (this.experience > 2000000000) {
             this.experience = 2000000000;
         }
     }

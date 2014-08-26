@@ -6,7 +6,7 @@ import com.asteria.engine.net.packet.PacketDecoder;
 import com.asteria.engine.net.packet.PacketOpcodeHeader;
 import com.asteria.world.World;
 import com.asteria.world.entity.player.Player;
-import com.asteria.world.entity.player.skill.SkillEvent;
+import com.asteria.world.entity.player.skill.Skills;
 
 /**
  * Sent when the player tries to follow another player.
@@ -25,13 +25,12 @@ public class DecodeFollowPlayerPacket extends PacketDecoder {
         }
         Player follow = World.getPlayers().get(followId);
 
-        if (follow == null
-                || !follow.getPosition().isViewableFrom(player.getPosition())
-                || follow.equals(player)) {
+        if (follow == null || !follow.getPosition().isViewableFrom(
+            player.getPosition()) || follow.equals(player)) {
             return;
         }
 
-        SkillEvent.fireSkillEvents(player);
+        Skills.fireSkillEvents(player);
         player.getMovementQueue().follow(follow);
     }
 }

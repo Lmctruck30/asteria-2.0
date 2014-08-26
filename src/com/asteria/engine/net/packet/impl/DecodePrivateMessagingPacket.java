@@ -63,14 +63,15 @@ public class DecodePrivateMessagingPacket extends PacketDecoder {
             }
 
             if (!player.getFriends().contains(to)) {
-                player.getPacketBuilder()
-                        .sendMessage(
-                                "You cannot send a message to a player not on your friends list!");
+                player
+                    .getPacketBuilder()
+                    .sendMessage(
+                        "You cannot send a message to a player not on your friends list!");
                 return;
             }
 
             player.getPrivateMessage().sendPrivateMessage(player, to, message,
-                    size);
+                size);
             break;
         }
     }

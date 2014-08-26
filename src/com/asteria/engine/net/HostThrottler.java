@@ -16,7 +16,7 @@ public class HostThrottler {
 
     /** A logger for printing debugging info. */
     private static Logger logger = Logger.getLogger(HostThrottler.class
-            .getSimpleName());
+        .getSimpleName());
 
     /** A map of hosts and their respective timers. */
     private static Map<String, Stopwatch> timeMap = new ConcurrentHashMap<>();
@@ -54,17 +54,16 @@ public class HostThrottler {
 
             // Get how many existing connections this host has.
             Integer connection = HostGateway.getHostMap().get(host) == null ? 0
-                    : HostGateway.getHostMap().get(host);
+                : HostGateway.getHostMap().get(host);
 
             // If the time since the last connection is less than
             // <code>THROTTLE_TIME_INTERVAL</code> and the amount of connections
             // is equal to or above the
             // <code>AMOUNT_OF_CONNECTIONS_PER_SECOND</code> then the host is
             // connecting too fast.
-            if (time < THROTTLE_TIME_INTERVAL_MILLISECONDS
-                    && connection >= AMOUNT_OF_CONNECTIONS_PER_INTERVAL) {
-                logger.warning("Session request from " + host
-                        + " denied: connecting too fast!");
+            if (time < THROTTLE_TIME_INTERVAL_MILLISECONDS && connection >= AMOUNT_OF_CONNECTIONS_PER_INTERVAL) {
+                logger
+                    .warning("Session request from " + host + " denied: connecting too fast!");
                 return false;
             }
 

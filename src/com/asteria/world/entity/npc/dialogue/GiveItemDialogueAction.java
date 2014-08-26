@@ -31,8 +31,8 @@ public class GiveItemDialogueAction implements DialogueAction {
     @Override
     public void accept(Dialogue dialogue) {
         dialogue.getPlayer().getPacketBuilder().sendString(text, 308);
-        dialogue.getPlayer().getPacketBuilder()
-                .sendItemOnInterface(307, 200, item.getId());
+        dialogue.getPlayer().getPacketBuilder().sendItemOnInterface(307, 200,
+            item.getId());
         dialogue.getPlayer().getPacketBuilder().sendChatInterface(306);
         dialogue.getPlayer().getInventory().add(item);
     }

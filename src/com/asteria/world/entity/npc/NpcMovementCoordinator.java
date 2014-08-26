@@ -55,7 +55,7 @@ public class NpcMovementCoordinator {
         // Block if this coordinator isn't set to coordinate or if the npc is in
         // combat.
         if (!coordinator.isCoordinate() || npc.getCombatBuilder().isAttacking() || npc
-                .getCombatBuilder().isBeingAttacked()) {
+            .getCombatBuilder().isBeingAttacked()) {
             return;
         }
 
@@ -67,7 +67,7 @@ public class NpcMovementCoordinator {
             case HOME:
                 if (npc.getMovementQueue().isMovementDone()) {
                     npc.getMovementQueue().walk(
-                            generateLocalPosition(coordinator.getRadius()));
+                        generateLocalPosition(coordinator.getRadius()));
                     coordinateState = CoordinateState.AWAY;
                 }
                 break;
@@ -96,36 +96,32 @@ public class NpcMovementCoordinator {
 
         // Northwest, north, and west directions.
         case 0:
-            return new Position(
-                    npc.getPosition().getX() + Utility.exclusiveRandom(radius),
-                    npc.getPosition().getY() + Utility.exclusiveRandom(radius),
-                    npc.getPosition().getZ());
+            return new Position(npc.getPosition().getX() + Utility
+                .exclusiveRandom(radius), npc.getPosition().getY() + Utility
+                .exclusiveRandom(radius), npc.getPosition().getZ());
 
             // Southeast, south, and east directions.
         case 1:
-            return new Position(
-                    npc.getPosition().getX() - Utility.exclusiveRandom(radius),
-                    npc.getPosition().getY() - Utility.exclusiveRandom(radius),
-                    npc.getPosition().getZ());
+            return new Position(npc.getPosition().getX() - Utility
+                .exclusiveRandom(radius), npc.getPosition().getY() - Utility
+                .exclusiveRandom(radius), npc.getPosition().getZ());
 
             // Southwest, south, and west directions.
         case 2:
-            return new Position(
-                    npc.getPosition().getX() + Utility.exclusiveRandom(radius),
-                    npc.getPosition().getY() - Utility.exclusiveRandom(radius),
-                    npc.getPosition().getZ());
+            return new Position(npc.getPosition().getX() + Utility
+                .exclusiveRandom(radius), npc.getPosition().getY() - Utility
+                .exclusiveRandom(radius), npc.getPosition().getZ());
 
             // Northeast, north, and east directions.
         case 3:
-            return new Position(
-                    npc.getPosition().getX() - Utility.exclusiveRandom(radius),
-                    npc.getPosition().getY() + Utility.exclusiveRandom(radius),
-                    npc.getPosition().getZ());
+            return new Position(npc.getPosition().getX() - Utility
+                .exclusiveRandom(radius), npc.getPosition().getY() + Utility
+                .exclusiveRandom(radius), npc.getPosition().getZ());
 
             // Invalid number, no directions.
         default:
             throw new IllegalStateException(
-                    "Invalid number range! Must be 0, 1, 2, or 3.");
+                "Invalid number range! Must be 0, 1, 2, or 3.");
         }
     }
 

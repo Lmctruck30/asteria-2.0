@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadFactory;
  * 
  * @author lare96
  */
-public class ThreadProvider implements ThreadFactory {
+public class ThreadBuilder implements ThreadFactory {
 
     /** The name of threads prepared by this factory. */
     private final String name;
@@ -23,7 +23,7 @@ public class ThreadProvider implements ThreadFactory {
     private final boolean daemon;
 
     /**
-     * Create a new {@link ThreadProvider}.
+     * Create a new {@link ThreadBuilder}.
      * 
      * @param name
      *            the name of threads prepared by this factory.
@@ -32,7 +32,7 @@ public class ThreadProvider implements ThreadFactory {
      * @param daemon
      *            if threads prepared by this factory are daemon.
      */
-    public ThreadProvider(String name, int priority, boolean daemon) {
+    public ThreadBuilder(String name, int priority, boolean daemon) {
         this.name = Objects.requireNonNull(name);
         this.priority = priority;
         this.daemon = daemon;

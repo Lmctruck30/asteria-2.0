@@ -80,8 +80,8 @@ public class MovementQueue {
             int y = Utility.DIRECTION_DELTA_Y[walkPoint.getDirection()];
 
             if (entity.isFollowing() && entity.getFollowEntity() != null) {
-                if (entity.getPosition().clone().move(x, y)
-                        .equals(entity.getFollowEntity().getPosition())) {
+                if (entity.getPosition().clone().move(x, y).equals(
+                    entity.getFollowEntity().getPosition())) {
                     return;
                 }
             }
@@ -101,8 +101,8 @@ public class MovementQueue {
             int y = Utility.DIRECTION_DELTA_Y[runPoint.getDirection()];
 
             if (entity.isFollowing() && entity.getFollowEntity() != null) {
-                if (entity.getPosition().clone().move(x, y)
-                        .equals(entity.getFollowEntity().getPosition())) {
+                if (entity.getPosition().clone().move(x, y).equals(
+                    entity.getFollowEntity().getPosition())) {
                     return;
                 }
             }
@@ -125,10 +125,10 @@ public class MovementQueue {
 
         // Check for region changes.
         if (entity.type() == EntityType.PLAYER) {
-            int deltaX = entity.getPosition().getX()
-                    - entity.getCurrentRegion().getRegionX() * 8;
-            int deltaY = entity.getPosition().getY()
-                    - entity.getCurrentRegion().getRegionY() * 8;
+            int deltaX = entity.getPosition().getX() - entity
+                .getCurrentRegion().getRegionX() * 8;
+            int deltaY = entity.getPosition().getY() - entity
+                .getCurrentRegion().getRegionY() * 8;
 
             if (deltaX < 16 || deltaX >= 88 || deltaY < 16 || deltaY > 88) {
                 ((Player) entity).getPacketBuilder().sendMapRegion();
@@ -146,10 +146,8 @@ public class MovementQueue {
      *            the amount of spaces to walk to the y.
      */
     public void walk(int addX, int addY) {
-        reset();
-        addToPath(new Position(entity.getPosition().getX() + addX, entity
-                .getPosition().getY() + addY));
-        finish();
+        walk(new Position(entity.getPosition().getX() + addX, entity
+            .getPosition().getY() + addY));
     }
 
     /**
@@ -265,18 +263,18 @@ public class MovementQueue {
      * @param leader
      *            the entity that this entity is being prompted to follow.
      */
-    public void follow(final Entity leader) {
+    public void follow(Entity leader) {
 
         // If we are currently following, stop before following someone else.
         if (followTask != null) {
             if (entity.isFollowing() && !entity.getFollowEntity()
-                    .equals(leader)) {
+                .equals(leader)) {
                 entity.faceEntity(null);
                 followTask.cancel();
                 entity.setFollowing(false);
                 entity.setFollowEntity(null);
             } else if (entity.isFollowing() && entity.getFollowEntity().equals(
-                    leader)) {
+                leader)) {
                 return;
             }
         }
@@ -289,14 +287,14 @@ public class MovementQueue {
 
             // Build the task that will be scheduled when following.
             followTask = new Task(1, true) {
+                @SuppressWarnings("unused")
                 @Override
                 public void execute() {
 
                     // Check if we can still follow the leader.
-                    if (!entity.isFollowing()
-                            || !entity.getPosition().withinDistance(
-                                    leader.getPosition(), 20)
-                            || entity.isDead() || leader.isDead()) {
+                    if (!entity.isFollowing() || !entity.getPosition()
+                        .withinDistance(leader.getPosition(), 20) || entity
+                        .isDead() || leader.isDead()) {
                         entity.faceEntity(null);
                         entity.setFollowing(false);
                         entity.setFollowEntity(null);
@@ -308,76 +306,199 @@ public class MovementQueue {
                     entity.faceEntity(leader);
 
                     // Block if our movement is locked.
-                    if (entity.getMovementQueue().isLockMovement()
-                            || entity.isFrozen()) {
+                    if (entity.getMovementQueue().isLockMovement() || entity
+                        .isFrozen()) {
                         return;
                     }
 
                     // If we are on the same position as the leader then move
                     // away.
                     if (entity.getPosition().equals(
-                            leader.getPosition().clone())) {
+                        leader.getPosition().clone())) {
                         entity.getMovementQueue().reset();
 
                         int x = entity.getPosition().getX();
                         int y = entity.getPosition().getY();
                         int z = entity.getPosition().getZ();
 
-                        switch (Utility.inclusiveRandom(3)) {
-                        case 0:
-                            if (/* entity.canMove(-1, 0) && */true) {
-                                entity.getMovementQueue().walk(
-                                        new Position(x - 1, y, z));
-                            }
-                            break;
-                        case 1:
-                            if (/* entity.canMove(-1, 0) && */true) {
-                                entity.getMovementQueue().walk(
-                                        new Position(x + 1, y, z));
-                            }
-                            break;
-                        case 2:
-                            if (/* entity.canMove(-1, 0) && */true) {
-                                entity.getMovementQueue().walk(
-                                        new Position(x, y - 1, z));
-                            }
-                            break;
-
-                        case 3:
-                            if (/* entity.canMove(-1, 0) && */true) {
-                                entity.getMovementQueue().walk(
-                                        new Position(x, y + 1, z));
-                            }
-                            break;
+                        if (true/*
+                                 * TraversalMap.isTraversableEast(z, x, y,
+                                 * entity .size())
+                                 */) {
+                            entity.getMovementQueue().walk(1, 0);
+                        } else if (true/*
+                                        * TraversalMap.isTraversableWest(z, x,
+                                        * y, entity.size())
+                                        */) {
+                            entity.getMovementQueue().walk(-1, 0);
+                        } else if (true/*
+                                        * TraversalMap.isTraversableSouth(z, x,
+                                        * y, entity.size())
+                                        */) {
+                            entity.getMovementQueue().walk(0, -1);
+                        } else if (true/*
+                                        * TraversalMap.isTraversableNorth(z, x,
+                                        * y, entity.size())
+                                        */) {
+                            entity.getMovementQueue().walk(0, 1);
                         }
                         return;
                     }
 
                     // Check if we are within distance to attack for combat.
-                    if (entity.getCombatBuilder().isAttacking()
-                            && entity.getPosition().withinDistance(
-                                    entity.getCombatBuilder().getVictim()
-                                            .getPosition(),
-                                    entity.getCombatBuilder().getStrategy()
-                                            .attackDistance(entity))) {
+                    if (entity.getCombatBuilder().isAttacking() && entity
+                        .getPosition()
+                        .withinDistance(
+                            entity.getCombatBuilder().getVictim().getPosition(),
+                            entity.getCombatBuilder().getStrategy()
+                                .attackDistance(entity))) {
                         entity.getMovementQueue().reset();
                         return;
                     }
 
                     // If we are within 1 square we don't need to move.
                     if (entity.getPosition().withinDistance(
-                            leader.getPosition(), 1)) {
+                        leader.getPosition(), 1)) {
                         return;
                     }
 
                     // We are more than 1 square away, we can move toward the
                     // leader.
-                    int x = leader.getPosition().getX();
-                    int y = leader.getPosition().getY();
-                    // ClippedPathFinder.getPathFinder().findRoute(entity,
-                    // x, y, true, 0, 0);
-                    entity.getMovementQueue().walk(
-                            new Position(x, y, entity.getPosition().getZ()));
+                    entity.getMovementQueue().walk(leader.getPosition());
+
+                    // if (entity.type() == EntityType.PLAYER) {
+                    // AStarPathFinder finder = new AStarPathFinder();
+                    // finder.find(entity, leader.getPosition().getX(), leader
+                    // .getPosition().getY());
+                    // } else {
+                    // if (entity.getPosition().withinDistance(
+                    // leader.getPosition(), 1)) {
+                    // return;
+                    // }
+                    //
+                    // int followX = leader.getPosition().getX(), followY =
+                    // leader
+                    // .getPosition().getY();
+                    // int moveX = 0, moveY = 0;
+                    // int x = entity.getPosition().getX();
+                    // int y = entity.getPosition().getY();
+                    // int z = entity.getPosition().getZ();
+                    // int size = entity.size();
+                    //
+                    // if (followX != entity.getPosition().getX() && followY !=
+                    // entity
+                    // .getPosition().getY()) {
+                    // if (followX > entity.getPosition().getX() && followY >
+                    // entity
+                    // .getPosition().getY()) {
+                    // if (TraversalMap.isTraversableNorthEast(z, x,
+                    // y, size) && !entity.getPosition()
+                    // .withinDistance(leader.getPosition(), 1)) {
+                    // moveX = 1;
+                    // moveY = 1;
+                    // } else if (TraversalMap.isTraversableEast(z, x,
+                    // y, size)) {
+                    // moveX = 1;
+                    // moveY = 0;
+                    // } else if (TraversalMap.isTraversableNorth(z,
+                    // x, y, size)) {
+                    // moveX = 0;
+                    // moveY = 1;
+                    // }
+                    // } else if (followX > entity.getPosition().getX() &&
+                    // followY < entity
+                    // .getPosition().getY()) {
+                    // if (TraversalMap.isTraversableSouthEast(z, x,
+                    // y, size) && !entity.getPosition()
+                    // .withinDistance(leader.getPosition(), 1)) {
+                    // moveX = 1;
+                    // moveY = -1;
+                    // } else if (TraversalMap.isTraversableSouth(z,
+                    // x, y, size)) {
+                    // moveX = 0;
+                    // moveY = -1;
+                    // } else if (TraversalMap.isTraversableEast(z, x,
+                    // y, size)) {
+                    // moveX = 1;
+                    // moveY = 0;
+                    // }
+                    // } else if (followX < entity.getPosition().getX() &&
+                    // followY > entity
+                    // .getPosition().getY()) {
+                    // if (TraversalMap.isTraversableNorthWest(z, x,
+                    // y, size) && !entity.getPosition()
+                    // .withinDistance(leader.getPosition(), 1)) {
+                    // moveX = -1;
+                    // moveY = 1;
+                    // } else if (TraversalMap.isTraversableWest(z, x,
+                    // y, size)) {
+                    // moveX = -1;
+                    // moveY = 0;
+                    // } else if (TraversalMap.isTraversableNorth(z,
+                    // x, y, size)) {
+                    // moveX = 0;
+                    // moveY = 1;
+                    // }
+                    // } else if (followX < entity.getPosition().getX() &&
+                    // followY < entity
+                    // .getPosition().getY()) {
+                    // if (TraversalMap.isTraversableSouthWest(z, x,
+                    // y, size) && !entity.getPosition()
+                    // .withinDistance(leader.getPosition(), 1)) {
+                    // moveX = -1;
+                    // moveY = -1;
+                    // } else if (TraversalMap.isTraversableSouth(z,
+                    // x, y, size)) {
+                    // moveX = 0;
+                    // moveY = -1;
+                    // } else if (TraversalMap.isTraversableWest(z, x,
+                    // y, size)) {
+                    // moveX = -1;
+                    // moveY = 0;
+                    // }
+                    // }
+                    // } else if (followX != entity.getPosition().getX()) {
+                    // if (followX > entity.getPosition().getX()) {
+                    // if (TraversalMap.isTraversableEast(z, x, y,
+                    // size)) {
+                    // moveX = 1;
+                    // moveY = 0;
+                    // }
+                    // } else if (followX < entity.getPosition().getX()) {
+                    // if (TraversalMap.isTraversableWest(z, x, y,
+                    // size)) {
+                    // moveX = -1;
+                    // moveY = 0;
+                    // }
+                    // }
+                    // } else if (followY != entity.getPosition().getY()) {
+                    // if (followY > entity.getPosition().getY()) {
+                    // if (TraversalMap.isTraversableNorth(z, x, y,
+                    // size)) {
+                    // moveX = 0;
+                    // moveY = 1;
+                    // }
+                    // } else if (followY < entity.getPosition().getY()) {
+                    // if (TraversalMap.isTraversableSouth(z, x, y,
+                    // size)) {
+                    // moveX = 0;
+                    // moveY = -1;
+                    // }
+                    // }
+                    // }
+                    // if (moveX != 0 || moveY != 0) {
+                    // DumbPathFinder finder = new DumbPathFinder();
+                    // Path p = finder.find(entity, entity.getPosition()
+                    // .clone().move(moveX, moveY));
+                    // MovementQueue.this.reset();
+                    // while (!p.getPositions().isEmpty()) {
+                    // Position point = p.getPositions().poll();
+                    // MovementQueue.this
+                    // .addToPath(point);
+                    // }
+                    // MovementQueue.this.finish();
+                    // }
+                    // }
                 }
             };
 

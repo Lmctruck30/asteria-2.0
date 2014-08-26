@@ -53,7 +53,7 @@ public class CombatContainer {
      *            if accuracy should be taken into account.
      */
     public CombatContainer(Entity attacker, Entity victim, int hitAmount,
-            CombatType hitType, boolean checkAccuracy) {
+        CombatType hitType, boolean checkAccuracy) {
         this.attacker = attacker;
         this.victim = victim;
         this.combatType = hitType;
@@ -71,7 +71,7 @@ public class CombatContainer {
      *            if accuracy should be taken into account.
      */
     public CombatContainer(Entity attacker, Entity victim, CombatType hitType,
-            boolean checkAccuracy) {
+        boolean checkAccuracy) {
         this(attacker, victim, 0, hitType, checkAccuracy);
     }
 
@@ -87,16 +87,16 @@ public class CombatContainer {
         // Check the hit amounts.
         if (hitAmount > 4) {
             throw new IllegalArgumentException(
-                    "Illegal number of hits! The maximum number of hits per turn is 4.");
+                "Illegal number of hits! The maximum number of hits per turn is 4.");
         } else if (hitAmount < 0) {
             throw new IllegalArgumentException(
-                    "Illegal number of hits! The minimum number of hits per turn is 0.");
+                "Illegal number of hits! The minimum number of hits per turn is 0.");
         }
 
         // No hit for this turn, but we still need to calculate accuracy.
         if (hitAmount == 0) {
             accurate = checkAccuracy ? CombatFactory.rollAccuracy(attacker,
-                    victim, combatType) : true;
+                victim, combatType) : true;
             return new CombatHit[] {};
         }
 
@@ -106,10 +106,9 @@ public class CombatContainer {
 
         for (int i = 0; i < array.length; i++) {
             boolean accuracy = checkAccuracy ? CombatFactory.rollAccuracy(
-                    attacker, victim, combatType) : true;
+                attacker, victim, combatType) : true;
             array[i] = new CombatHit(CombatFactory.getHit(attacker, victim,
-                    combatType),
-                    accuracy);
+                combatType), accuracy);
             if (array[i].isAccurate()) {
                 accurate = true;
             }
@@ -151,11 +150,11 @@ public class CombatContainer {
         } else if (hits.length == 2) {
             victim.dealDoubleDamage(hits[0].getHit(), hits[1].getHit());
         } else if (hits.length == 3) {
-            victim.dealTripleDamage(hits[0].getHit(), hits[1].getHit(),
-                    hits[2].getHit());
+            victim.dealTripleDamage(hits[0].getHit(), hits[1].getHit(), hits[2]
+                .getHit());
         } else if (hits.length == 4) {
             victim.dealQuadrupleDamage(hits[0].getHit(), hits[1].getHit(),
-                    hits[2].getHit(), hits[3].getHit());
+                hits[2].getHit(), hits[3].getHit());
         }
 
         // Return the damage counter.

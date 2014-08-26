@@ -9,6 +9,7 @@ import static com.asteria.world.entity.player.skill.Skills.RANGED;
 import static com.asteria.world.entity.player.skill.Skills.STRENGTH;
 
 import java.util.EnumSet;
+import java.util.Optional;
 import java.util.Set;
 
 import com.asteria.engine.task.Task;
@@ -173,15 +174,15 @@ public enum PotionConsumable {
      *            the id of the potion.
      * @return the potion consumable instance.
      */
-    private static PotionConsumable forId(int id) {
+    private static Optional<PotionConsumable> forId(int id) {
         for (PotionConsumable potion : ALL_POTIONS) {
             for (int potionId : potion.getIds()) {
                 if (id == potionId) {
-                    return potion;
+                    return Optional.of(potion);
                 }
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -192,11 +193,14 @@ public enum PotionConsumable {
      * @return the lower potion dose.
      */
     private static Item getReplacementItem(Item item) {
-        PotionConsumable potion = forId(item.getId());
-        int length = potion.getIds().length;
-        for (int index = 0; index < length; index++) {
-            if (potion.getIds()[index] == item.getId() && index + 1 < length) {
-                return new Item(potion.getIds()[index + 1]);
+        Optional<PotionConsumable> potion = forId(item.getId());
+
+        if (potion.isPresent()) {
+            int length = potion.get().getIds().length;
+            for (int index = 0; index < length; index++) {
+                if (potion.get().getIds()[index] == item.getId() && index + 1 < length) {
+                    return new Item(potion.get().getIds()[index + 1]);
+                }
             }
         }
         return VIAL;
@@ -262,8 +266,7 @@ public enum PotionConsumable {
      *            the player to do this action for.
      * @param boolean superPotion if the boolean is a super potion.
      */
-    // TODO: This can easily be done through a system timer.
-    private static void doAntiPoison(final Player player, boolean superPotion) {
+    private static void doAntiPoison(Player player, boolean superPotion) {
         if (player.isPoisoned()) {
             player.setPoisonDamage(0);
             player.getPacketBuilder().sendMessage(
@@ -332,8 +335,7 @@ public enum PotionConsumable {
      * @param player
      *            the player to do this action for..
      */
-    // TODO: This can easily be done through a system timer.
-    private static void doAntiFire(final Player player) {
+    private static void doAntiFire(Player player) {
         player
             .getPacketBuilder()
             .sendMessage(
@@ -407,8 +409,8 @@ public enum PotionConsumable {
      * @return true if the potion was consumed.
      */
     public static boolean consume(Player player, Item item, int slot) {
-        PotionConsumable potion = forId(item.getId());
-        if (potion == null) {
+        Optional<PotionConsumable> potion = forId(item.getId());
+        if (!potion.isPresent()) {
             return false;
         }
         if (player.isDead()) {
@@ -424,7 +426,7 @@ public enum PotionConsumable {
         player.getEatingTimer().reset();
         player.getInventory().remove(item, slot);
         player.getInventory().add(getReplacementItem(item));
-        potion.potionEffect(player);
+        potion.get().potionEffect(player);
         return true;
     }
 

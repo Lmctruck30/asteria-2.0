@@ -78,7 +78,7 @@ public class TradeSession {
         partner = sending;
         player.getPacketBuilder().sendMessage("Sending trade request...");
         sending.getPacketBuilder().sendMessage(
-                player.getCapitalizedUsername() + ":tradereq:");
+            player.getCapitalizedUsername() + ":tradereq:");
     }
 
     /**
@@ -89,16 +89,16 @@ public class TradeSession {
 
         // Open the initial trade interface and set up the features.
         player.getPacketBuilder().sendUpdateItems(3322,
-                player.getInventory().toArray());
+            player.getInventory().toArray());
 
-        player.getPacketBuilder()
-                .sendString(
-                        "Trading with: " + getDisplayName(partner) + " who has @gre@" + partner
-                                .getInventory().getRemainingSlots() + " free slots",
-                        3417);
+        player
+            .getPacketBuilder()
+            .sendString(
+                "Trading with: " + getDisplayName(partner) + " who has @gre@" + partner
+                    .getInventory().getRemainingSlots() + " free slots", 3417);
         player.getPacketBuilder().sendString("", 3431);
         player.getPacketBuilder().sendString(
-                "Are you sure you want to make this trade?", 3535);
+            "Are you sure you want to make this trade?", 3535);
         player.getPacketBuilder().sendInventoryInterface(3323, 3321);
     }
 
@@ -110,14 +110,11 @@ public class TradeSession {
 
         // Open the confirm trade interface and set up the features.
         player.getPacketBuilder().sendUpdateItems(3214,
-                player.getInventory().toArray());
+            player.getInventory().toArray());
         player.getPacketBuilder().sendString(confirmText(offering.toArray()),
-                3557);
-        player.getPacketBuilder()
-                .sendString(
-                        confirmText(partner.getTradeSession().offering
-                                .toArray()),
-                        3558);
+            3557);
+        player.getPacketBuilder().sendString(
+            confirmText(partner.getTradeSession().offering.toArray()), 3558);
         player.getPacketBuilder().sendInventoryInterface(3443, 3213);
     }
 
@@ -140,17 +137,17 @@ public class TradeSession {
         for (int id : TradeSession.ITEM_UNTRADEABLE) {
             if (id == item.getId()) {
                 player.getPacketBuilder().sendMessage(
-                        "You cannot trade this item.");
+                    "You cannot trade this item.");
                 return;
             }
         }
 
         // Set this amount to the proper amount if needed.
         if (item.getAmount() > player.getInventory().totalAmount(item.getId()) && !item
-                .getDefinition().isStackable()) {
+            .getDefinition().isStackable()) {
             item.setAmount(player.getInventory().totalAmount(item.getId()));
         } else if (item.getAmount() > player.getInventory().get(slot)
-                .getAmount() && item.getDefinition().isStackable()) {
+            .getAmount() && item.getDefinition().isStackable()) {
             item.setAmount(player.getInventory().get(slot).getAmount());
         }
 
@@ -158,18 +155,18 @@ public class TradeSession {
         player.getInventory().remove(item, slot);
         offering.add(item);
 
-        partner.getPacketBuilder()
-                .sendString(
-                        "Trading with: " + getDisplayName(player) + " who has @gre@" + player
-                                .getInventory().getRemainingSlots() + " free slots",
-                        3417);
+        partner
+            .getPacketBuilder()
+            .sendString(
+                "Trading with: " + getDisplayName(player) + " who has @gre@" + player
+                    .getInventory().getRemainingSlots() + " free slots", 3417);
         player.getPacketBuilder().sendUpdateItems(3322,
-                player.getInventory().toArray());
+            player.getInventory().toArray());
         int length = offering.size();
         player.getPacketBuilder().sendUpdateItems(3415, offering.toArray(),
-                length);
+            length);
         partner.getPacketBuilder().sendUpdateItems(3416, offering.toArray(),
-                length);
+            length);
         stage = TradeStage.OFFER;
         partner.getTradeSession().stage = TradeStage.OFFER;
         player.getPacketBuilder().sendString("", 3431);
@@ -199,18 +196,18 @@ public class TradeSession {
         offering.remove(item);
         player.getInventory().add(item);
 
-        partner.getPacketBuilder()
-                .sendString(
-                        "Trading with: " + getDisplayName(player) + " who has @gre@" + player
-                                .getInventory().getRemainingSlots() + " free slots",
-                        3417);
+        partner
+            .getPacketBuilder()
+            .sendString(
+                "Trading with: " + getDisplayName(player) + " who has @gre@" + player
+                    .getInventory().getRemainingSlots() + " free slots", 3417);
         player.getPacketBuilder().sendUpdateItems(3322,
-                player.getInventory().toArray());
+            player.getInventory().toArray());
         int length = offering.size();
         player.getPacketBuilder().sendUpdateItems(3415, offering.toArray(),
-                length);
+            length);
         partner.getPacketBuilder().sendUpdateItems(3416, offering.toArray(),
-                length);
+            length);
         stage = TradeStage.OFFER;
         partner.getTradeSession().stage = TradeStage.OFFER;
         player.getPacketBuilder().sendString("", 3431);
@@ -246,14 +243,14 @@ public class TradeSession {
         // Give the items to each of the players
         player.getInventory().add(offering.toArray());
         partner.getInventory()
-                .add(partner.getTradeSession().offering.toArray());
+            .add(partner.getTradeSession().offering.toArray());
 
         // Send the partner a message if applicable.
         if (declined) {
             partner.getPacketBuilder().sendMessage(
-                    "The other player has declined the trade!");
+                "The other player has declined the trade!");
             player.getPacketBuilder().sendMessage(
-                    "You have declined the trade.");
+                "You have declined the trade.");
         }
 
         // Reset the trade.
@@ -290,13 +287,15 @@ public class TradeSession {
      * @return the trade display name.
      */
     private String getDisplayName(Player player) {
-        return player.getCapitalizedUsername().concat(
-                player.getCapitalizedUsername()
-                        .concat(player.getRights().equalTo(
-                                PlayerRights.MODERATOR) ? "@cr1@" : player
-                                .getRights()
-                                .greaterThan(PlayerRights.MODERATOR) ? "@cr2@"
-                                : ""));
+        return player
+            .getCapitalizedUsername()
+            .concat(
+                player
+                    .getCapitalizedUsername()
+                    .concat(
+                        player.getRights().equalTo(PlayerRights.MODERATOR) ? "@cr1@"
+                            : player.getRights().greaterThan(
+                                PlayerRights.MODERATOR) ? "@cr2@" : ""));
     }
 
     /**
@@ -320,10 +319,10 @@ public class TradeSession {
 
             if (item.getAmount() >= 1000 && item.getAmount() < 1000000) {
                 tradeAmount = "@cya@" + (item.getAmount() / 1000) + "K @whi@(" + item
-                        .getAmount() + ")";
+                    .getAmount() + ")";
             } else if (item.getAmount() >= 1000000) {
                 tradeAmount = "@gre@" + (item.getAmount() / 1000000) + " million @whi@(" + item
-                        .getAmount() + ")";
+                    .getAmount() + ")";
             } else {
                 tradeAmount = "" + item.getAmount();
             }
@@ -332,7 +331,7 @@ public class TradeSession {
                 tradeItems = item.getDefinition().getItemName();
             } else {
                 tradeItems = tradeItems + "\\n" + item.getDefinition()
-                        .getItemName();
+                    .getItemName();
             }
 
             if (item.getDefinition().isStackable()) {
@@ -352,8 +351,8 @@ public class TradeSession {
      */
     public boolean inTrade() {
         return player.getTradeSession().stage == TradeStage.OFFER || player
-                .getTradeSession().stage == TradeStage.FIRST_ACCEPT || player
-                .getTradeSession().stage == TradeStage.FINAL_ACCEPT;
+            .getTradeSession().stage == TradeStage.FIRST_ACCEPT || player
+            .getTradeSession().stage == TradeStage.FINAL_ACCEPT;
     }
 
     /**

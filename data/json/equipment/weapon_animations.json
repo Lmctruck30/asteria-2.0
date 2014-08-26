@@ -1,0 +1,506 @@
+[
+  {
+    "hash": 3200,
+    "item-id": 3200,
+    "animation": {
+      "standingAnimation": 809,
+      "walkingAnimation": 1146,
+      "runningAnimation": 1210
+    }
+  },
+  {
+    "hash": 4864,
+    "item-id": 4864,
+    "animation": {
+      "standingAnimation": 809,
+      "walkingAnimation": 1146,
+      "runningAnimation": 1210
+    }
+  },
+  {
+    "hash": 4865,
+    "item-id": 4865,
+    "animation": {
+      "standingAnimation": 809,
+      "walkingAnimation": 1146,
+      "runningAnimation": 1210
+    }
+  },
+  {
+    "hash": 3202,
+    "item-id": 3202,
+    "animation": {
+      "standingAnimation": 809,
+      "walkingAnimation": 1146,
+      "runningAnimation": 1210
+    }
+  },
+  {
+    "hash": 3204,
+    "item-id": 3204,
+    "animation": {
+      "standingAnimation": 809,
+      "walkingAnimation": 1146,
+      "runningAnimation": 1210
+    }
+  },
+  {
+    "hash": 4755,
+    "item-id": 4755,
+    "animation": {
+      "standingAnimation": 1832,
+      "walkingAnimation": 1830,
+      "runningAnimation": 1831
+    }
+  },
+  {
+    "hash": 4886,
+    "item-id": 4886,
+    "animation": {
+      "standingAnimation": 2065,
+      "walkingAnimation": 1663,
+      "runningAnimation": 1664
+    }
+  },
+  {
+    "hash": 4887,
+    "item-id": 4887,
+    "animation": {
+      "standingAnimation": 2065,
+      "walkingAnimation": 1663,
+      "runningAnimation": 1664
+    }
+  },
+  {
+    "hash": 4888,
+    "item-id": 4888,
+    "animation": {
+      "standingAnimation": 2065,
+      "walkingAnimation": 1663,
+      "runningAnimation": 1664
+    }
+  },
+  {
+    "hash": 1305,
+    "item-id": 1305,
+    "animation": {
+      "standingAnimation": 809,
+      "walkingAnimation": -1,
+      "runningAnimation": -1
+    }
+  },
+  {
+    "hash": 4889,
+    "item-id": 4889,
+    "animation": {
+      "standingAnimation": 2065,
+      "walkingAnimation": 1663,
+      "runningAnimation": 1664
+    }
+  },
+  {
+    "hash": 1307,
+    "item-id": 1307,
+    "animation": {
+      "standingAnimation": 2561,
+      "walkingAnimation": 2064,
+      "runningAnimation": 2563
+    }
+  },
+  {
+    "hash": 1309,
+    "item-id": 1309,
+    "animation": {
+      "standingAnimation": 2561,
+      "walkingAnimation": 2064,
+      "runningAnimation": 2563
+    }
+  },
+  {
+    "hash": 1311,
+    "item-id": 1311,
+    "animation": {
+      "standingAnimation": 2561,
+      "walkingAnimation": 2064,
+      "runningAnimation": 2563
+    }
+  },
+  {
+    "hash": 1313,
+    "item-id": 1313,
+    "animation": {
+      "standingAnimation": 2561,
+      "walkingAnimation": 2064,
+      "runningAnimation": 2563
+    }
+  },
+  {
+    "hash": 1315,
+    "item-id": 1315,
+    "animation": {
+      "standingAnimation": 2561,
+      "walkingAnimation": 2064,
+      "runningAnimation": 2563
+    }
+  },
+  {
+    "hash": 1317,
+    "item-id": 1317,
+    "animation": {
+      "standingAnimation": 2561,
+      "walkingAnimation": 2064,
+      "runningAnimation": 2563
+    }
+  },
+  {
+    "hash": 1319,
+    "item-id": 1319,
+    "animation": {
+      "standingAnimation": 2561,
+      "walkingAnimation": 2064,
+      "runningAnimation": 2563
+    }
+  },
+  {
+    "hash": 4151,
+    "item-id": 4151,
+    "animation": {
+      "standingAnimation": 1832,
+      "walkingAnimation": 1660,
+      "runningAnimation": 1661
+    }
+  },
+  {
+    "hash": 4153,
+    "item-id": 4153,
+    "animation": {
+      "standingAnimation": 1662,
+      "walkingAnimation": 1663,
+      "runningAnimation": 1664
+    }
+  },
+  {
+    "hash": 6082,
+    "item-id": 6082,
+    "animation": {
+      "standingAnimation": 2316,
+      "walkingAnimation": 2317,
+      "runningAnimation": 2322
+    }
+  },
+  {
+    "hash": 837,
+    "item-id": 837,
+    "animation": {
+      "standingAnimation": 2074,
+      "walkingAnimation": 2076,
+      "runningAnimation": 2077
+    }
+  },
+  {
+    "hash": 4934,
+    "item-id": 4934,
+    "animation": {
+      "standingAnimation": 2074,
+      "walkingAnimation": 2076,
+      "runningAnimation": 2077
+    }
+  },
+  {
+    "hash": 4935,
+    "item-id": 4935,
+    "animation": {
+      "standingAnimation": 2074,
+      "walkingAnimation": 2076,
+      "runningAnimation": 2077
+    }
+  },
+  {
+    "hash": 6599,
+    "item-id": 6599,
+    "animation": {
+      "standingAnimation": 809,
+      "walkingAnimation": 1146,
+      "runningAnimation": 1210
+    }
+  },
+  {
+    "hash": 4936,
+    "item-id": 4936,
+    "animation": {
+      "standingAnimation": 2074,
+      "walkingAnimation": 2076,
+      "runningAnimation": 2077
+    }
+  },
+  {
+    "hash": 4937,
+    "item-id": 4937,
+    "animation": {
+      "standingAnimation": 2074,
+      "walkingAnimation": 2076,
+      "runningAnimation": 2077
+    }
+  },
+  {
+    "hash": 843,
+    "item-id": 843,
+    "animation": {
+      "standingAnimation": 808,
+      "walkingAnimation": 819,
+      "runningAnimation": 824
+    }
+  },
+  {
+    "hash": 845,
+    "item-id": 845,
+    "animation": {
+      "standingAnimation": 808,
+      "walkingAnimation": 819,
+      "runningAnimation": 824
+    }
+  },
+  {
+    "hash": 847,
+    "item-id": 847,
+    "animation": {
+      "standingAnimation": 808,
+      "walkingAnimation": 819,
+      "runningAnimation": 824
+    }
+  },
+  {
+    "hash": 849,
+    "item-id": 849,
+    "animation": {
+      "standingAnimation": 808,
+      "walkingAnimation": 819,
+      "runningAnimation": 824
+    }
+  },
+  {
+    "hash": 6609,
+    "item-id": 6609,
+    "animation": {
+      "standingAnimation": 2561,
+      "walkingAnimation": 2064,
+      "runningAnimation": 2563
+    }
+  },
+  {
+    "hash": 4178,
+    "item-id": 4178,
+    "animation": {
+      "standingAnimation": 1832,
+      "walkingAnimation": 1660,
+      "runningAnimation": 1661
+    }
+  },
+  {
+    "hash": 851,
+    "item-id": 851,
+    "animation": {
+      "standingAnimation": 808,
+      "walkingAnimation": 819,
+      "runningAnimation": 824
+    }
+  },
+  {
+    "hash": 853,
+    "item-id": 853,
+    "animation": {
+      "standingAnimation": 808,
+      "walkingAnimation": 819,
+      "runningAnimation": 824
+    }
+  },
+  {
+    "hash": 855,
+    "item-id": 855,
+    "animation": {
+      "standingAnimation": 808,
+      "walkingAnimation": 819,
+      "runningAnimation": 824
+    }
+  },
+  {
+    "hash": 857,
+    "item-id": 857,
+    "animation": {
+      "standingAnimation": 808,
+      "walkingAnimation": 819,
+      "runningAnimation": 824
+    }
+  },
+  {
+    "hash": 859,
+    "item-id": 859,
+    "animation": {
+      "standingAnimation": 808,
+      "walkingAnimation": 819,
+      "runningAnimation": 824
+    }
+  },
+  {
+    "hash": 861,
+    "item-id": 861,
+    "animation": {
+      "standingAnimation": 808,
+      "walkingAnimation": 819,
+      "runningAnimation": 824
+    }
+  },
+  {
+    "hash": 4710,
+    "item-id": 4710,
+    "animation": {
+      "standingAnimation": 809,
+      "walkingAnimation": 1146,
+      "runningAnimation": 1210
+    }
+  },
+  {
+    "hash": 4718,
+    "item-id": 4718,
+    "animation": {
+      "standingAnimation": 2065,
+      "walkingAnimation": 1663,
+      "runningAnimation": 1664
+    }
+  },
+  {
+    "hash": 3190,
+    "item-id": 3190,
+    "animation": {
+      "standingAnimation": 809,
+      "walkingAnimation": 1146,
+      "runningAnimation": 1210
+    }
+  },
+  {
+    "hash": 4982,
+    "item-id": 4982,
+    "animation": {
+      "standingAnimation": 1832,
+      "walkingAnimation": 1830,
+      "runningAnimation": 1831
+    }
+  },
+  {
+    "hash": 7158,
+    "item-id": 7158,
+    "animation": {
+      "standingAnimation": 2561,
+      "walkingAnimation": 2064,
+      "runningAnimation": 2563
+    }
+  },
+  {
+    "hash": 4983,
+    "item-id": 4983,
+    "animation": {
+      "standingAnimation": 1832,
+      "walkingAnimation": 1830,
+      "runningAnimation": 1831
+    }
+  },
+  {
+    "hash": 7671,
+    "item-id": 7671,
+    "animation": {
+      "standingAnimation": 3677,
+      "walkingAnimation": 3680,
+      "runningAnimation": -1
+    }
+  },
+  {
+    "hash": 3192,
+    "item-id": 3192,
+    "animation": {
+      "standingAnimation": 809,
+      "walkingAnimation": 1146,
+      "runningAnimation": 1210
+    }
+  },
+  {
+    "hash": 4984,
+    "item-id": 4984,
+    "animation": {
+      "standingAnimation": 1832,
+      "walkingAnimation": 1830,
+      "runningAnimation": 1831
+    }
+  },
+  {
+    "hash": 4985,
+    "item-id": 4985,
+    "animation": {
+      "standingAnimation": 1832,
+      "walkingAnimation": 1830,
+      "runningAnimation": 1831
+    }
+  },
+  {
+    "hash": 7673,
+    "item-id": 7673,
+    "animation": {
+      "standingAnimation": 3677,
+      "walkingAnimation": 3680,
+      "runningAnimation": -1
+    }
+  },
+  {
+    "hash": 3194,
+    "item-id": 3194,
+    "animation": {
+      "standingAnimation": 809,
+      "walkingAnimation": 1146,
+      "runningAnimation": 1210
+    }
+  },
+  {
+    "hash": 3196,
+    "item-id": 3196,
+    "animation": {
+      "standingAnimation": 809,
+      "walkingAnimation": 1146,
+      "runningAnimation": 1210
+    }
+  },
+  {
+    "hash": 3198,
+    "item-id": 3198,
+    "animation": {
+      "standingAnimation": 809,
+      "walkingAnimation": 1146,
+      "runningAnimation": 1210
+    }
+  },
+  {
+    "hash": 4734,
+    "item-id": 4734,
+    "animation": {
+      "standingAnimation": 2074,
+      "walkingAnimation": 2076,
+      "runningAnimation": 2077
+    }
+  },
+  {
+    "hash": 4862,
+    "item-id": 4862,
+    "animation": {
+      "standingAnimation": 809,
+      "walkingAnimation": 1146,
+      "runningAnimation": 1210
+    }
+  },
+  {
+    "hash": 4863,
+    "item-id": 4863,
+    "animation": {
+      "standingAnimation": 809,
+      "walkingAnimation": 1146,
+      "runningAnimation": 1210
+    }
+  }
+]

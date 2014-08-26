@@ -1,15 +1,17 @@
 package com.asteria.world.item.container;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import com.asteria.util.Utility;
 import com.asteria.world.entity.UpdateFlags.Flag;
+import com.asteria.world.entity.combat.weapon.FightType;
 import com.asteria.world.entity.player.Player;
-import com.asteria.world.entity.player.content.AssignSkillRequirement;
-import com.asteria.world.entity.player.content.AssignWeaponAnimation;
-import com.asteria.world.entity.player.content.AssignWeaponInterface;
+import com.asteria.world.entity.player.content.SkillRequirements;
+import com.asteria.world.entity.player.content.WeaponAnimations;
+import com.asteria.world.entity.player.content.WeaponInterfaces;
 import com.asteria.world.entity.player.minigame.Minigame;
-import com.asteria.world.entity.player.minigame.MinigameFactory;
+import com.asteria.world.entity.player.minigame.Minigames;
 import com.asteria.world.item.Item;
 import com.asteria.world.item.ItemContainer;
 
@@ -55,16 +57,15 @@ public class EquipmentContainer extends ItemContainer {
             return false;
         }
 
-        for (Minigame minigame : MinigameFactory.getMinigames().values()) {
-            if (minigame.inMinigame(player)) {
-                if (!minigame.canEquip(player, item, item.getDefinition()
-                        .getEquipmentSlot())) {
-                    return false;
-                }
+        Optional<Minigame> optional = Minigames.get(player);
+        if (optional.isPresent()) {
+            if (!optional.get().canEquip(player, item,
+                item.getDefinition().getEquipmentSlot())) {
+                return false;
             }
         }
 
-        if (!AssignSkillRequirement.checkRequirement(player, item)) {
+        if (!SkillRequirements.check(player, item)) {
             return false;
         }
 
@@ -77,7 +78,7 @@ public class EquipmentContainer extends ItemContainer {
                 if (item.getId() == equipItem.getId()) {
 
                     set(designatedSlot, new Item(item.getId(),
-                            item.getAmount() + equipItem.getAmount()));
+                        item.getAmount() + equipItem.getAmount()));
                 } else {
 
                     player.getInventory().set(inventorySlot, equipItem);
@@ -94,7 +95,7 @@ public class EquipmentContainer extends ItemContainer {
             int designatedSlot = item.getDefinition().getEquipmentSlot();
 
             if (designatedSlot == Utility.EQUIPMENT_SLOT_WEAPON && item
-                    .getDefinition().isTwoHanded()) {
+                .getDefinition().isTwoHanded()) {
                 unequipItem(Utility.EQUIPMENT_SLOT_SHIELD, true);
 
                 if (isSlotUsed(Utility.EQUIPMENT_SLOT_SHIELD)) {
@@ -104,7 +105,7 @@ public class EquipmentContainer extends ItemContainer {
 
             if (designatedSlot == Utility.EQUIPMENT_SLOT_SHIELD && isSlotUsed(Utility.EQUIPMENT_SLOT_WEAPON)) {
                 if (get(Utility.EQUIPMENT_SLOT_WEAPON).getDefinition()
-                        .isTwoHanded()) {
+                    .isTwoHanded()) {
                     unequipItem(Utility.EQUIPMENT_SLOT_WEAPON, true);
 
                     if (isSlotUsed(Utility.EQUIPMENT_SLOT_WEAPON)) {
@@ -126,14 +127,13 @@ public class EquipmentContainer extends ItemContainer {
         }
 
         if (item.getDefinition().getEquipmentSlot() == Utility.EQUIPMENT_SLOT_WEAPON) {
-            AssignWeaponInterface.assignInterface(player, item);
-            AssignWeaponAnimation.assignAnimation(player, item);
-            AssignWeaponInterface.changeFightType(player);
+            WeaponInterfaces.assign(player, item);
+            WeaponAnimations.assign(player, item);
+            FightType.assign(player);
             player.setCastSpell(null);
             player.setAutocastSpell(null);
             player.setAutocast(false);
             player.getPacketBuilder().sendConfig(108, 0);
-            player.getUpdateAnimation().reset();
         }
 
         player.writeBonus();
@@ -161,17 +161,17 @@ public class EquipmentContainer extends ItemContainer {
 
         Item item = get(equipmentSlot);
 
-        for (Minigame minigame : MinigameFactory.getMinigames().values()) {
-            if (minigame.inMinigame(player)) {
-                if (!minigame.canUnequip(player, item, equipmentSlot)) {
-                    return false;
-                }
+        Optional<Minigame> optional = Minigames.get(player);
+        if (optional.isPresent()) {
+            if (!optional.get().canUnequip(player, item,
+                item.getDefinition().getEquipmentSlot())) {
+                return false;
             }
         }
 
         if (!player.getInventory().spaceFor(item)) {
             player.getPacketBuilder().sendMessage(
-                    "You do not have enough space in your inventory!");
+                "You do not have enough space in your inventory!");
             return false;
         }
 
@@ -181,8 +181,8 @@ public class EquipmentContainer extends ItemContainer {
             player.getInventory().add(new Item(item.getId(), item.getAmount()));
 
         if (equipmentSlot == Utility.EQUIPMENT_SLOT_WEAPON) {
-            AssignWeaponInterface.assignInterface(player, null);
-            AssignWeaponInterface.changeFightType(player);
+            WeaponInterfaces.assign(player, null);
+            FightType.assign(player);
             player.setCastSpell(null);
             player.setAutocastSpell(null);
             player.setAutocast(false);
@@ -231,7 +231,7 @@ public class EquipmentContainer extends ItemContainer {
         throw new UnsupportedOperationException(
             "This method is not supported by this container implementation.");
     }
-    
+
     /**
      * This method is not supported by this container implementation. It will
      * always throw an {@link UnsupportedOperationException}.

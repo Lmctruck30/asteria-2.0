@@ -4,7 +4,7 @@ import com.asteria.engine.task.Task;
 import com.asteria.engine.task.TaskManager;
 import com.asteria.world.entity.Entity.EntityType;
 import com.asteria.world.entity.combat.CombatFactory.CombatType;
-import com.asteria.world.entity.combat.special.CombatSpecial;
+import com.asteria.world.entity.combat.weapon.CombatSpecial;
 import com.asteria.world.entity.player.Player;
 
 /**
@@ -69,23 +69,23 @@ public class CombatHookTask extends Task {
 
             // Check if the attack can be made on this hook
             if (!builder.getStrategy().canAttack(builder.getEntity(),
-                    builder.getVictim())) {
+                builder.getVictim())) {
                 return;
             }
 
             // Do all combat calculations here, we create the combat containers
             // using the attacking entity's combat strategy.
             CombatContainer container = builder.getStrategy().attack(
-                    builder.getEntity(), builder.getVictim());
+                builder.getEntity(), builder.getVictim());
 
             if (builder.getEntity().type() == EntityType.PLAYER) {
                 Player player = (Player) builder.getEntity();
                 player.getPacketBuilder().sendCloseWindows();
                 if (player.isSpecialActivated()) {
                     container = player.getCombatSpecial().container(player,
-                            builder.getVictim());
+                        builder.getVictim());
                     CombatSpecial.drain(player, player.getCombatSpecial()
-                            .getDrainAmount());
+                        .getDrainAmount());
                 }
             }
 
@@ -104,19 +104,19 @@ public class CombatHookTask extends Task {
                 // after 3.
                 if (container.getCombatType() == CombatType.MELEE) {
                     TaskManager.submit(new CombatHitTask(builder, container, 1,
-                            true));
+                        true));
                 } else if (container.getCombatType() == CombatType.RANGED) {
                     TaskManager.submit(new CombatHitTask(builder, container, 2,
-                            false));
+                        false));
                 } else if (container.getCombatType() == CombatType.MAGIC) {
                     TaskManager.submit(new CombatHitTask(builder, container, 3,
-                            false));
+                        false));
                 }
             }
 
             // Reset the attacking entity.
             builder.attackTimer = builder.getStrategy().attackDelay(
-                    builder.getEntity());
+                builder.getEntity());
             builder.cooldown = 0;
             builder.getEntity().faceEntity(builder.getVictim());
         }

@@ -1,5 +1,7 @@
 package com.asteria.world.entity.player.content;
 
+import java.util.Optional;
+
 import com.asteria.engine.task.Task;
 import com.asteria.engine.task.TaskManager;
 import com.asteria.world.entity.Animation;
@@ -26,7 +28,7 @@ public abstract class TeleportSpell extends Spell {
     public enum Teleport {
         NORMAL_SPELLBOOK_TELEPORT {
             @Override
-            public void fire(final Player player, final TeleportSpell spell) {
+            public void fire(Player player, TeleportSpell spell) {
                 player.animation(new Animation(714));
 
                 TaskManager.submit(new Task(1, false) {
@@ -49,7 +51,7 @@ public abstract class TeleportSpell extends Spell {
         },
         ANCIENTS_SPELLBOOK_TELEPORT {
             @Override
-            public void fire(final Player player, final TeleportSpell spell) {
+            public void fire(Player player, TeleportSpell spell) {
                 player.animation(new Animation(1979));
 
                 TaskManager.submit(new Task(1, false) {
@@ -99,10 +101,10 @@ public abstract class TeleportSpell extends Spell {
     public abstract Teleport type();
 
     @Override
-    public Item[] equipmentRequired(Player player) {
+    public Optional<Item[]> equipmentRequired(Player player) {
 
         // Teleport spells never require any equipment.
-        return null;
+        return Optional.empty();
     }
 
     @Override

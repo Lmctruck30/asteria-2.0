@@ -1,5 +1,7 @@
 package com.asteria.world.entity.combat.magic;
 
+import java.util.Optional;
+
 import com.asteria.world.entity.Entity;
 import com.asteria.world.entity.Spell;
 import com.asteria.world.entity.player.Player;
@@ -21,16 +23,16 @@ public abstract class CombatEffectSpell extends CombatSpell {
     }
 
     @Override
-    public Item[] equipmentRequired(Player player) {
+    public Optional<Item[]> equipmentRequired(Player player) {
 
         // These types of spells never require any equipment, although the
         // method can still be overridden if by some chance a spell does.
-        return null;
+        return Optional.empty();
     }
 
     @Override
     public void finishCast(Entity cast, Entity castOn, boolean accurate,
-            int damage) {
+        int damage) {
         if (accurate) {
             spellEffect(cast, castOn);
         }

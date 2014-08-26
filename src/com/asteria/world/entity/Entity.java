@@ -121,14 +121,6 @@ public abstract class Entity {
     }
 
     /**
-     * Handles processing for this entity.
-     * 
-     * @throws Exception
-     *             if any errors occur while executing pre-processing code.
-     */
-    public abstract void preUpdate() throws Exception;
-
-    /**
      * Gets the attack speed for the entity.
      */
     public abstract int getAttackSpeed();
@@ -230,9 +222,18 @@ public abstract class Entity {
     }
 
     /**
+     * The size of this entity.
+     */
+    public int size() {
+        if (type() == EntityType.PLAYER)
+            return 1;
+        return ((Npc) this).getDefinition().getSize();
+    }
+
+    /**
      * Resets this entity after updating.
      */
-    public void postUpdate() {
+    public void reset() {
         primaryDirection = -1;
         secondaryDirection = -1;
         flags.reset();

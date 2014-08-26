@@ -3,10 +3,10 @@ package com.asteria.world.entity;
 import java.util.Objects;
 
 import com.asteria.engine.task.TaskManager;
-import com.asteria.engine.task.listener.EventListener;
+import com.asteria.engine.task.listener.ActionListener;
 
 /**
- * Uses an {@link EventListener} to append tasks to the end of {@link Entity}s
+ * Uses an {@link ActionListener} to append tasks to the end of {@link Entity}s
  * walking queues.
  * 
  * @author lare96
@@ -17,7 +17,7 @@ public class MovementQueueListener {
     private Entity entity;
 
     /** The listener that determine's when to run the action. */
-    private EventListener listener;
+    private ActionListener listener;
 
     /**
      * Create a new {@link MovementQueueListener}.
@@ -30,7 +30,7 @@ public class MovementQueueListener {
     }
 
     /**
-     * Creates a new {@link EventListener} that will listen for the walking
+     * Creates a new {@link ActionListener} that will listen for the walking
      * queue to finish. Once the walking queue is finished the listener will run
      * the logic within argued task. <br>
      * <br>
@@ -51,8 +51,8 @@ public class MovementQueueListener {
         entity.setFollowing(false);
 
         // Build the new listener.
-        listener = new MovementQueueListenerTask(entity,
-                Objects.requireNonNull(task));
+        listener = new MovementQueueListenerTask(entity, Objects
+            .requireNonNull(task));
 
         // Then submit it to the TaskManager!
         TaskManager.submit(listener);
@@ -77,12 +77,12 @@ public class MovementQueueListener {
     }
 
     /**
-     * The {@link EventListener} implementation that will listen for the walking
+     * The {@link ActionListener} implementation that will listen for the walking
      * queue to finish.
      * 
      * @author lare96
      */
-    private static class MovementQueueListenerTask extends EventListener {
+    private static class MovementQueueListenerTask extends ActionListener {
 
         /** The entity's walking queue we are listening for. */
         private Entity entity;
@@ -105,9 +105,9 @@ public class MovementQueueListener {
         }
 
         @Override
-        public boolean listenFor() {
+        public boolean listenWhile() {
             return !(entity.getMovementQueue().isMovementDone() || entity
-                    .isUnregistered());
+                .isUnregistered());
         }
 
         @Override

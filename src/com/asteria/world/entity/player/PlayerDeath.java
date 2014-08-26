@@ -7,16 +7,17 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import com.asteria.util.Utility;
 import com.asteria.world.entity.Animation;
 import com.asteria.world.entity.EntityDeath;
 import com.asteria.world.entity.UpdateFlags.Flag;
 import com.asteria.world.entity.combat.prayer.CombatPrayer;
-import com.asteria.world.entity.player.content.AssignWeaponInterface;
+import com.asteria.world.entity.combat.weapon.FightType;
+import com.asteria.world.entity.player.content.WeaponInterfaces;
 import com.asteria.world.entity.player.minigame.Minigame;
-import com.asteria.world.entity.player.minigame.MinigameFactory;
-import com.asteria.world.entity.player.skill.SkillEvent;
+import com.asteria.world.entity.player.minigame.Minigames;
 import com.asteria.world.entity.player.skill.Skills;
 import com.asteria.world.item.Item;
 import com.asteria.world.item.ground.GroundItem;
@@ -62,7 +63,7 @@ public class PlayerDeath extends EntityDeath<Player> {
 
         // Start death animation, fire events, and reset stuff.
         entity.animation(new Animation(0x900));
-        SkillEvent.fireSkillEvents(entity);
+        Skills.fireSkillEvents(entity);
         entity.getTradeSession().reset(false);
     }
 
@@ -70,31 +71,27 @@ public class PlayerDeath extends EntityDeath<Player> {
     public void death(Player entity) {
 
         // Get the killer and minigame instances.
-        Player killer = entity.getCombatBuilder().getKiller(true);
-        Minigame minigame = MinigameFactory.getMinigame(entity);
+        Optional<Player> killer = entity.getCombatBuilder().getKiller(true);
+        Optional<Minigame> optional = Minigames.get(entity);
 
         // Send the killer a message.
-        if (killer != null) {
-            killer.getPacketBuilder().sendMessage(
-                Utility.randomElement(DEATH_MESSAGES).replaceAll("-victim-",
-                    entity.getCapitalizedUsername()).replaceAll("-killer-",
-                    killer.getCapitalizedUsername()));
-        }
+        killer.ifPresent(k -> k.getPacketBuilder().sendMessage(
+            Utility.randomElement(DEATH_MESSAGES).replaceAll("-victim-",
+                entity.getCapitalizedUsername()).replaceAll("-killer-",
+                k.getCapitalizedUsername())));
 
         // We are in a minigame, so fire minigames events instead.
-        if (minigame != null) {
-            minigame.fireOnDeath(entity);
+        if (optional.isPresent()) {
+            optional.get().fireOnDeath(entity);
 
-            if (!minigame.canKeepItems()) {
+            if (!optional.get().canKeepItems()) {
                 if (entity.getRights().lessThan(PlayerRights.ADMINISTRATOR)) {
                     dropDeathItems(entity, killer);
                 }
             }
 
-            if (killer != null) {
-                minigame.fireOnKill(killer, entity);
-            }
-            entity.move(minigame.getDeathPosition(entity));
+            killer.ifPresent(k -> optional.get().fireOnKill(k, entity));
+            entity.move(optional.get().getDeathPosition(entity));
             return;
         }
 
@@ -118,9 +115,9 @@ public class PlayerDeath extends EntityDeath<Player> {
         entity.setSkullIcon(-1);
         entity.setTeleblockTimer(0);
         entity.animation(new Animation(65535));
-        AssignWeaponInterface.assignInterface(entity, entity.getEquipment()
-            .get(Utility.EQUIPMENT_SLOT_WEAPON));
-        AssignWeaponInterface.changeFightType(entity);
+        WeaponInterfaces.assign(entity, entity.getEquipment().get(
+            Utility.EQUIPMENT_SLOT_WEAPON));
+        FightType.assign(entity);
         entity
             .getPacketBuilder()
             .sendMessage(
@@ -140,7 +137,7 @@ public class PlayerDeath extends EntityDeath<Player> {
      * @param killer
      *            the player who killed the victim.
      */
-    public void dropDeathItems(Player entity, Player killer) {
+    public void dropDeathItems(Player entity, Optional<Player> killer) {
 
         // Add the player's kept items to a cached list.
         List<Integer> keep = new LinkedList<>();
@@ -168,9 +165,9 @@ public class PlayerDeath extends EntityDeath<Player> {
         if (entity.getSkullTimer() > 0) {
             items.stream().filter(Objects::nonNull).forEach(
                 item -> GroundItemManager
-                    .register(killer == null ? new StaticGroundItem(item,
+                    .register(!killer.isPresent() ? new StaticGroundItem(item,
                         entity.getPosition()) : new GroundItem(item, entity
-                        .getPosition(), killer)));
+                        .getPosition(), killer.get())));
         } else {
 
             // The player is not skulled so create an array cache of items to
@@ -240,9 +237,9 @@ public class PlayerDeath extends EntityDeath<Player> {
                 }
 
                 GroundItemManager
-                    .register(killer == null ? new StaticGroundItem(item,
+                    .register(!killer.isPresent() ? new StaticGroundItem(item,
                         entity.getPosition()) : new GroundItem(item, entity
-                        .getPosition(), killer));
+                        .getPosition(), killer.get()));
             }
         }
 

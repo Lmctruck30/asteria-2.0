@@ -5,7 +5,7 @@ import com.asteria.engine.net.ProtocolBuffer.ValueType;
 import com.asteria.engine.net.packet.PacketDecoder;
 import com.asteria.engine.net.packet.PacketOpcodeHeader;
 import com.asteria.world.entity.player.Player;
-import com.asteria.world.entity.player.skill.SkillEvent;
+import com.asteria.world.entity.player.skill.Skills;
 import com.asteria.world.item.Item;
 import com.asteria.world.item.ItemDefinition;
 import com.asteria.world.item.ground.GroundItem;
@@ -33,19 +33,18 @@ public class DecodeDropItemPacket extends PacketDecoder {
             return;
         }
 
-        SkillEvent.fireSkillEvents(player);
+        Skills.fireSkillEvents(player);
 
         if (player.getInventory().contains(item)) {
             int amount = ItemDefinition.getDefinitions()[item].isStackable() ? amount = player
                 .getInventory().totalAmount(item)
-                    : 1;
+                : 1;
 
             player.getInventory().remove(new Item(item, amount), slot);
-            final Position itemLocation = new Position(player.getPosition()
-                    .getX(), player.getPosition().getY(), player.getPosition()
-                    .getZ());
+            Position itemLocation = new Position(player.getPosition().getX(),
+                player.getPosition().getY(), player.getPosition().getZ());
             GroundItemManager.register(new GroundItem(new Item(item, amount),
-                    itemLocation, player));
+                itemLocation, player));
         }
     }
 }

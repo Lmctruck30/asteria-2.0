@@ -295,6 +295,42 @@ public class Position {
     }
 
     /**
+     * Gets the x coordinate of the region.
+     *
+     * @return the region x coordinate.
+     */
+    public int getTopLeftRegionX() {
+        return x / 8 - 6;
+    }
+
+    /**
+     * Gets the y coordinate of the region.
+     *
+     * @return the region y coordinate.
+     */
+    public int getTopLeftRegionY() {
+        return y / 8 - 6;
+    }
+
+    /**
+     * Returns the base local x coordinate.
+     *
+     * @return The base local x coordinate.
+     */
+    public int getBaseLocalX() {
+        return getTopLeftRegionX() * 8;
+    }
+
+    /**
+     * Returns the base local y coordinate.
+     *
+     * @return The base local y coordinate.
+     */
+    public int getBaseLocalY() {
+        return getTopLeftRegionY() * 8;
+    }
+
+    /**
      * Gets the region relative to this position.
      * 
      * @return the region relative to this position.

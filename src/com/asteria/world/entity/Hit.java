@@ -14,15 +14,38 @@ public class Hit {
     private HitType type;
 
     /**
-     * The different types of hits that can be dealt.
+     * An enumeration representing the different types of hits that can be
+     * dealt.
      * 
      * @author lare96
      */
     public enum HitType {
-        BLOCKED,
-        NORMAL,
-        POISON,
-        DIESEASE
+        BLOCKED(0),
+        NORMAL(1),
+        POISON(2),
+        DIESEASE(3);
+
+        /** The identification for this hit type. */
+        private int id;
+
+        /**
+         * Create a new {@link HitType}.
+         * 
+         * @param id
+         *            the identification for this hit type.
+         */
+        private HitType(int id) {
+            this.id = id;
+        }
+
+        /**
+         * Gets the identification for this hit type.
+         * 
+         * @return the identification for this hit type.
+         */
+        public int getId() {
+            return id;
+        }
     }
 
     /**

@@ -33,7 +33,7 @@ public class CombatTeleblockEffect extends Task {
         // blocked anymore
         if (player.getTeleblockTimer() <= 0) {
             player.getPacketBuilder().sendMessage(
-                    "You feel the effects of the teleblock spell go away.");
+                "You feel the effects of the teleblock spell go away.");
             this.cancel();
             return;
         }

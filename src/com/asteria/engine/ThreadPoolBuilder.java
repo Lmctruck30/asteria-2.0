@@ -1,6 +1,6 @@
 package com.asteria.engine;
 
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Phaser;
@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * 
  * @author lare96
  */
-public final class ThreadPoolFactory {
+public final class ThreadPoolBuilder {
 
     /**
      * Creates a new {@link ThreadPoolExecutor} with the argued settings. All
@@ -34,25 +34,25 @@ public final class ThreadPoolFactory {
      *            pool to be deallocated.
      * @return the new thread pool with the argued settings.
      */
-    public static ThreadPoolExecutor createThreadPool(String name, int size,
+    public static ThreadPoolExecutor build(String name, int size,
         int priority, long timeout) {
         ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors
             .newFixedThreadPool(size);
-        threadPool.setThreadFactory(new ThreadProvider(name, priority, true));
+        threadPool.setThreadFactory(new ThreadBuilder(name, priority, true));
         threadPool
             .setRejectedExecutionHandler(new IndicationCallerRunsPolicy());
         threadPool.setKeepAliveTime(timeout, TimeUnit.MINUTES);
         threadPool.allowCoreThreadTimeOut(true);
-        threadPool.prestartAllCoreThreads();
+        // threadPool.prestartAllCoreThreads();
         return threadPool;
     }
 
     /**
      * A handler for rejected tasks that runs the rejected task directly in the
-     * calling thread of the <code>execute</code> method, unless the executor
+     * calling thread of the <code>execute()</code> method, unless the executor
      * has been shut down, in which case the task is discarded. The difference
-     * between this handler and {@link CallerRunsPolicy} is that this handler
-     * will print off an indication of what happened.
+     * between this handler and {@link CallerRunsPolicy} is that this will print
+     * off an indication of what happened.
      * 
      * @author lare96
      */
@@ -66,7 +66,7 @@ public final class ThreadPoolFactory {
         public void rejectedExecution(Runnable r, ThreadPoolExecutor e) {
             super.rejectedExecution(r, e);
             logger
-                .warning(e.isShutdown() ? "Task discared by thread pool: " + e
+                .warning(e.isShutdown() ? "Task discarded by thread pool: " + e
                     .toString()
                     : "Task executed on calling thread by thread pool: " + e
                         .toString());
@@ -92,7 +92,7 @@ public final class ThreadPoolFactory {
         private final Phaser phaser;
 
         /** A queue that will hold all of the pending tasks. */
-        private final Queue<Runnable> pendingTasks = new LinkedList<>();
+        private final Queue<Runnable> pendingTasks = new ArrayDeque<>();
 
         /**
          * Create a new {@link BlockingThreadPool} with the argued size.
@@ -102,7 +102,7 @@ public final class ThreadPoolFactory {
          *            this thread pool.
          */
         public BlockingThreadPool(int size) {
-            this.executor = ThreadPoolFactory.createThreadPool(
+            this.executor = ThreadPoolBuilder.build(
                 "Blocking-Thread", size, Thread.NORM_PRIORITY, Long.MAX_VALUE);
             this.executor.allowCoreThreadTimeOut(false);
             this.phaser = new Phaser(1);
@@ -124,23 +124,20 @@ public final class ThreadPoolFactory {
          * @param r
          *            the task to add to the queue of pending tasks.
          */
-        public void append(final Runnable r) {
+        public void append(Runnable r) {
 
             // Register a new party for the phaser.
             phaser.register();
 
             // Wrap the argued task in this new task, so we can arrive at
             // the phaser and handle any errors.
-            pendingTasks.add(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        r.run();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        phaser.arrive();
-                    }
+            pendingTasks.add(() -> {
+                try {
+                    r.run();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    phaser.arrive();
                 }
             });
         }
@@ -166,5 +163,5 @@ public final class ThreadPoolFactory {
         }
     }
 
-    private ThreadPoolFactory() {}
+    private ThreadPoolBuilder() {}
 }

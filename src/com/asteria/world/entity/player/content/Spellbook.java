@@ -48,12 +48,12 @@ public enum Spellbook {
      */
     public static void convert(Player player, Spellbook book) {
         player.getPacketBuilder().sendSidebarInterface(6,
-                book.getSidebarInterface());
+            book.getSidebarInterface());
         player.setSpellbook(book);
-        player.getPacketBuilder().sendMessage(
-                "You convert to "
-                        + book.name().toLowerCase().replaceAll("_", " ")
-                        + " magicks!");
+        player.getPacketBuilder()
+            .sendMessage(
+                "You convert to " + book.name().toLowerCase().replaceAll("_",
+                    " ") + " magicks!");
     }
 
     /**

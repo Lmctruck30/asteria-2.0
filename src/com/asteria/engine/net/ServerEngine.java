@@ -28,8 +28,6 @@ import com.asteria.world.entity.player.Player;
  */
 public final class ServerEngine {
 
-    // TODO: Throttle packets?
-
     /** A logger for printing information. */
     private static Logger logger = Logger.getLogger(ServerEngine.class
         .getSimpleName());
@@ -39,6 +37,9 @@ public final class ServerEngine {
 
     /** The server socket channel that will accept incoming connections. */
     private static ServerSocketChannel server;
+
+    /** The maximum amount of packets to decode for a single player. */
+    public static final int PACKET_LIMIT = 15;
 
     /**
      * Starts the core components of the reactor.
@@ -219,9 +220,18 @@ public final class ServerEngine {
                     try {
                         if (PacketDecoder.getPackets()[session
                             .getPacketOpcode()] != null) {
+
+                            if (session.getPacketCount() >= ServerEngine.PACKET_LIMIT) {
+                                logger
+                                    .warning(session.getPlayer() + " has decoded too many packets for this cycle!");
+                                session.disconnect();
+                                break;
+                            }
+
                             PacketDecoder.getPackets()[session
                                 .getPacketOpcode()].decode(session.getPlayer(),
                                 new ProtocolBuffer(session.getInData()));
+                            session.incrementPacketCount();
                         } else {
                             if (Main.DEBUG)
                                 logger
@@ -313,26 +323,18 @@ public final class ServerEngine {
         while (it.hasNext()) {
             SelectionKey key = it.next();
 
-            if (!key.isValid()) {
+            try {
+                if (key.isValid()) {
+                    if (key.isAcceptable()) {
+                        acceptClients();
+                    } else if (key.isReadable()) {
+                        decodePackets(key);
+                    } else if (key.isWritable()) {
+                        sendQueuedData(key);
+                    }
+                }
+            } finally {
                 it.remove();
-            } else if (key.isAcceptable()) {
-                try {
-                    acceptClients();
-                } finally {
-                    it.remove();
-                }
-            } else if (key.isReadable()) {
-                try {
-                    decodePackets(key);
-                } finally {
-                    it.remove();
-                }
-            } else if (key.isWritable()) {
-                try {
-                    sendQueuedData(key);
-                } finally {
-                    it.remove();
-                }
             }
         }
     }

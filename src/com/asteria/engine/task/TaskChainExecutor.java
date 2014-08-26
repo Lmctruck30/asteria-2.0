@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Queue;
 
-
 /**
  * A {@link TaskChainExecutor} holds a queue of {@link TaskChain}s that are ran
  * in <i>FIFO</i> order. When a task in the chain is fired the next task in the
@@ -103,15 +102,15 @@ public class TaskChainExecutor {
 
         // Makes sure we aren't running an empty executor.
         if (internalTasks.isEmpty()) {
-            throw new IllegalStateException("[" + name
-                    + "]: There are no tasks in the chain!");
+            throw new IllegalStateException(
+                "[" + name + "]: There are no tasks in the chain!");
         }
 
         // Flag this executor as running.
         runningExecutor = true;
 
         // Adds all internal tasks to the operation queue
-        final Queue<TaskChain> operationTasks = new LinkedList<>();
+        Queue<TaskChain> operationTasks = new LinkedList<>();
         operationTasks.addAll(internalTasks);
 
         // The main task that will fire all of the tasks in the chain.
@@ -161,9 +160,7 @@ public class TaskChainExecutor {
         // Verify that this isn't already shutdown.
         if (!runningExecutor) {
             throw new IllegalStateException(
-                    "["
-                            + name
-                            + "]: You cannot halt an executor which has already been shutdown!");
+                "[" + name + "]: You cannot halt an executor which has already been shutdown!");
         }
 
         // Flag this executor as cancelled.
@@ -195,16 +192,14 @@ public class TaskChainExecutor {
 
         // Make sure this executor isn't running.
         if (!runningExecutor) {
-            throw new IllegalStateException("[" + name
-                    + "]: Cannot add task to a running executor!");
+            throw new IllegalStateException(
+                "[" + name + "]: Cannot add task to a running executor!");
         }
 
         // Make sure the task has a positive delay.
         if (task.delay() < 0) {
             throw new IllegalArgumentException(
-                    "["
-                            + name
-                            + "]: Cannot add task with delay value of below 0 to a executor!");
+                "[" + name + "]: Cannot add task with delay value of below 0 to a executor!");
         }
 
         // Append the new task to the chain.
@@ -218,7 +213,7 @@ public class TaskChainExecutor {
      *            the tasks to append to the chain.
      */
     public void appendAll(Collection<TaskChain> tasks) {
-        tasks.stream().forEach(t -> append(t));
+        tasks.forEach(t -> append(t));
     }
 
     /**

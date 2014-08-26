@@ -63,21 +63,20 @@ public final class NpcAggression {
 
             // Check if the entity is within distance.
             if (position.withinDistance(entity.getPosition(),
-                    NPC_TARGET_DISTANCE)) {
+                NPC_TARGET_DISTANCE)) {
 
                 // Check if the aggressive npc is attacking or being attacked.
                 if (npc.getCombatBuilder().isAttacking() || npc
-                        .getCombatBuilder().isBeingAttacked() || npc
-                        .equals(entity)) {
+                    .getCombatBuilder().isBeingAttacked() || npc.equals(entity)) {
                     continue;
                 }
 
                 // Check if the entity is attacking or being attacked.
                 if (!Location.inMultiCombat(entity) && entity
-                        .getCombatBuilder().isAttacking() || entity
-                        .getCombatBuilder().isBeingAttacked()) {
+                    .getCombatBuilder().isAttacking() || entity
+                    .getCombatBuilder().isBeingAttacked()) {
                     npc.getMovementCoordinator().setCoordinate(
-                            npc.isOriginalRandomWalk());
+                        npc.isOriginalRandomWalk());
                     continue;
                 }
 
@@ -88,14 +87,14 @@ public final class NpcAggression {
 
                     if (player.getTolerance().elapsed() > (NPC_TOLERANCE_SECONDS * 1000)) {
                         npc.getMovementCoordinator().setCoordinate(
-                                npc.isOriginalRandomWalk());
+                            npc.isOriginalRandomWalk());
                         continue;
                     }
                     if (!(player.getCombatLevel() <= (npc.getDefinition()
-                            .getCombatLevel() * 2)) && !Location
-                            .inWilderness(player)) {
+                        .getCombatLevel() * 2)) && !Location
+                        .inWilderness(player)) {
                         npc.getMovementCoordinator().setCoordinate(
-                                npc.isOriginalRandomWalk());
+                            npc.isOriginalRandomWalk());
                         continue;
                     }
                 }
@@ -142,7 +141,7 @@ public final class NpcAggression {
         // Check and validate the identifiers.
         if (policy.identifiers() == null) {
             throw new IllegalArgumentException(
-                    "Cannot add a policy with no indentifers!");
+                "Cannot add a policy with no indentifers!");
         }
 
         // Add the policy for all of the identifiers.

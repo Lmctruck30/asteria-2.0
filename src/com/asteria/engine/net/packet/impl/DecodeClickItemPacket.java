@@ -5,10 +5,12 @@ import com.asteria.engine.net.ProtocolBuffer.ByteOrder;
 import com.asteria.engine.net.ProtocolBuffer.ValueType;
 import com.asteria.engine.net.packet.PacketDecoder;
 import com.asteria.engine.net.packet.PacketOpcodeHeader;
+import com.asteria.util.Utility;
 import com.asteria.world.entity.player.Player;
 import com.asteria.world.entity.player.content.FoodConsumable;
 import com.asteria.world.entity.player.content.PotionConsumable;
-import com.asteria.world.entity.player.skill.SkillEvent;
+import com.asteria.world.entity.player.skill.Skills;
+import com.asteria.world.entity.player.skill.impl.Fishing;
 import com.asteria.world.item.Item;
 import com.asteria.world.item.ItemDefinition;
 
@@ -26,12 +28,12 @@ public class DecodeClickItemPacket extends PacketDecoder {
         int slot = buf.readShort(false, ValueType.A);
         int id = buf.readShort(false, ByteOrder.LITTLE);
 
-        if (slot < 0 || container < 0 || id < 0
-                || id > ItemDefinition.getDefinitions().length) {
+        if (slot < 0 || container < 0 || id < 0 || id > ItemDefinition
+            .getDefinitions().length) {
             return;
         }
 
-        SkillEvent.fireSkillEvents(player);
+        Skills.fireSkillEvents(player);
         player.getCombatBuilder().resetAttackTimer();
 
         if (container == 3214) {
@@ -48,7 +50,18 @@ public class DecodeClickItemPacket extends PacketDecoder {
             if (PotionConsumable.consume(player, item, slot)) {
                 return;
             }
+
+            switch (item.getId()) {
+
+            case 405: // Casket obtained from fishing.
+                if (player.getInventory().add(
+                    Utility.randomElement(Fishing.CASKET_ITEMS).clone())) {
+                    player.getInventory().remove(item, slot);
+                    player.getPacketBuilder().sendMessage(
+                        "You open the casket and recieve an item!");
+                }
+                break;
+            }
         }
     }
-
 }

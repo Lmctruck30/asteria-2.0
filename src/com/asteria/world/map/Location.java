@@ -13,7 +13,7 @@ public class Location {
 
     /** The wilderness location. */
     public static final Location WILDERNESS = new Location(2941, 3518, 3392,
-            3966);
+        3966);
 
     /** The south-west <code>x</code> coordinate. */
     private int southWestX;
@@ -40,7 +40,7 @@ public class Location {
      *            the north-east <code>y</code> coordinate.
      */
     public Location(int southWestX, int southWestY, int northEastX,
-            int northEastY) {
+        int northEastY) {
         this.southWestX = southWestX;
         this.southWestY = southWestY;
         this.northEastX = northEastX;
@@ -57,7 +57,7 @@ public class Location {
      */
     public Location(Position source, int radius) {
         this(source.getX() - radius, source.getY() - radius,
-                source.getX() + radius, source.getY() + radius);
+            source.getX() + radius, source.getY() + radius);
     }
 
     /**
@@ -103,6 +103,11 @@ public class Location {
         return false;
     }
 
+    @Override
+    public Location clone() {
+        return new Location(southWestX, southWestY, northEastX, northEastY);
+    }
+
     /**
      * Checks if this {@link Entity} is in the wilderness.
      * 
@@ -123,32 +128,32 @@ public class Location {
      */
     public static boolean inMultiCombat(Entity entity) {
         return (entity.getPosition().getX() >= 3136 && entity.getPosition()
-                .getX() <= 3327 && entity.getPosition().getY() >= 3519 && entity
-                .getPosition().getY() <= 3607) || (entity.getPosition().getX() >= 3190 && entity
-                .getPosition().getX() <= 3327 && entity.getPosition().getY() >= 3648 && entity
-                .getPosition().getY() <= 3839) || (entity.getPosition().getX() >= 3200 && entity
-                .getPosition().getX() <= 3390 && entity.getPosition().getY() >= 3840 && entity
-                .getPosition().getY() <= 3967) || (entity.getPosition().getX() >= 2992 && entity
-                .getPosition().getX() <= 3007 && entity.getPosition().getY() >= 3912 && entity
-                .getPosition().getY() <= 3967) || (entity.getPosition().getX() >= 2946 && entity
-                .getPosition().getX() <= 2959 && entity.getPosition().getY() >= 3816 && entity
-                .getPosition().getY() <= 3831) || (entity.getPosition().getX() >= 3008 && entity
-                .getPosition().getX() <= 3199 && entity.getPosition().getY() >= 3856 && entity
-                .getPosition().getY() <= 3903) || (entity.getPosition().getX() >= 3008 && entity
-                .getPosition().getX() <= 3071 && entity.getPosition().getY() >= 3600 && entity
-                .getPosition().getY() <= 3711) || (entity.getPosition().getX() >= 3072 && entity
-                .getPosition().getX() <= 3327 && entity.getPosition().getY() >= 3608 && entity
-                .getPosition().getY() <= 3647) || (entity.getPosition().getX() >= 2624 && entity
-                .getPosition().getX() <= 2690 && entity.getPosition().getY() >= 2550 && entity
-                .getPosition().getY() <= 2619) || (entity.getPosition().getX() >= 2371 && entity
-                .getPosition().getX() <= 2422 && entity.getPosition().getY() >= 5062 && entity
-                .getPosition().getY() <= 5117) || (entity.getPosition().getX() >= 2896 && entity
-                .getPosition().getX() <= 2927 && entity.getPosition().getY() >= 3595 && entity
-                .getPosition().getY() <= 3630) || (entity.getPosition().getX() >= 2892 && entity
-                .getPosition().getX() <= 2932 && entity.getPosition().getY() >= 4435 && entity
-                .getPosition().getY() <= 4464) || (entity.getPosition().getX() >= 2256 && entity
-                .getPosition().getX() <= 2287 && entity.getPosition().getY() >= 4680 && entity
-                .getPosition().getY() <= 4711);
+            .getX() <= 3327 && entity.getPosition().getY() >= 3519 && entity
+            .getPosition().getY() <= 3607) || (entity.getPosition().getX() >= 3190 && entity
+            .getPosition().getX() <= 3327 && entity.getPosition().getY() >= 3648 && entity
+            .getPosition().getY() <= 3839) || (entity.getPosition().getX() >= 3200 && entity
+            .getPosition().getX() <= 3390 && entity.getPosition().getY() >= 3840 && entity
+            .getPosition().getY() <= 3967) || (entity.getPosition().getX() >= 2992 && entity
+            .getPosition().getX() <= 3007 && entity.getPosition().getY() >= 3912 && entity
+            .getPosition().getY() <= 3967) || (entity.getPosition().getX() >= 2946 && entity
+            .getPosition().getX() <= 2959 && entity.getPosition().getY() >= 3816 && entity
+            .getPosition().getY() <= 3831) || (entity.getPosition().getX() >= 3008 && entity
+            .getPosition().getX() <= 3199 && entity.getPosition().getY() >= 3856 && entity
+            .getPosition().getY() <= 3903) || (entity.getPosition().getX() >= 3008 && entity
+            .getPosition().getX() <= 3071 && entity.getPosition().getY() >= 3600 && entity
+            .getPosition().getY() <= 3711) || (entity.getPosition().getX() >= 3072 && entity
+            .getPosition().getX() <= 3327 && entity.getPosition().getY() >= 3608 && entity
+            .getPosition().getY() <= 3647) || (entity.getPosition().getX() >= 2624 && entity
+            .getPosition().getX() <= 2690 && entity.getPosition().getY() >= 2550 && entity
+            .getPosition().getY() <= 2619) || (entity.getPosition().getX() >= 2371 && entity
+            .getPosition().getX() <= 2422 && entity.getPosition().getY() >= 5062 && entity
+            .getPosition().getY() <= 5117) || (entity.getPosition().getX() >= 2896 && entity
+            .getPosition().getX() <= 2927 && entity.getPosition().getY() >= 3595 && entity
+            .getPosition().getY() <= 3630) || (entity.getPosition().getX() >= 2892 && entity
+            .getPosition().getX() <= 2932 && entity.getPosition().getY() >= 4435 && entity
+            .getPosition().getY() <= 4464) || (entity.getPosition().getX() >= 2256 && entity
+            .getPosition().getX() <= 2287 && entity.getPosition().getY() >= 4680 && entity
+            .getPosition().getY() <= 4711);
     }
 
     /**

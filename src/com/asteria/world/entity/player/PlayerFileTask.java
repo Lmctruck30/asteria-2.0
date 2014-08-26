@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 import com.asteria.engine.GameEngine;
 import com.asteria.util.Utility;
-import com.asteria.world.entity.player.content.AssignWeaponInterface.FightType;
+import com.asteria.world.entity.combat.weapon.FightType;
 import com.asteria.world.entity.player.content.Spellbook;
 import com.asteria.world.entity.player.skill.Skill;
 import com.asteria.world.entity.player.skill.Skills;
@@ -36,7 +36,7 @@ public final class PlayerFileTask {
 
     /** A {@link Logger} for printing debugging info. */
     private static final Logger logger = Logger.getLogger(PlayerFileTask.class
-            .getSimpleName());
+        .getSimpleName());
 
     private PlayerFileTask() {}
 
@@ -77,68 +77,65 @@ public final class PlayerFileTask {
                     // Check if the file exists before saving it.
                     if (!file.exists()) {
                         if (!file.createNewFile()) {
-                            logger.severe("Unable to create save file for player: " + player);
+                            logger
+                                .severe("Unable to create save file for player: " + player);
                             return;
                         }
                     }
 
                     // Now add the properties to the json parser.
                     Gson builder = new GsonBuilder().setPrettyPrinting()
-                            .create();
+                        .create();
                     JsonObject object = new JsonObject();
 
                     object.addProperty("username", player.getUsername().trim());
                     object.addProperty("password", player.getPassword().trim());
-                    object.add("position",
-                            builder.toJsonTree(player.getPosition()));
+                    object.add("position", builder.toJsonTree(player
+                        .getPosition()));
                     object.addProperty("staff-rights", player.getRights()
-                            .name());
+                        .name());
                     object.addProperty("gender",
-                            new Integer(player.getGender()));
-                    object.add("appearance",
-                            builder.toJsonTree(player.getAppearance()));
-                    object.add("colors", builder.toJsonTree(player.getColors()));
+                        new Integer(player.getGender()));
+                    object.add("appearance", builder.toJsonTree(player
+                        .getAppearance()));
+                    object
+                        .add("colors", builder.toJsonTree(player.getColors()));
                     object.addProperty("run-toggled", new Boolean(player
-                            .getMovementQueue().isRunToggled()));
-                    object.addProperty("new-player",
-                            new Boolean(player.isNewPlayer()));
-                    object.add(
-                            "inventory",
-                            builder.toJsonTree(player.getInventory()
-.toArray()));
-                    object.add(
-                            "bank",
-                            builder.toJsonTree(player.getBank()
-                                    .toArray()));
-                    object.add(
-                            "equipment",
-                            builder.toJsonTree(player.getEquipment()
-.toArray()));
-                    object.add("skills", builder.toJsonTree(player.getSkills()));
-                    object.add("friends",
-                            builder.toJsonTree(player.getFriends().toArray()));
-                    object.add("ignores",
-                            builder.toJsonTree(player.getIgnores().toArray()));
-                    object.addProperty("run-energy",
-                            new Integer(player.getRunEnergy()));
+                        .getMovementQueue().isRunToggled()));
+                    object.addProperty("new-player", new Boolean(player
+                        .isNewPlayer()));
+                    object.add("inventory", builder.toJsonTree(player
+                        .getInventory().toArray()));
+                    object.add("bank", builder.toJsonTree(player.getBank()
+                        .toArray()));
+                    object.add("equipment", builder.toJsonTree(player
+                        .getEquipment().toArray()));
+                    object
+                        .add("skills", builder.toJsonTree(player.getSkills()));
+                    object.add("friends", builder.toJsonTree(player
+                        .getFriends().toArray()));
+                    object.add("ignores", builder.toJsonTree(player
+                        .getIgnores().toArray()));
+                    object.addProperty("run-energy", new Integer(player
+                        .getRunEnergy()));
                     object.addProperty("spell-book", player.getSpellbook()
-                            .name());
-                    object.addProperty("is-banned",
-                            new Boolean(player.isBanned()));
-                    object.addProperty("auto-retaliate",
-                            new Boolean(player.isAutoRetaliate()));
+                        .name());
+                    object.addProperty("is-banned", new Boolean(player
+                        .isBanned()));
+                    object.addProperty("auto-retaliate", new Boolean(player
+                        .isAutoRetaliate()));
                     object.addProperty("fight-type", player.getFightType()
-                            .name());
-                    object.addProperty("skull-timer",
-                            new Integer(player.getSkullTimer()));
-                    object.addProperty("accept-aid",
-                            new Boolean(player.isAcceptAid()));
-                    object.addProperty("poison-damage",
-                            new Integer(player.getPoisonDamage()));
-                    object.addProperty("teleblock-timer",
-                            new Integer(player.getTeleblockTimer()));
-                    object.addProperty("special-amount",
-                            new Integer(player.getSpecialPercentage()));
+                        .name());
+                    object.addProperty("skull-timer", new Integer(player
+                        .getSkullTimer()));
+                    object.addProperty("accept-aid", new Boolean(player
+                        .isAcceptAid()));
+                    object.addProperty("poison-damage", new Integer(player
+                        .getPoisonDamage()));
+                    object.addProperty("teleblock-timer", new Integer(player
+                        .getTeleblockTimer()));
+                    object.addProperty("special-amount", new Integer(player
+                        .getSpecialPercentage()));
 
                     // And write the data to the character file!
                     writer.write(builder.toJson(object));
@@ -149,7 +146,7 @@ public final class PlayerFileTask {
 
                     // An error happened while saving.
                     logger.log(Level.WARNING,
-                            "Error while saving character file!", e);
+                        "Error while saving character file!", e);
                 }
             }
         }
@@ -197,7 +194,7 @@ public final class PlayerFileTask {
                 JsonParser fileParser = new JsonParser();
                 Gson builder = new GsonBuilder().create();
                 JsonObject reader = (JsonObject) fileParser
-                        .parse(new FileReader(file));
+                    .parse(new FileReader(file));
 
                 if (reader.has("username")) {
                     player.setUsername(reader.get("username").getAsString());
@@ -212,61 +209,61 @@ public final class PlayerFileTask {
                 }
                 if (reader.has("position")) {
                     player.getPosition().setAs(
-                            builder.fromJson(reader.get("position"),
-                                    Position.class));
+                        builder
+                            .fromJson(reader.get("position"), Position.class));
                 }
                 if (reader.has("staff-rights")) {
                     player.setRights(PlayerRights.valueOf(reader.get(
-                            "staff-rights").getAsString()));
+                        "staff-rights").getAsString()));
                 }
                 if (reader.has("gender")) {
                     player.setGender(reader.get("gender").getAsInt());
                 }
                 if (reader.has("appearance")) {
-                    player.setAppearance(builder.fromJson(
-                            reader.get("appearance").getAsJsonArray(),
-                            int[].class));
+                    player.setAppearance(builder.fromJson(reader.get(
+                        "appearance").getAsJsonArray(), int[].class));
                 }
                 if (reader.has("colors")) {
                     player.setColors(builder.fromJson(reader.get("colors")
-                            .getAsJsonArray(), int[].class));
+                        .getAsJsonArray(), int[].class));
                 }
                 if (reader.has("run-toggled")) {
                     player.getMovementQueue().setRunToggled(
-                            reader.get("run-toggled").getAsBoolean());
+                        reader.get("run-toggled").getAsBoolean());
                 }
                 if (reader.has("new-player")) {
-                    player.setNewPlayer(reader.get("new-player").getAsBoolean());
+                    player
+                        .setNewPlayer(reader.get("new-player").getAsBoolean());
                 }
                 if (reader.has("inventory")) {
                     player.getInventory()
 
-                            .setItems(
-                                    builder.fromJson(reader.get("inventory")
-                                            .getAsJsonArray(), Item[].class));
+                    .setItems(
+                        builder.fromJson(reader.get("inventory")
+                            .getAsJsonArray(), Item[].class));
 
                 }
                 if (reader.has("bank")) {
                     player.getBank()
 
-                            .setItems(
-                                    builder.fromJson(reader.get("bank")
-                                            .getAsJsonArray(), Item[].class));
+                    .setItems(
+                        builder.fromJson(reader.get("bank").getAsJsonArray(),
+                            Item[].class));
                 }
                 if (reader.has("equipment")) {
                     player.getEquipment()
 
-                            .setItems(
-                                    builder.fromJson(reader.get("equipment")
-                                            .getAsJsonArray(), Item[].class));
+                    .setItems(
+                        builder.fromJson(reader.get("equipment")
+                            .getAsJsonArray(), Item[].class));
                 }
                 if (reader.has("skills")) {
                     player.setSkills(builder.fromJson(reader.get("skills")
-                            .getAsJsonArray(), Skill[].class));
+                        .getAsJsonArray(), Skill[].class));
                 }
                 if (reader.has("friends")) {
                     long[] friends = builder.fromJson(reader.get("friends")
-                            .getAsJsonArray(), long[].class);
+                        .getAsJsonArray(), long[].class);
 
                     for (long l : friends) {
                         player.getFriends().add(l);
@@ -274,7 +271,7 @@ public final class PlayerFileTask {
                 }
                 if (reader.has("ignores")) {
                     long[] ignores = builder.fromJson(reader.get("ignores")
-                            .getAsJsonArray(), long[].class);
+                        .getAsJsonArray(), long[].class);
 
                     for (long l : ignores) {
                         player.getIgnores().add(l);
@@ -285,7 +282,7 @@ public final class PlayerFileTask {
                 }
                 if (reader.has("spell-book")) {
                     player.setSpellbook(Spellbook.valueOf(reader.get(
-                            "spell-book").getAsString()));
+                        "spell-book").getAsString()));
                 }
                 if (reader.has("is-banned")) {
                     boolean banned = reader.get("is-banned").getAsBoolean();
@@ -297,29 +294,30 @@ public final class PlayerFileTask {
                 }
                 if (reader.has("auto-retaliate")) {
                     player.setAutoRetaliate(reader.get("auto-retaliate")
-                            .getAsBoolean());
+                        .getAsBoolean());
                 }
                 if (reader.has("fight-type")) {
                     player.setFightType(FightType.valueOf(reader.get(
-                            "fight-type").getAsString()));
+                        "fight-type").getAsString()));
                 }
                 if (reader.has("skull-timer")) {
                     player.setSkullTimer(reader.get("skull-timer").getAsInt());
                 }
                 if (reader.has("accept-aid")) {
-                    player.setAcceptAid(reader.get("accept-aid").getAsBoolean());
+                    player
+                        .setAcceptAid(reader.get("accept-aid").getAsBoolean());
                 }
                 if (reader.has("poison-damage")) {
                     player.setPoisonDamage(reader.get("poison-damage")
-                            .getAsInt());
+                        .getAsInt());
                 }
                 if (reader.has("teleblock-timer")) {
                     player.setTeleblockTimer(reader.get("teleblock-timer")
-                            .getAsInt());
+                        .getAsInt());
                 }
                 if (reader.has("special-amount")) {
                     player.setSpecialPercentage(reader.get("special-amount")
-                            .getAsInt());
+                        .getAsInt());
                 }
             } catch (Exception e) {
                 e.printStackTrace();

@@ -19,32 +19,35 @@ import com.asteria.world.map.Position;
 @PacketOpcodeHeader({ 132, 252, 70 })
 public class DecodeObjectActionPacket extends PacketDecoder {
 
-    // TODO: When cache reading is done, check position of objects to
-    // see if you're actually near them or not.
-
     /** The various packet opcodes. */
     public static final int FIRST_CLICK = 132, SECOND_CLICK = 252,
-            THIRD_CLICK = 70;
+        THIRD_CLICK = 70;
 
     /** The various fields for the packets. */
-    private int objectX, objectY, objectId, objectSize;
+    private int objectX, objectY, objectId, size = 1;
 
     @Override
-    public void decode(final Player player, ProtocolBuffer buf) {
+    public void decode(Player player, ProtocolBuffer buf) {
         switch (player.getSession().getPacketOpcode()) {
         case FIRST_CLICK:
             objectX = buf.readShort(true, ValueType.A, ByteOrder.LITTLE);
             objectId = buf.readShort(false);
             objectY = buf.readShort(false, ValueType.A);
-            objectSize = 1;
+
+            if (objectX < 1 || objectY < 1 || objectId < 1)
+                return;
+            // if (!def.valid(new Position(objectX, objectY,
+            // player.getPosition()
+            // .getZ())))
+            // return;
 
             player.facePosition(new Position(objectX, objectY));
             player.getMovementQueueListener().append(new Runnable() {
                 @Override
                 public void run() {
                     if (player.getPosition().withinDistance(
-                            new Position(objectX, objectY, player.getPosition()
-                                    .getZ()), objectSize)) {
+                        new Position(objectX, objectY, player.getPosition()
+                            .getZ()), size)) {
 
                         switch (objectId) {
 
@@ -54,19 +57,18 @@ public class DecodeObjectActionPacket extends PacketDecoder {
                             break;
                         case 409:
                             int level = player.getSkills()[Skills.PRAYER]
-                                    .getLevelForExperience();
+                                .getLevelForExperience();
 
                             if (player.getSkills()[Skills.PRAYER].getLevel() < level) {
                                 player.animation(new Animation(645));
-                                player.getSkills()[Skills.PRAYER]
-.setLevel(
-                                        level, true);
+                                player.getSkills()[Skills.PRAYER].setLevel(
+                                    level, true);
                                 player.getPacketBuilder().sendMessage(
-                                        "You recharge your prayer points.");
+                                    "You recharge your prayer points.");
                                 Skills.refresh(player, Skills.PRAYER);
                             } else {
                                 player.getPacketBuilder().sendMessage(
-                                        "You already have full prayer points.");
+                                    "You already have full prayer points.");
                             }
                             break;
                         case 6552:
@@ -86,7 +88,13 @@ public class DecodeObjectActionPacket extends PacketDecoder {
             objectId = buf.readShort(false, ValueType.A, ByteOrder.LITTLE);
             objectY = buf.readShort(true, ByteOrder.LITTLE);
             objectX = buf.readShort(false, ValueType.A);
-            objectSize = 1;
+
+            if (objectX < 1 || objectY < 1 || objectId < 1)
+                return;
+            // if (!def.valid(new Position(objectX, objectY,
+            // player.getPosition()
+            // .getZ())))
+            // return;
 
             player.facePosition(new Position(objectX, objectY));
 
@@ -94,8 +102,8 @@ public class DecodeObjectActionPacket extends PacketDecoder {
                 @Override
                 public void run() {
                     if (player.getPosition().withinDistance(
-                            new Position(objectX, objectY, player.getPosition()
-                                    .getZ()), objectSize)) {
+                        new Position(objectX, objectY, player.getPosition()
+                            .getZ()), size)) {
                         switch (objectId) {
 
                         }
@@ -108,7 +116,13 @@ public class DecodeObjectActionPacket extends PacketDecoder {
             objectX = buf.readShort(true, ByteOrder.LITTLE);
             objectY = buf.readShort(false);
             objectId = buf.readShort(false, ValueType.A, ByteOrder.LITTLE);
-            objectSize = 1;
+
+            if (objectX < 1 || objectY < 1 || objectId < 1)
+                return;
+            // if (!def.valid(new Position(objectX, objectY,
+            // player.getPosition()
+            // .getZ())))
+            // return;
 
             player.facePosition(new Position(objectX, objectY));
 
@@ -116,8 +130,8 @@ public class DecodeObjectActionPacket extends PacketDecoder {
                 @Override
                 public void run() {
                     if (player.getPosition().withinDistance(
-                            new Position(objectX, objectY, player.getPosition()
-                                    .getZ()), objectSize)) {
+                        new Position(objectX, objectY, player.getPosition()
+                            .getZ()), size)) {
                         switch (objectId) {
 
                         }

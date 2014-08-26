@@ -1,5 +1,7 @@
 package com.asteria.world.entity.player.content;
 
+import java.util.Optional;
+
 import com.asteria.world.World;
 import com.asteria.world.entity.player.Player;
 
@@ -8,7 +10,7 @@ import com.asteria.world.entity.player.Player;
  * 
  * @author lare96
  */
-public class PrivateMessage {
+public final class PrivateMessage {
 
     /** The player instance. */
     private Player player;
@@ -36,12 +38,13 @@ public class PrivateMessage {
         for (long name : player.getFriends()) {
             if (name == 0) {
                 continue;
-            }
-            Player load = World.getPlayerByHash(name);
-            player.getPacketBuilder().loadPrivateMessage(name,
-                    load == null ? 0 : 1);
-        }
 
+            }
+
+            Optional<Player> p = World.getPlayerByHash(name);
+            player.getPacketBuilder().loadPrivateMessage(name,
+                !p.isPresent() ? 0 : 1);
+        }
     }
 
     /**
@@ -63,7 +66,7 @@ public class PrivateMessage {
 
             if (players.getFriends().contains(player.getUsernameHash())) {
                 players.getPacketBuilder().loadPrivateMessage(
-                        player.getUsernameHash(), !online ? 0 : 1);
+                    player.getUsernameHash(), !online ? 0 : 1);
             }
         }
     }
@@ -86,17 +89,17 @@ public class PrivateMessage {
         // list.
         if (player.getFriends().contains(name)) {
             player.getPacketBuilder().sendMessage(
-                    "They are already on your friends list.");
+                "They are already on your friends list.");
             return;
         }
 
         // Add the name to your friends list and update it with online or
         // offline.
-        Player load = World.getPlayerByHash(name);
+        Optional<Player> p = World.getPlayerByHash(name);
 
         player.getFriends().add(name);
-        player.getPacketBuilder()
-                .loadPrivateMessage(name, load == null ? 0 : 1);
+        player.getPacketBuilder().loadPrivateMessage(name,
+            !p.isPresent() ? 0 : 1);
     }
 
     /**
@@ -117,7 +120,7 @@ public class PrivateMessage {
         // list.
         if (player.getIgnores().contains(name)) {
             player.getPacketBuilder().sendMessage(
-                    "They are already on your ignores list.");
+                "They are already on your ignores list.");
             return;
         }
 
@@ -138,7 +141,7 @@ public class PrivateMessage {
             player.getFriends().remove(name);
         } else {
             player.getPacketBuilder().sendMessage(
-                    "They are not on your friends list.");
+                "They are not on your friends list.");
         }
     }
 
@@ -155,7 +158,7 @@ public class PrivateMessage {
             player.getIgnores().remove(name);
         } else {
             player.getPacketBuilder().sendMessage(
-                    "They are not on your ignores list.");
+                "They are not on your ignores list.");
         }
     }
 
@@ -172,15 +175,12 @@ public class PrivateMessage {
      *            the total size of the message.
      */
     public void sendPrivateMessage(Player sendingFrom, long sendingTo,
-            byte[] message, int messageSize) {
-        Player send = World.getPlayerByHash(sendingTo);
-
-        if (send != null) {
-            send.getPacketBuilder().sendPrivateMessage(
-                    sendingFrom.getUsernameHash(),
-                    sendingFrom.getRights().getProtocolValue(), message,
-                    messageSize);
-        }
+        byte[] message, int messageSize) {
+        World.getPlayerByHash(sendingTo).ifPresent(
+            p -> p.getPacketBuilder().sendPrivateMessage(
+                sendingFrom.getUsernameHash(),
+                sendingFrom.getRights().getProtocolValue(), message,
+                messageSize));
     }
 
     /**

@@ -10,25 +10,55 @@ import java.util.BitSet;
 public class UpdateFlags {
 
     /** A bit set holding the values for the update flags. */
-    private BitSet bits = new BitSet(Flag.values().length);
+    private BitSet bits = new BitSet(Flag.size());
 
     /**
-     * Holds all of the update flag constants. Please note that the order of
-     * these constants <b>should never</b> be changed!
+     * An enumeration representing all of the update flags.
      * 
      * @author lare96
      */
     public enum Flag {
-        APPEARANCE,
-        CHAT,
-        GRAPHICS,
-        ANIMATION,
-        FORCED_CHAT,
-        FACE_ENTITY,
-        FACE_COORDINATE,
-        HIT,
-        HIT_2,
-        TRANSFORM
+        APPEARANCE(0),
+        CHAT(1),
+        GRAPHICS(2),
+        ANIMATION(3),
+        FORCED_CHAT(4),
+        FACE_ENTITY(5),
+        FACE_COORDINATE(6),
+        HIT(7),
+        HIT_2(8),
+        TRANSFORM(9);
+
+        /** The index of this update flag in the bit set. */
+        private int id;
+
+        /**
+         * Create a new {@link Flag}.
+         * 
+         * @param id
+         *            the index of this update flag in the bit set.
+         */
+        private Flag(int id) {
+            this.id = id;
+        }
+
+        /**
+         * Gets the index of this update flag in the bit set.
+         * 
+         * @return the index of this update flag in the bit set.
+         */
+        public int getId() {
+            return id;
+        }
+
+        /**
+         * Gets the amount of constants in this enumeration.
+         * 
+         * @return the amount of constants in this enumeration.
+         */
+        public static int size() {
+            return Flag.values().length;
+        }
     }
 
     /**
@@ -39,7 +69,7 @@ public class UpdateFlags {
      *            the update flag that will be flagged.
      */
     public void flag(Flag flag) {
-        bits.set(flag.ordinal());
+        bits.set(flag.getId());
     }
 
     /**
@@ -49,7 +79,7 @@ public class UpdateFlags {
      *            the update flag that will be flipped.
      */
     public void flip(Flag flag) {
-        bits.flip(flag.ordinal());
+        bits.flip(flag.getId());
     }
 
     /**
@@ -60,7 +90,7 @@ public class UpdateFlags {
      * @return the value of the flag.
      */
     public boolean get(Flag flag) {
-        return bits.get(flag.ordinal());
+        return bits.get(flag.getId());
     }
 
     /**

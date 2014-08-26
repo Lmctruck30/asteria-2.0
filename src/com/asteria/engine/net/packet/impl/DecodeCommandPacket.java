@@ -16,7 +16,7 @@ import com.asteria.world.item.ItemDefinition;
 import com.asteria.world.map.Location;
 import com.asteria.world.map.Position;
 import com.asteria.world.object.WorldObject;
-import com.asteria.world.object.WorldObject.Rotation;
+import com.asteria.world.object.WorldObject.Direction;
 import com.asteria.world.object.WorldObjectManager;
 
 /**
@@ -28,9 +28,9 @@ import com.asteria.world.object.WorldObjectManager;
 public class DecodeCommandPacket extends PacketDecoder {
 
     @Override
-    public void decode(final Player player, ProtocolBuffer buf) {
+    public void decode(Player player, ProtocolBuffer buf) {
         String command = buf.readString().toLowerCase();
-        final String[] cmd = command.split(" ");
+        String[] cmd = command.split(" ");
 
         // All commands are currently for 'developers' only, which is the
         // highest rank. For all of the other ranks look at the 'PlayerRights'
@@ -57,22 +57,16 @@ public class DecodeCommandPacket extends PacketDecoder {
                         "You have started a war with " + (monsters * 2) + " monsters!");
                 break;
             case "teleto":
-                Player teleTo = World.getPlayerByName(cmd[1].replaceAll("_",
-                    " "));
-
-                if (teleTo != null)
-                    player.move(teleTo.getPosition());
+                World.getPlayerByName(cmd[1].replaceAll("_", " ")).ifPresent(
+                    p -> p.move(p.getPosition()));
                 break;
             case "teletome":
-                Player teleToMe = World.getPlayerByName(cmd[1].replaceAll("_",
-                    " "));
-
-                if (teleToMe != null)
-                    teleToMe.move(player.getPosition());
+                World.getPlayerByName(cmd[1].replaceAll("_", " ")).ifPresent(
+                    p -> p.move(p.getPosition()));
                 break;
             case "ipban":
-                Player ipban = World.getPlayerByName(cmd[1]
-                    .replaceAll("_", " "));
+                Player ipban = World.getPlayerByName(
+                    cmd[1].replaceAll("_", " ")).orElse(null);
 
                 if (ipban != null && ipban.getRights().lessThan(
                     PlayerRights.ADMINISTRATOR) && !ipban.equals(player)) {
@@ -83,7 +77,8 @@ public class DecodeCommandPacket extends PacketDecoder {
                 }
                 break;
             case "ban":
-                Player ban = World.getPlayerByName(cmd[1].replaceAll("_", " "));
+                Player ban = World.getPlayerByName(cmd[1].replaceAll("_", " "))
+                    .orElse(null);
 
                 if (ban != null && ban.getRights().lessThan(
                     PlayerRights.MODERATOR) && !ban.equals(player)) {
@@ -197,7 +192,7 @@ public class DecodeCommandPacket extends PacketDecoder {
                 player.animation(new Animation(Integer.parseInt(cmd[1])));
                 break;
             case "players":
-                int size = World.getPlayers().getSize();
+                int size = World.getPlayers().size();
                 player.getPacketBuilder().sendMessage(
                     size == 1 ? "There is currently 1 player online!"
                         : "There are currently " + size + " players online!");
@@ -206,9 +201,8 @@ public class DecodeCommandPacket extends PacketDecoder {
                 player.graphic(new Graphic(Integer.parseInt(cmd[1])));
                 break;
             case "object":
-                WorldObjectManager
-                    .register(new WorldObject(Integer.parseInt(cmd[1]), player
-                        .getPosition(), Rotation.SOUTH, 10));
+                WorldObjectManager.register(new WorldObject(Integer
+                    .parseInt(cmd[1]), player.getPosition(), Direction.SOUTH));
                 break;
             case "config":
                 player.getPacketBuilder().sendConfig(Integer.parseInt(cmd[1]),

@@ -2,11 +2,16 @@ package com.asteria.world.entity.npc;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
+import com.asteria.Main;
 import com.asteria.util.JsonLoader;
 import com.asteria.util.Utility;
+import com.asteria.world.entity.npc.drops.AlwaysDropModification;
+import com.asteria.world.entity.npc.drops.RingOfWealthModification;
 import com.asteria.world.entity.player.Player;
+import com.asteria.world.entity.player.PlayerRights;
 import com.asteria.world.item.Item;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -19,10 +24,7 @@ import com.google.gson.JsonObject;
  */
 public class NpcDropTable {
 
-    /**
-     * Will be used to hold all of the drops for each npc. We use a map for easy
-     * and fast retrieval of the npc's table.
-     */
+    /** A map of {@link Npc}s and their drop tables. */
     private static Map<Integer, NpcDropTable> drops = new HashMap<>(100);
 
     /**
@@ -30,7 +32,6 @@ public class NpcDropTable {
      * will be compared against the number assigned to the drop called a
      * <code>bet</code> that will determine if the item can be dropped or not.
      */
-    // Generate a fresh seed using the ThreadLocalRandom.
     private static final Random roll = new Random(Utility.RANDOM.nextLong());
 
     /** The npc(s) who use this drop table. */
@@ -99,27 +100,24 @@ public class NpcDropTable {
         if (rare != null && rare.length > 0) {
 
             // The bet modification value.
-            BetModification betMod = getBetModification(player);
+            Optional<BetModification> betMod = getBetModification(player);
 
             // Select one random item from out of the rare table.
             NpcDrop rareDrop = Utility.randomElement(rare);
 
             // Round to 3 decimal places for decreased accuracy.
             double rollRound = Math.round(roll.nextDouble() * 1000.0) / 1000.0;
+            double modPlus = betMod.isPresent() ? betMod.get().getMod() : 0.0;
 
             // Compare the roll against the bet, including the bet
             // modifications.
-            if (rollRound <= (rareDrop.getBet() + betMod.getMod())) {
+            if (rollRound <= (rareDrop.getBet() + modPlus)) {
 
                 // Roll was successful! Add the item to the drops.
                 item[slot++] = rareDrop.toItem();
 
                 // Drop successful! Apply any bet modification effects here.
-                betMod.itemPassed(player, rareDrop);
-            } else {
-
-                // Drop unsuccessful! Apply any bet modification effects here.
-                betMod.itemFailed(player, rareDrop);
+                betMod.ifPresent(m -> m.itemPassed(player, rareDrop));
             }
 
         }
@@ -175,12 +173,12 @@ public class NpcDropTable {
         return new JsonLoader() {
             @Override
             public void load(JsonObject reader, Gson builder) {
-                final int[] identifiers = builder.fromJson(reader.get("id"),
+                int[] identifiers = builder.fromJson(reader.get("id"),
                     int[].class);
-                final NpcDrop[] dynamicTable = builder.fromJson(reader
-                    .get("dynamic"), NpcDrop[].class);
-                final NpcDrop[] rareTable = builder.fromJson(
-                    reader.get("rare"), NpcDrop[].class);
+                NpcDrop[] dynamicTable = builder.fromJson(
+                    reader.get("dynamic"), NpcDrop[].class);
+                NpcDrop[] rareTable = builder.fromJson(reader.get("rare"),
+                    NpcDrop[].class);
 
                 for (int id : identifiers) {
                     NpcDropTable.getDrops().put(id,
@@ -218,42 +216,20 @@ public class NpcDropTable {
      *            the player these items are being dropped for.
      * @return the modification to the <code>bet</code>.
      */
-    private static BetModification getBetModification(Player player) {
+    private static Optional<BetModification> getBetModification(Player player) {
 
         // If there is no player we return the default bet modification.
         if (player == null) {
-            return BetModification.DEFAULT_BET_MOD;
+            return Optional.empty();
         }
 
-        // Check if we have a ring of wealth equipped.
+        // Otherwise we do other bet modifications.
         if (player.getEquipment().getItemId(Utility.EQUIPMENT_SLOT_RING) == 2572) {
-
-            // Chance to drop a rare item is increased by 0.025, which is 2.5%.
-            return new BetModification(0.025) {
-                @Override
-                public void itemPassed(Player player, NpcDrop item) {
-
-                    // Item dropped, do ring of wealth stuff.
-                    if (roll.nextBoolean()) {
-                        player.getEquipment().unequipItem(
-                            Utility.EQUIPMENT_SLOT_RING, false);
-                        player
-                            .getPacketBuilder()
-                            .sendMessage(
-                                "Your ring of wealth takes effect and crumbles into dust!");
-                    } else {
-                        player
-                            .getPacketBuilder()
-                            .sendMessage(
-                                "Your ring of wealth takes effect and keeps itself intact!");
-                    }
-                }
-
-                @Override
-                public void itemFailed(Player player, NpcDrop item) {}
-            };
+            return Optional.of(new RingOfWealthModification());
+        } else if (player.getRights().equalTo(PlayerRights.DEVELOPER) && Main.DEBUG) {
+            return Optional.of(new AlwaysDropModification());
         }
-        return BetModification.DEFAULT_BET_MOD;
+        return Optional.empty();
     }
 
     /**
@@ -281,17 +257,6 @@ public class NpcDropTable {
      */
     public static abstract class BetModification {
 
-        // The default bet modification. We use this so we do not have to check
-        // for 'null' values.
-        public static final BetModification DEFAULT_BET_MOD = new BetModification(
-            0.0) {
-            @Override
-            public void itemPassed(Player player, NpcDrop item) {}
-
-            @Override
-            public void itemFailed(Player player, NpcDrop item) {}
-        };
-
         /** The fixed bet modification. */
         private final double mod;
 
@@ -314,17 +279,6 @@ public class NpcDropTable {
          *            the item being dropped.
          */
         public abstract void itemPassed(Player player, NpcDrop item);
-
-        /**
-         * What happens when the item was selected, but not successful enough to
-         * be dropped.
-         * 
-         * @param player
-         *            the player who is receiving the drops.
-         * @param item
-         *            the item being dropped.
-         */
-        public abstract void itemFailed(Player player, NpcDrop item);
 
         /**
          * Gets the fixed bet modification.

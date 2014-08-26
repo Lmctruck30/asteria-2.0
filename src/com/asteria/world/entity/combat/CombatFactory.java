@@ -1,5 +1,7 @@
 package com.asteria.world.entity.combat;
 
+import java.util.Optional;
+
 import com.asteria.Main;
 import com.asteria.engine.task.TaskManager;
 import com.asteria.util.Utility;
@@ -16,11 +18,11 @@ import com.asteria.world.entity.combat.prayer.CombatPrayer;
 import com.asteria.world.entity.combat.strategy.DefaultMagicCombatStrategy;
 import com.asteria.world.entity.combat.strategy.DefaultMeleeCombatStrategy;
 import com.asteria.world.entity.combat.strategy.DefaultRangedCombatStrategy;
+import com.asteria.world.entity.combat.weapon.FightStyle;
 import com.asteria.world.entity.npc.Npc;
 import com.asteria.world.entity.player.Player;
-import com.asteria.world.entity.player.content.AssignWeaponInterface.FightStyle;
 import com.asteria.world.entity.player.minigame.Minigame;
-import com.asteria.world.entity.player.minigame.MinigameFactory;
+import com.asteria.world.entity.player.minigame.Minigames;
 import com.asteria.world.entity.player.skill.Skills;
 import com.asteria.world.item.Item;
 import com.asteria.world.map.Location;
@@ -56,14 +58,14 @@ public final class CombatFactory {
     public static final double REDEMPTION_PRAYER_HEAL = .25;
 
     /** The maximum amount of damage inflicted by retribution. */
-    // Damage between currently 0-10 will be inflicted if in the specified
+    // Damage between currently 0-15 will be inflicted if in the specified
     // radius when the retribution prayer effect is activated.
-    public static final int MAXIMUM_RETRIBUTION_DAMAGE = 10;
+    public static final int MAXIMUM_RETRIBUTION_DAMAGE = 15;
 
     /** The radius that retribution will hit players in. */
-    // All players within currently 3 squares will get hit by the retribution
+    // All players within currently 5 squares will get hit by the retribution
     // effect.
-    public static final int RETRIBUTION_RADIUS = 3;
+    public static final int RETRIBUTION_RADIUS = 5;
 
     /**
      * A set of constants representing the three different types of combat that
@@ -163,11 +165,9 @@ public final class CombatFactory {
      * @return true if the player is wielding a crystal bow.
      */
     public static boolean crystalBow(Player player) {
-        Item item;
-        if ((item = player.getEquipment().get(Utility.EQUIPMENT_SLOT_WEAPON)) == null) {
+        Item item = player.getEquipment().get(Utility.EQUIPMENT_SLOT_WEAPON);
+        if (item == null)
             return false;
-        }
-
         return item.getDefinition().getItemName().toLowerCase().contains(
             "crystal bow");
     }
@@ -220,10 +220,11 @@ public final class CombatFactory {
      * @param poisonType
      *            the poison type that this entity is being inflicted with.
      */
-    public static void poisonEntity(Entity entity, PoisonType poisonType) {
+    public static void poisonEntity(Entity entity,
+        Optional<PoisonType> poisonType) {
 
         // We are already poisoned or the poison type is invalid, do nothing.
-        if (entity.isPoisoned() || poisonType == null) {
+        if (entity.isPoisoned() || !poisonType.isPresent()) {
             return;
         }
 
@@ -238,8 +239,22 @@ public final class CombatFactory {
         }
 
         // Poison the entity as normal.
-        entity.setPoisonDamage(poisonType.getDamage());
+        entity.setPoisonDamage(poisonType.get().getDamage());
         TaskManager.submit(new CombatPoisonEffect(entity));
+    }
+
+    /**
+     * Attempts to poison the argued {@link Entity} with the argued
+     * {@link PoisonType}. This method will have no effect if the entity is
+     * already poisoned.
+     * 
+     * @param entity
+     *            the entity that will be poisoned, if not already.
+     * @param poisonType
+     *            the poison type that this entity is being inflicted with.
+     */
+    public static void poisonEntity(Entity entity, PoisonType poisonType) {
+        poisonEntity(entity, Optional.ofNullable(poisonType));
     }
 
     /**
@@ -721,10 +736,10 @@ public final class CombatFactory {
         // player can attack the victim while they are in a minigame.
         if (builder.getEntity().type() == EntityType.PLAYER) {
             Player player = (Player) builder.getEntity();
-            Minigame minigame = MinigameFactory.getMinigame(player);
+            Optional<Minigame> optional = Minigames.get(player);
 
-            if (minigame != null) {
-                if (!minigame.canHit(player, builder.getVictim())) {
+            if (optional.isPresent()) {
+                if (!optional.get().canHit(player, builder.getVictim())) {
                     return false;
                 }
             } else if (builder.getVictim().type() == EntityType.PLAYER) {
@@ -825,7 +840,7 @@ public final class CombatFactory {
         // the damage by 20% and the accuracy at random.
         if (builder.getVictim().type() == EntityType.PLAYER && builder
             .getEntity().type() == EntityType.PLAYER) {
-            final Player attacker = (Player) builder.getEntity();
+            Player attacker = (Player) builder.getEntity();
             Player victim = (Player) builder.getVictim();
 
             // If wearing veracs, the attacker will hit through prayer
@@ -1026,7 +1041,7 @@ public final class CombatFactory {
                     .getSkills()[Skills.HITPOINTS].getLevel() < 1) {
                     victim.graphic(new Graphic(437));
 
-                    if (Location.inWilderness(victim) || MinigameFactory
+                    if (Location.inWilderness(victim) || Minigames
                         .inMinigame(victim) && !Location.inMultiCombat(victim)) {
                         if (builder.getEntity().getPosition().withinDistance(
                             victim.getPosition(),
@@ -1038,7 +1053,7 @@ public final class CombatFactory {
                                         Utility
                                             .inclusiveRandom(CombatFactory.MAXIMUM_RETRIBUTION_DAMAGE)));
                         }
-                    } else if (Location.inWilderness(victim) || MinigameFactory
+                    } else if (Location.inWilderness(victim) || Minigames
                         .inMinigame(victim) && Location.inMultiCombat(victim)) {
                         for (Player player : victim.getLocalPlayers()) {
                             if (player == null) {
