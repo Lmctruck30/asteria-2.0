@@ -19,8 +19,9 @@ public final class ThreadPoolBuilder {
 
     /**
      * Creates a new {@link ThreadPoolExecutor} with the argued settings. All
-     * pools created through this method have their core threads started and
-     * will terminate after being idle for the argued timeout value.
+     * pools created through this method <b>do not</b> have their core threads
+     * started and will terminate after being idle for a total of <tt>2</tt>
+     * <code>MINUTES</code>.
      * 
      * @param name
      *            the name of the threads in this thread pool.
@@ -29,21 +30,16 @@ public final class ThreadPoolBuilder {
      *            thread pool.
      * @param priority
      *            the priority of threads in this thread pool.
-     * @param timeout
-     *            how long in minutes it takes for an idle thread in this thread
-     *            pool to be deallocated.
      * @return the new thread pool with the argued settings.
      */
-    public static ThreadPoolExecutor build(String name, int size,
-        int priority, long timeout) {
+    public static ThreadPoolExecutor build(String name, int size, int priority) {
         ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors
             .newFixedThreadPool(size);
         threadPool.setThreadFactory(new ThreadBuilder(name, priority, true));
         threadPool
             .setRejectedExecutionHandler(new IndicationCallerRunsPolicy());
-        threadPool.setKeepAliveTime(timeout, TimeUnit.MINUTES);
+        threadPool.setKeepAliveTime(2, TimeUnit.MINUTES);
         threadPool.allowCoreThreadTimeOut(true);
-        // threadPool.prestartAllCoreThreads();
         return threadPool;
     }
 
@@ -102,8 +98,8 @@ public final class ThreadPoolBuilder {
          *            this thread pool.
          */
         public BlockingThreadPool(int size) {
-            this.executor = ThreadPoolBuilder.build(
-                "Blocking-Thread", size, Thread.NORM_PRIORITY, Long.MAX_VALUE);
+            this.executor = ThreadPoolBuilder.build("Blocking-Thread", size,
+                Thread.NORM_PRIORITY);
             this.executor.allowCoreThreadTimeOut(false);
             this.phaser = new Phaser(1);
         }

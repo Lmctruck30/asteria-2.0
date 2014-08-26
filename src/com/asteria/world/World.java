@@ -33,8 +33,8 @@ public final class World {
 
     /** A thread pool that will update players in parallel. */
     private static final ThreadPoolExecutor updateExecutor = ThreadPoolBuilder
-        .build("Update-Thread", Runtime.getRuntime()
-            .availableProcessors(), Thread.MAX_PRIORITY, 5);
+        .build("Update-Thread", Runtime.getRuntime().availableProcessors(),
+            Thread.MAX_PRIORITY);
 
     /**
      * The method that executes code for all in game entities every <tt>600</tt>
@@ -46,7 +46,8 @@ public final class World {
         try {
 
             // First we construct the update sequences.
-            WorldUpdateSequence<Player> playerUpdate = new PlayerUpdateSequence(synchronizer, updateExecutor);
+            WorldUpdateSequence<Player> playerUpdate = new PlayerUpdateSequence(
+                synchronizer, updateExecutor);
             WorldUpdateSequence<Npc> npcUpdate = new NpcUpdateSequence();
 
             // Then we execute pre-updating code.

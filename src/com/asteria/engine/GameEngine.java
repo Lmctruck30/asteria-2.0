@@ -29,7 +29,7 @@ public final class GameEngine implements Runnable {
      * be done on the game thread.
      */
     private static final ThreadPoolExecutor serviceExecutor = ThreadPoolBuilder
-        .build("Service-Thread", 1, Thread.MIN_PRIORITY, 5);
+        .build("Service-Thread", 1, Thread.MIN_PRIORITY);
 
     /**
      * Schedule the task that will execute game code at 600ms intervals. This
