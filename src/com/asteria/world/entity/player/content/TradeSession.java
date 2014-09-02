@@ -290,12 +290,9 @@ public class TradeSession {
         return player
             .getCapitalizedUsername()
             .concat(
-                player
-                    .getCapitalizedUsername()
-                    .concat(
-                        player.getRights().equalTo(PlayerRights.MODERATOR) ? "@cr1@"
-                            : player.getRights().greaterThan(
-                                PlayerRights.MODERATOR) ? "@cr2@" : ""));
+                player.getRights().equalTo(PlayerRights.MODERATOR) ? "@cr1@"
+                    : player.getRights().greaterThan(PlayerRights.MODERATOR) ? "@cr2@"
+                        : "");
     }
 
     /**
