@@ -137,7 +137,8 @@ public class Dialogue {
         case 1:
             player.getPacketBuilder().interfaceAnimation(969,
                 expression.getExpressionId());
-            player.getPacketBuilder().sendString(player.getUsername(), 970);
+            player.getPacketBuilder().sendString(
+                player.getCapitalizedUsername(), 970);
             player.getPacketBuilder().sendString(text[0], 971);
             player.getPacketBuilder().sendPlayerHeadModel(969);
             player.getPacketBuilder().sendChatInterface(968);
@@ -145,7 +146,8 @@ public class Dialogue {
         case 2:
             player.getPacketBuilder().interfaceAnimation(974,
                 expression.getExpressionId());
-            player.getPacketBuilder().sendString(player.getUsername(), 975);
+            player.getPacketBuilder().sendString(
+                player.getCapitalizedUsername(), 975);
             player.getPacketBuilder().sendString(text[0], 976);
             player.getPacketBuilder().sendString(text[1], 977);
             player.getPacketBuilder().sendPlayerHeadModel(974);
@@ -154,7 +156,8 @@ public class Dialogue {
         case 3:
             player.getPacketBuilder().interfaceAnimation(980,
                 expression.getExpressionId());
-            player.getPacketBuilder().sendString(player.getUsername(), 981);
+            player.getPacketBuilder().sendString(
+                player.getCapitalizedUsername(), 981);
             player.getPacketBuilder().sendString(text[0], 982);
             player.getPacketBuilder().sendString(text[1], 983);
             player.getPacketBuilder().sendString(text[2], 984);
@@ -164,7 +167,8 @@ public class Dialogue {
         case 4:
             player.getPacketBuilder().interfaceAnimation(987,
                 expression.getExpressionId());
-            player.getPacketBuilder().sendString(player.getUsername(), 988);
+            player.getPacketBuilder().sendString(
+                player.getCapitalizedUsername(), 988);
             player.getPacketBuilder().sendString(text[0], 989);
             player.getPacketBuilder().sendString(text[1], 990);
             player.getPacketBuilder().sendString(text[2], 991);
