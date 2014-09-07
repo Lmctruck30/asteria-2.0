@@ -59,11 +59,12 @@ public class HostGateway {
         }
 
         // Retrieve the amount of connections this host has.
-        Integer amount = hostMap.put(host, 1);
+        Integer amount = hostMap.get(host);
 
         // If the host was not in the map, they're clear to go.
         if (amount == null) {
             logger.info("Session request from " + host + "<1> accepted.");
+            hostMap.put(host, 1);
             return true;
         }
 
@@ -76,9 +77,8 @@ public class HostGateway {
         }
 
         // Otherwise, replace the key with the next value if it was present.
-        hostMap.put(host, amount + 1);
-        logger
-            .info("Session request from " + host + "<" + hostMap.get(host) + "> accepted.");
+        logger.info("Session request from " + host + "<" + hostMap.put(host,
+            amount + 1) + "> accepted.");
         return true;
     }
 
@@ -98,9 +98,9 @@ public class HostGateway {
         // Get the amount of connections stored for the host.
         Integer amount = hostMap.get(host);
 
-        if (amount < 1) {
+        if (amount == 1) {
 
-            // Remove the host from the map if it's below 1 connection.
+            // Remove the host from the map if it's at one connection.
             hostMap.remove(host);
             HostThrottler.getTimeMap().remove(host);
             return;
