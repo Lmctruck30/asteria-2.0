@@ -64,7 +64,7 @@ public class BankContainer extends ItemContainer {
             item.setAmount(count);
         }
 
-        if (deposit(item)) {
+        if (deposit(item.clone())) {
             player.getInventory().remove(item, inventorySlot);
             refresh();
             player.getPacketBuilder().sendUpdateItems(5064,

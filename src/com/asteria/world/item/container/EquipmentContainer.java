@@ -209,7 +209,11 @@ public class EquipmentContainer extends ItemContainer {
      *         the call, <code>false</code> otherwise.
      */
     public boolean unequipItem(Item item, boolean addItem) {
-        return unequipItem(getSlot(item.getId()), addItem);
+        int slot = getSlot(item.getId());
+
+        if (slot == -1)
+            return false;
+        return unequipItem(slot, addItem);
     }
 
     /**

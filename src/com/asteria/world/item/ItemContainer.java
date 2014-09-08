@@ -79,7 +79,8 @@ public class ItemContainer extends AbstractCollection<Item> {
      *         the call, <code>false</code> otherwise.
      */
     public boolean add(Item item, int slot) {
-        if (item == null) {
+        if (item == null || item.getId() < 1 || item.getAmount() < 1 || item
+            .getAmount() > Integer.MAX_VALUE) {
             return false;
         }
 
@@ -136,7 +137,8 @@ public class ItemContainer extends AbstractCollection<Item> {
      *         the call, <code>false</code> otherwise.
      */
     public boolean remove(Item item, int slot) {
-        if (item == null || item.getId() < 1 || item.getAmount() < 1) {
+        if (item == null || item.getId() < 1 || item.getAmount() < 1 || item
+            .getAmount() > Integer.MAX_VALUE) {
             return false;
         }
         if ((item.getDefinition().isStackable() || policy

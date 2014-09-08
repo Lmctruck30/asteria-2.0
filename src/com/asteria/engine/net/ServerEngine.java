@@ -323,15 +323,18 @@ public final class ServerEngine {
         while (it.hasNext()) {
             SelectionKey key = it.next();
 
+            if (!key.isValid()) {
+                it.remove();
+                continue;
+            }
+
             try {
-                if (key.isValid()) {
-                    if (key.isAcceptable()) {
-                        acceptClients();
-                    } else if (key.isReadable()) {
-                        decodePackets(key);
-                    } else if (key.isWritable()) {
-                        sendQueuedData(key);
-                    }
+                if (key.isAcceptable()) {
+                    acceptClients();
+                } else if (key.isReadable()) {
+                    decodePackets(key);
+                } else if (key.isWritable()) {
+                    sendQueuedData(key);
                 }
             } finally {
                 it.remove();

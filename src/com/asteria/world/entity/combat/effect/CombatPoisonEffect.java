@@ -210,6 +210,8 @@ public class CombatPoisonEffect extends Task {
          *         if the item is not able to poison the victim.
          */
         public static Optional<PoisonType> getPoisonType(Item item) {
+            if (item == null || item.getId() < 1 || item.getAmount() < 1)
+                return Optional.empty();
             return Optional.ofNullable(types.get(item.getId()));
         }
 
